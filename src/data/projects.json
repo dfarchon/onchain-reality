@@ -1,0 +1,9 @@
+[
+  {
+    "id": "example",
+    "title": "Example Project",
+    "description": "A placeholder for the first Onchain Reality project. Replace with real projects in src/data/projects.json.",
+    "url": "#",
+    "cover": null
+  }
+]
