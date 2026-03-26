@@ -41,8 +41,12 @@ export function Home() {
         <div className="mx-auto flex flex-col items-center justify-center gap-6">
           <h1
             className="hero-title font-heading text-4xl font-semibold tracking-wide text-[var(--text-heading)] md:text-5xl uppercase"
-            onMouseEnter={() => document.body.classList.add("hero-title-hovered")}
-            onMouseLeave={() => document.body.classList.remove("hero-title-hovered")}
+            onMouseEnter={() =>
+              document.body.classList.add("hero-title-hovered")
+            }
+            onMouseLeave={() =>
+              document.body.classList.remove("hero-title-hovered")
+            }
           >
             Onchain Reality
           </h1>

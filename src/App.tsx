@@ -6,6 +6,7 @@ import { Projects } from './routes/Projects'
 import { BlogIndex } from './routes/Blog/BlogIndex'
 import { BlogPost } from './routes/Blog/BlogPost'
 import { Ascii } from './routes/Ascii'
+import { StarrySky } from './routes/StarrySky'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="blog" element={<BlogIndex />} />
           <Route path="blog/:slug" element={<BlogPost />} />
           <Route path="ascii" element={<Ascii />} />
+          <Route path="starry-sky" element={<StarrySky />} />
         </Route>
       </Routes>
     </BrowserRouter>
