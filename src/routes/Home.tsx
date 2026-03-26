@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { StarryBackground } from "../components/StarryBackground";
 
 const SUBTITLE_LANGUAGES: { lang: string; text: string }[] = [
   { lang: "zh", text: "链上现实" },
@@ -36,7 +37,9 @@ export function Home() {
   const current = SUBTITLE_LANGUAGES[index];
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-8rem)] max-w-3xl flex-col px-6 py-16">
+    <>
+    <StarryBackground />
+    <div className="relative z-[2] mx-auto flex min-h-[calc(100vh-8rem)] max-w-3xl flex-col px-6 py-16">
       <div className="retro-box flex flex-1 flex-col justify-center text-center">
         <div className="mx-auto flex flex-col items-center justify-center gap-6">
           <h1
@@ -87,5 +90,6 @@ export function Home() {
         </div>
       </div>
     </div>
+    </>
   );
 }
