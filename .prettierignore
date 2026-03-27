@@ -1,0 +1,8 @@
+node_modules
+dist
+dist-ssr
+pnpm-lock.yaml
+package-lock.json
+.netlify
+*.min.js
+*.min.css

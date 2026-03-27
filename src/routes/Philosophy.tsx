@@ -38,13 +38,10 @@ export function Philosophy() {
             </blockquote>
 
             <p className="mt-6 leading-relaxed text-[var(--text)] font-body text-lg">
-              Onchain reality doesn't mean putting our existing reality on the
-              blockchain.
-            </p>
-            <p className="mt-6 leading-relaxed text-[var(--text)] font-body text-lg">
-              Instead, it is about constructing unique interaction protocols
-              based on the primitives of blockchain, which spontaneously evolve
-              into crypto-native new definitions of reality.
+              Onchain reality is about constructing unique interaction protocols
+              entirely based on the primitives of blockchain, which
+              spontaneously evolve into crypto-native new definitions of
+              reality.
             </p>
 
             <p className="mt-6 leading-relaxed text-[var(--text)] font-body text-lg">

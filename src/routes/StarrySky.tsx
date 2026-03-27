@@ -27,7 +27,8 @@ export function StarrySky() {
 
     const onScroll = () => {
       const maxScroll = html.scrollHeight - window.innerHeight;
-      scrollProgressRef.current = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      scrollProgressRef.current =
+        maxScroll > 0 ? window.scrollY / maxScroll : 0;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
 

@@ -1,14 +1,14 @@
-import projectsData from '../data/projects.json'
+import projectsData from "../data/projects.json";
 
 type Project = {
-  id: string
-  title: string
-  description: string
-  url: string
-  cover: string | null
-}
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  cover: string | null;
+};
 
-const projects = projectsData as Project[]
+const projects = projectsData as Project[];
 
 export function Projects() {
   return (
@@ -17,7 +17,10 @@ export function Projects() {
         <h1 className="font-heading text-3xl font-semibold tracking-wide text-[var(--text-heading)] uppercase">
           Projects
         </h1>
-        <p className="mt-2 font-body text-base text-[var(--text-muted)]" lang="ja">
+        <p
+          className="mt-2 font-body text-base text-[var(--text-muted)]"
+          lang="ja"
+        >
           — プロジェクト
         </p>
         <p className="mt-4 text-[var(--text-muted)] font-body text-base">
@@ -31,17 +34,21 @@ export function Projects() {
             <li key={p.id}>
               <a
                 href={p.url}
-                target={p.url.startsWith('http') ? '_blank' : undefined}
-                rel={p.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                target={p.url.startsWith("http") ? "_blank" : undefined}
+                rel={
+                  p.url.startsWith("http") ? "noopener noreferrer" : undefined
+                }
                 className="retro-link"
               >
                 {p.title}
               </a>
-              <p className="mt-1 text-base text-[var(--text-muted)]">{p.description}</p>
+              <p className="mt-1 text-base text-[var(--text-muted)]">
+                {p.description}
+              </p>
             </li>
           ))}
         </ul>
       </div>
     </div>
-  )
+  );
 }

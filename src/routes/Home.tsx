@@ -75,7 +75,7 @@ export function Home() {
     <>
       <StarryBackground />
       <div className="relative z-[2] mx-auto flex h-[calc(100vh-8rem)] w-full max-w-6xl -translate-y-8 flex-col items-center justify-center px-6 py-16 md:-translate-y-10">
-        <div className="retro-box w-full max-w-5xl flex flex-col items-stretch justify-center pb-12 pt-14 text-center md:pt-16">
+        <div className="retro-box retro-box--hero w-full max-w-4xl flex flex-col items-stretch justify-center text-center">
           <div className="mx-auto flex w-full flex-col items-center justify-center gap-6">
             <h1
               className="hero-title font-heading text-4xl font-semibold tracking-wide text-[var(--text-heading)] md:text-5xl uppercase"

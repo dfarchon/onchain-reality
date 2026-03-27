@@ -9,8 +9,8 @@ This is the first post. The blog supports **Markdown**, code blocks, and GFM.
 ## Code example
 
 ```ts
-const onchain = "reality"
-console.log(onchain)
+const onchain = "reality";
+console.log(onchain);
 ```
 
 ## List

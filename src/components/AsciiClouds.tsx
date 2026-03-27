@@ -93,10 +93,10 @@ export function AsciiClouds() {
     const CHAR_H = FONT_SIZE * 1.05;
 
     const LAYERS = [
-      { speed: 0.025, scale: 1.8, seed: 0,    threshold: 0.40, alpha: 0.55 },
-      { speed: 0.05,  scale: 2.4, seed: 50,   threshold: 0.36, alpha: 0.7  },
-      { speed: 0.09,  scale: 3.2, seed: 100,  threshold: 0.33, alpha: 0.85 },
-      { speed: 0.15,  scale: 4.5, seed: 170,  threshold: 0.30, alpha: 1.0  },
+      { speed: 0.025, scale: 1.8, seed: 0, threshold: 0.4, alpha: 0.55 },
+      { speed: 0.05, scale: 2.4, seed: 50, threshold: 0.36, alpha: 0.7 },
+      { speed: 0.09, scale: 3.2, seed: 100, threshold: 0.33, alpha: 0.85 },
+      { speed: 0.15, scale: 4.5, seed: 170, threshold: 0.3, alpha: 1.0 },
     ];
 
     let cols = 0;
@@ -208,7 +208,10 @@ export function AsciiClouds() {
             }
           }
 
-          const baseDensity = (fbm(angle * 2 + 7, Math.log(dist + 0.1) * 2 - tSec * 0.03 + 7, 3) + 1) * 0.5;
+          const baseDensity =
+            (fbm(angle * 2 + 7, Math.log(dist + 0.1) * 2 - tSec * 0.03 + 7, 3) +
+              1) *
+            0.5;
           let finalDensity = Math.max(baseDensity * 0.35, bestDensity);
 
           const inf = grid[row * cols + col];
@@ -222,9 +225,10 @@ export function AsciiClouds() {
           let r = Math.round(lerp(240, 255, bright));
           let g = Math.round(lerp(180, 220, bright));
           let b = Math.round(lerp(210, 245, bright));
-          let alpha = bestDensity > 0.01
-            ? lerp(0.5, bestAlpha, bestDensity)
-            : 0.3 + baseDensity * 0.3;
+          let alpha =
+            bestDensity > 0.01
+              ? lerp(0.5, bestAlpha, bestDensity)
+              : 0.3 + baseDensity * 0.3;
 
           if (inf > 0.001) {
             r = Math.round(lerp(r, 160, inf * 0.5));

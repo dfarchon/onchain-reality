@@ -1,12 +1,12 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Layout } from './components/Layout'
-import { Home } from './routes/Home'
-import { Philosophy } from './routes/Philosophy'
-import { Projects } from './routes/Projects'
-import { BlogIndex } from './routes/Blog/BlogIndex'
-import { BlogPost } from './routes/Blog/BlogPost'
-import { Ascii } from './routes/Ascii'
-import { StarrySky } from './routes/StarrySky'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Layout } from "./components/Layout";
+import { Home } from "./routes/Home";
+import { Philosophy } from "./routes/Philosophy";
+import { Projects } from "./routes/Projects";
+import { BlogIndex } from "./routes/Blog/BlogIndex";
+import { BlogPost } from "./routes/Blog/BlogPost";
+import { Ascii } from "./routes/Ascii";
+import { StarrySky } from "./routes/StarrySky";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
