@@ -254,7 +254,7 @@ export function MusicPlayer() {
   return (
     <div
       ref={panelRef}
-      className="music-panel fixed z-[5] flex cursor-grab items-center gap-3 rounded border border-[var(--border)] bg-[var(--bg-surface)] px-3 py-2 shadow-lg active:cursor-grabbing"
+      className="music-panel fixed z-[100] flex cursor-grab items-center gap-3 rounded border border-[var(--border)] bg-[var(--bg-surface)] px-3 py-2 shadow-lg active:cursor-grabbing"
       style={{ left: position.x, top: position.y }}
       aria-label="Music player"
       onMouseDown={handleMouseDown}

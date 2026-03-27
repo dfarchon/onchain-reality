@@ -29,7 +29,7 @@ export function Ascii() {
   const [panelOpen, setPanelOpen] = useState(true)
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12">
+    <div className="mx-auto max-w-5xl px-6 py-12">
       {panelOpen && (
         <div className="retro-box ascii-panel">
           <div className="flex items-start justify-between gap-4">

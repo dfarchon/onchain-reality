@@ -9,7 +9,7 @@ export function BlogPost() {
   const post = getPostBySlug(slug)
   if (!post) {
     return (
-      <div className="mx-auto max-w-3xl px-6 py-16 text-center">
+      <div className="mx-auto max-w-5xl px-6 py-16 text-center">
         <div className="retro-box inline-block">
           <p className="text-[var(--text-muted)] font-body">Post not found.</p>
           <Link to="/blog" className="retro-link mt-4 inline-block">Back to Blog</Link>
@@ -19,7 +19,7 @@ export function BlogPost() {
   }
 
   return (
-    <article className="mx-auto max-w-2xl px-6 py-12">
+    <article className="mx-auto max-w-4xl px-6 py-12">
       <div className="retro-box">
         <Link to="/blog" className="retro-link text-base">
           ← Back to Blog

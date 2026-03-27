@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -8,9 +8,14 @@ const nav = [
 ] as const;
 
 export function Header() {
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
+  const isPhilosophy = pathname === "/philosophy";
+  const isTransparentPage = isHome || isPhilosophy;
+
   return (
     <header
-      className="fixed left-0 right-0 top-0 z-10 flex items-center bg-transparent"
+      className={`fixed left-0 right-0 top-0 z-10 flex items-center ${isTransparentPage ? "bg-transparent" : "bg-[rgba(0,0,0,0.6)] backdrop-blur-sm"}`}
       style={{ height: "var(--banner-height)" }}
     >
       <nav
@@ -19,7 +24,7 @@ export function Header() {
       >
         <Link
           to="/"
-          className="shrink-0 font-heading text-2xl font-semibold text-[var(--text-heading)] no-underline tracking-wide hover:text-[var(--accent)] whitespace-nowrap"
+          className={`shrink-0 font-heading text-2xl font-semibold text-[var(--text-heading)] no-underline tracking-wide hover:text-[var(--accent)] whitespace-nowrap rounded-md px-4 py-2 ${isPhilosophy ? "bg-[rgba(0,0,0,0.55)] backdrop-blur-sm" : ""}`}
         >
           Onchain Reality
         </Link>
@@ -28,7 +33,7 @@ export function Header() {
             <li key={to}>
               <Link
                 to={to}
-                className="font-normal text-[var(--accent)] no-underline hover:text-[var(--text-heading)] visited:text-[var(--text-muted)]"
+                className={`font-normal text-[var(--accent)] no-underline hover:text-[var(--text-heading)] visited:text-[var(--text-muted)] rounded-md px-3 py-2 ${isPhilosophy ? "bg-[rgba(0,0,0,0.55)] backdrop-blur-sm" : ""}`}
               >
                 {label}
               </Link>
