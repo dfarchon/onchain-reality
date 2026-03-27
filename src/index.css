@@ -60,34 +60,69 @@ body {
   display: none;
 }
 
-/* Content block — dark frame, thin pink border */
+/* Hide scrollbar on StarrySky page */
+html.starry-scroll,
+html.starry-scroll body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html.starry-scroll::-webkit-scrollbar,
+html.starry-scroll body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Content block — pure black panel */
 .retro-box {
   position: relative;
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  padding: 2rem 2.5rem;
+  background: linear-gradient(
+    180deg,
+    rgba(11, 11, 15, 0.97) 0%,
+    rgba(9, 9, 13, 0.98) 100%
+  );
+  border: 1px solid rgba(240, 160, 192, 0.28);
+  padding: 2.5rem 3rem;
   margin: 0 auto;
-  transition: background 0.3s ease, border-color 0.3s ease;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.02),
+    0 8px 24px rgba(0, 0, 0, 0.5);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.retro-box:has(.hero-title:hover) {
+
+.retro-box::before {
+  content: none;
+}
+
+.retro-box > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* All text flame effect on hover */
+body.hero-title-hovered .retro-box {
   background: transparent;
   border-color: transparent;
   box-shadow: none;
 }
-
-/* When hovering "Onchain Reality", hide all other content */
-.retro-box > div:first-child > p,
-.retro-box > hr.section-rule,
-.retro-box > p,
-.retro-box > div:last-child {
-  transition: opacity 0.3s ease;
+body.hero-title-hovered .retro-box::before {
+  display: none;
 }
-.retro-box:has(.hero-title:hover) > div:first-child > p,
-.retro-box:has(.hero-title:hover) > hr.section-rule,
-.retro-box:has(.hero-title:hover) > p,
-.retro-box:has(.hero-title:hover) > div:last-child {
-  opacity: 0;
-  pointer-events: none;
+
+body.hero-title-hovered .retro-box * {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+body.hero-title-hovered .retro-box p,
+body.hero-title-hovered .retro-box span,
+body.hero-title-hovered .retro-box a,
+body.hero-title-hovered .retro-box h1 {
+  color: #fffacd !important;
+  text-shadow:
+    0 0 8px #ffd700,
+    0 0 16px #ff8c00,
+    0 -2px 24px #ff4500,
+    0 -4px 36px #cc2200;
+  animation: flame-burn 2s ease-in-out infinite;
+  will-change: text-shadow;
 }
 
 /* Hide header, footer, music player when hero title hovered */
@@ -108,14 +143,12 @@ body.hero-title-hovered .hero-title {
   position: relative;
   color: #fffacd;
   text-shadow:
-    0 0 8px #fffacd,
-    0 0 16px #ffd700,
-    0 0 24px #ff8c00,
-    0 -2px 12px #ff6600,
-    0 -4px 32px #ff4500,
-    0 -6px 48px #cc2200,
-    0 -8px 64px #990000;
-  animation: flame-burn 0.08s ease-in-out infinite;
+    0 0 10px #ffd700,
+    0 0 20px #ff8c00,
+    0 -3px 30px #ff4500,
+    0 -6px 50px #cc2200;
+  animation: flame-burn 2s ease-in-out infinite;
+  will-change: text-shadow;
 }
 
 body.hero-title-hovered .hero-title::after {
@@ -129,63 +162,45 @@ body.hero-title-hovered .hero-title::after {
   color: transparent;
   z-index: -1;
   text-shadow:
-    0 -4px 20px rgba(255, 200, 80, 0.8),
-    0 -8px 40px rgba(255, 100, 0, 0.6),
-    0 -12px 60px rgba(255, 50, 0, 0.4),
-    0 -16px 80px rgba(200, 20, 0, 0.3);
-  animation: flame-rise 0.12s ease-in-out infinite;
+    0 -4px 20px rgba(255, 200, 80, 0.6),
+    0 -10px 50px rgba(255, 100, 0, 0.4),
+    0 -16px 80px rgba(200, 20, 0, 0.2);
+  animation: flame-rise 3s ease-in-out infinite;
   pointer-events: none;
+  will-change: text-shadow, transform;
 }
 
 @keyframes flame-burn {
-  0% {
+  0%, 100% {
     text-shadow:
-      0 0 10px #fffef0,
-      0 0 20px #ffd700,
-      0 0 28px #ff8c00,
-      0 -3px 14px #ff6600,
-      0 -5px 36px #ff4500,
-      0 -7px 52px #cc2200,
-      0 -10px 70px #990000;
+      0 0 10px #ffd700,
+      0 0 20px #ff8c00,
+      0 -3px 30px #ff4500,
+      0 -6px 50px #cc2200;
   }
   50% {
     text-shadow:
       0 0 14px #ff8c00,
-      0 0 24px #ff6600,
-      0 0 36px #ff4500,
-      0 -4px 18px #cc2200,
-      0 -7px 44px #990000,
-      0 -10px 62px #660000,
-      0 -14px 80px #330000;
-  }
-  100% {
-    text-shadow:
-      0 0 10px #fffef0,
-      0 0 20px #ffd700,
-      0 0 28px #ff8c00,
-      0 -3px 14px #ff6600,
-      0 -5px 36px #ff4500,
-      0 -7px 52px #cc2200,
-      0 -10px 70px #990000;
+      0 0 28px #ff4500,
+      0 -4px 36px #cc2200,
+      0 -8px 60px #990000;
   }
 }
 
 @keyframes flame-rise {
   0%, 100% {
     text-shadow:
-      0 -4px 20px rgba(255, 200, 80, 0.8),
-      0 -8px 40px rgba(255, 100, 0, 0.6),
-      0 -12px 60px rgba(255, 50, 0, 0.4),
-      0 -16px 80px rgba(200, 20, 0, 0.3);
-    transform: translateY(0) scale(1.02);
+      0 -4px 20px rgba(255, 200, 80, 0.6),
+      0 -10px 50px rgba(255, 100, 0, 0.4),
+      0 -16px 80px rgba(200, 20, 0, 0.2);
+    transform: translateY(0);
   }
   50% {
     text-shadow:
-      0 -8px 24px rgba(255, 180, 60, 0.7),
-      0 -14px 48px rgba(255, 80, 0, 0.5),
-      0 -20px 72px rgba(255, 30, 0, 0.35),
-      0 -24px 96px rgba(180, 10, 0, 0.25);
-    transform: translateY(-3px) scale(1.03);
+      0 -6px 24px rgba(255, 180, 60, 0.5),
+      0 -14px 56px rgba(255, 80, 0, 0.35),
+      0 -22px 90px rgba(180, 10, 0, 0.2);
+    transform: translateY(-2px);
   }
 }
 
@@ -209,19 +224,9 @@ a.retro-link:hover {
   color: var(--text-heading);
 }
 
-/* Subtitle — continuous subtle random jitter */
-@keyframes subtitle-jitter {
-  0%, 100% { transform: translate(0, 0); }
-  12.5% { transform: translate(2px, -1px); }
-  25% { transform: translate(-1px, 2px); }
-  37.5% { transform: translate(1px, 1px); }
-  50% { transform: translate(-2px, -1px); }
-  62.5% { transform: translate(1px, -2px); }
-  75% { transform: translate(-1px, 1px); }
-  87.5% { transform: translate(2px, 1px); }
-}
-.subtitle-jitter {
-  animation: subtitle-jitter 1.5s ease-in-out infinite;
+/* Subtitle — monospace for decode effect */
+.subtitle-decode {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Data-stream style block — dense monospace pink (ref. image 2) */

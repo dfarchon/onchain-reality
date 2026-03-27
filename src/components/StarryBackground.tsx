@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 import * as THREE from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
@@ -101,7 +101,13 @@ const FRAG = /* glsl */ `
   }
 `;
 
-export function StarryBackground() {
+const ease = (t: number) => t * t * (3 - 2 * t);
+
+interface StarryBackgroundProps {
+  scrollProgressRef?: RefObject<number>;
+}
+
+export function StarryBackground({ scrollProgressRef }: StarryBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -123,11 +129,15 @@ export function StarryBackground() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(w(), h()),
+      1.4,
+      0.7,
+      0.15,
+    );
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
-    composer.addPass(
-      new UnrealBloomPass(new THREE.Vector2(w(), h()), 1.4, 0.7, 0.15),
-    );
+    composer.addPass(bloomPass);
     composer.addPass(new OutputPass());
 
     const geo = buildTrailGeometry();
@@ -149,8 +159,16 @@ export function StarryBackground() {
     const tick = () => {
       animId = requestAnimationFrame(tick);
       const elapsed = (performance.now() - t0) * 0.001;
+      const s = ease(scrollProgressRef?.current ?? 0);
+
       quat.setFromAxisAngle(POLE_AXIS, elapsed * ROTATION_SPEED);
       trails.quaternion.copy(quat);
+
+      // Scroll-driven bloom: more dreamy and hazy as you scroll down
+      bloomPass.strength = THREE.MathUtils.lerp(1.4, 2.2, s);
+      bloomPass.radius = THREE.MathUtils.lerp(0.7, 1.1, s);
+      bloomPass.threshold = THREE.MathUtils.lerp(0.15, 0.05, s);
+
       composer.render();
     };
     tick();

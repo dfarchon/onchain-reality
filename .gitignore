@@ -25,7 +25,15 @@ dist-ssr
 *.sw?
 
 # Audio
-public/bgm.ogg
+*.aac
+*.flac
+*.m4a
+*.mp3
+*.oga
+*.ogg
+*.opus
+*.wav
+*.wma
 
 # Local Netlify folder
 .netlify
