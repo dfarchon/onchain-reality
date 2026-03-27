@@ -164,7 +164,7 @@ export function MusicPlayer() {
             setIsPlaying(true)
             fadeIn(audio)
           })
-          .catch(() => setHasSource(false))
+          .catch(() => setIsPlaying(false))
       }, LOOP_GAP_MS)
     }
     const onError = () => setHasSource(false)
@@ -245,7 +245,6 @@ export function MusicPlayer() {
         setIsPlaying(true)
         fadeIn(audio)
       }).catch(() => {
-        setHasSource(false)
         setIsPlaying(false)
         userWantsPlaybackRef.current = false
       })
