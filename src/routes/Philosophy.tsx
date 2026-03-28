@@ -3,13 +3,15 @@ import { AsciiClouds } from "../components/AsciiClouds";
 
 export function Philosophy() {
   useEffect(() => {
+    document.body.classList.add("philosophy-page");
     const main = document.querySelector<HTMLElement>("main.main-scroll");
     if (main) {
       main.style.overflow = "hidden";
-      return () => {
-        main.style.overflow = "";
-      };
     }
+    return () => {
+      document.body.classList.remove("philosophy-page");
+      if (main) main.style.overflow = "";
+    };
   }, []);
 
   return (

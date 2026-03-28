@@ -1,17 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
 
 const nav = [
-  { to: "/", label: "Home", width: "5.5rem" },
-  { to: "/philosophy", label: "Philosophy", width: "9.5rem" },
-  { to: "/projects", label: "Projects", width: "7.5rem" },
-  { to: "/blog", label: "Blog", width: "5.5rem" },
+  { to: "/", label: "Home", width: "6rem" },
+  { to: "/philosophy", label: "Philosophy", width: "10rem" },
+  { to: "/projects", label: "Projects", width: "8rem" },
+  { to: "/blog", label: "Blog", width: "6rem" },
 ] as const;
 
 export function Header() {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
   const isPhilosophy = pathname === "/philosophy";
-  const isTransparentPage = isHome || isPhilosophy;
+  const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
+  const isTransparentPage = isHome || isPhilosophy || isBlog;
+  const needsBackdropPill = isPhilosophy || isBlog;
 
   return (
     <header
@@ -24,7 +26,7 @@ export function Header() {
       >
         <Link
           to="/"
-          className={`justify-self-start font-heading text-2xl font-semibold uppercase tracking-wide text-[var(--text-heading)] no-underline hover:text-[var(--accent)] whitespace-nowrap rounded-md px-4 py-2 ${isPhilosophy ? "bg-[rgba(0,0,0,0.55)] backdrop-blur-sm" : ""}`}
+          className={`justify-self-start font-heading text-2xl font-semibold uppercase tracking-wide text-[var(--text-heading)] no-underline hover:text-[var(--accent)] whitespace-nowrap rounded-md px-4 py-2 ${needsBackdropPill ? "bg-[rgba(0,0,0,0.55)] backdrop-blur-sm" : ""}`}
         >
           Onchain Reality
         </Link>
@@ -38,7 +40,7 @@ export function Header() {
             >
               <Link
                 to={to}
-                className={`inline-flex items-center justify-center whitespace-nowrap font-normal text-[var(--accent)] no-underline hover:text-[var(--text-heading)] visited:text-[var(--text-muted)] rounded-md px-2 py-2 ${isPhilosophy ? "bg-[rgba(0,0,0,0.55)] backdrop-blur-sm" : ""}`}
+                className={`inline-flex items-center justify-center whitespace-nowrap font-normal text-[var(--accent)] no-underline hover:text-[var(--text-heading)] visited:text-[var(--text-muted)] rounded-md px-4 py-2 ${needsBackdropPill ? "bg-[rgba(0,0,0,0.55)] backdrop-blur-sm" : ""}`}
               >
                 {label}
               </Link>

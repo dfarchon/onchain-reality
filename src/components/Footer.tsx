@@ -3,7 +3,10 @@ import { useLocation } from "react-router-dom";
 export function Footer() {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
-  const isTransparentPage = isHome || pathname === "/philosophy";
+  const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
+  const isTransparentPage =
+    isHome || pathname === "/philosophy" || isBlog;
+  const needsBackdropPill = pathname === "/philosophy" || isBlog;
 
   return (
     <footer
@@ -12,7 +15,7 @@ export function Footer() {
     >
       <div className="mx-auto flex w-full max-w-5xl items-center justify-center px-6">
         <p
-          className={`text-center text-base text-[var(--text-muted)] ${pathname === "/philosophy" ? "inline-block rounded-md bg-[rgba(0,0,0,0.55)] px-4 py-2 backdrop-blur-sm" : ""}`}
+          className={`text-center text-base text-[var(--text-muted)] ${needsBackdropPill ? "inline-block rounded-md bg-[rgba(0,0,0,0.55)] px-4 py-2 backdrop-blur-sm" : ""}`}
         >
           Building New Realities on the Blockchain
         </p>

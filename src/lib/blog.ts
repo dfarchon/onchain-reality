@@ -1,10 +1,14 @@
 import fm from "front-matter";
 
+export type Category = "Reality" | "Protocol" | "Experiment" | "Reflection";
+
 export type PostMeta = {
   title: string;
   date: string;
   summary?: string;
   slug?: string;
+  author?: string;
+  category?: Category;
 };
 
 export type Post = PostMeta & {
@@ -39,6 +43,8 @@ export function getPostList(): PostMeta[] {
       title: (attributes.title as string) ?? slug,
       date: dateToString(attributes.date),
       summary: attributes.summary as string | undefined,
+      author: attributes.author as string | undefined,
+      category: attributes.category as Category | undefined,
     };
   });
   return list.sort((a, b) => (b.date > a.date ? 1 : -1));

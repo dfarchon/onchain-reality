@@ -1,6 +1,8 @@
 ---
 title: Hello World
 date: 2025-03-14
+author: cherry
+category: Reflection
 summary: The first post on Onchain Reality — a placeholder to show the blog pipeline.
 ---
 

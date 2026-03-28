@@ -1,45 +1,104 @@
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { getPostList } from "../../lib/blog";
-import type { PostMeta } from "../../lib/blog";
+import type { Category, PostMeta } from "../../lib/blog";
+import { AsciiGameOfLife } from "../../components/AsciiGameOfLife";
+import { BlogCard } from "../../components/BlogCard";
+
+/** Set to `true` to show the "Debug BG" toggle on the blog index. */
+const SHOW_DEBUG_BG_BUTTON = false;
+
+const CATEGORIES: (Category | "All")[] = [
+  "All",
+  "Reality",
+  "Protocol",
+  "Experiment",
+  "Reflection",
+];
 
 export function BlogIndex() {
+  useEffect(() => {
+    document.body.classList.add("blog-page");
+    return () => document.body.classList.remove("blog-page");
+  }, []);
   const posts = getPostList();
+  const [activeCategory, setActiveCategory] = useState<Category | "All">("All");
+  const [search, setSearch] = useState("");
+  const [debugBg, setDebugBg] = useState(false);
+
+  const filtered = useMemo(() => {
+    const q = search.toLowerCase().trim();
+    return posts.filter((p: PostMeta) => {
+      if (activeCategory !== "All" && p.category !== activeCategory) return false;
+      if (q) {
+        const haystack = [p.title, p.author ?? "", p.summary ?? ""]
+          .join(" ")
+          .toLowerCase();
+        if (!haystack.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [posts, activeCategory, search]);
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-12">
-      <div className="retro-box">
-        <h1 className="text-3xl font-semibold tracking-wide text-[var(--text-heading)] uppercase">
-          Blog
-        </h1>
-        <p
-          className="mt-2 font-body text-base text-[var(--text-muted)]"
-          lang="ja"
+    <div className="relative min-h-[calc(100vh-8rem)]">
+      <AsciiGameOfLife />
+
+      {SHOW_DEBUG_BG_BUTTON && (
+        <button
+          type="button"
+          onClick={() => setDebugBg((v) => !v)}
+          className="fixed top-3 right-3 z-50 rounded border border-white/20 bg-black/60 px-2 py-1 font-mono text-xs text-white/70 backdrop-blur hover:bg-black/80 hover:text-white transition-colors"
         >
-          — ブログ
-        </p>
-        <p className="mt-4 text-[var(--text-muted)] font-body text-base">
-          Essays, notes, and code from the Onchain Reality world.
-        </p>
+          {debugBg ? "Show UI" : "Debug BG"}
+        </button>
+      )}
 
-        <hr className="section-rule" />
+      <div className={`relative z-10 mx-auto max-w-6xl px-6 py-10 sm:px-10 md:px-12 transition-opacity ${debugBg ? "opacity-0 pointer-events-none" : ""}`}>
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div className="flex flex-wrap gap-2">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`blog-filter-tab ${activeCategory === cat ? "blog-filter-tab--active" : ""}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
 
-        <ul className="list-none space-y-6 p-0 font-body">
-          {posts.map((post: PostMeta) => (
-            <li key={post.slug}>
-              <Link to={`/blog/${post.slug}`} className="retro-link">
-                {post.title}
-              </Link>
-              <p className="mt-0.5 text-base text-[var(--text-muted)]">
-                {post.date}
-              </p>
-              {post.summary && (
-                <p className="mt-1 text-base text-[var(--text)]">
-                  {post.summary}
-                </p>
-              )}
-            </li>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search..."
+            className="blog-search"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((post: PostMeta) => (
+            <Link
+              key={post.slug}
+              to={`/blog/${post.slug}`}
+              className="no-underline"
+            >
+              <BlogCard
+                category={post.category}
+                title={post.title}
+                author={post.author}
+                date={post.date}
+              />
+            </Link>
           ))}
-        </ul>
+        </div>
+
+        {filtered.length === 0 && (
+          <p className="mt-12 text-center text-[var(--text-muted)] text-lg">
+            No posts found.
+          </p>
+        )}
       </div>
     </div>
   );

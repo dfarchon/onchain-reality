@@ -163,6 +163,26 @@ body.hero-title-hovered .music-panel {
   pointer-events: none;
 }
 
+/* Philosophy page — borderless music panel */
+body.philosophy-page .music-panel,
+body.philosophy-page .music-panel button {
+  border-color: transparent;
+}
+
+/* Blog pages — remove all pink borders */
+body.blog-page .music-panel,
+body.blog-page .music-panel button,
+body.blog-page .blog-filter-tab,
+body.blog-page .blog-filter-tab--active,
+body.blog-page .blog-search,
+body.blog-page .blog-card,
+body.blog-page .retro-box,
+body.blog-page .prose pre,
+body.blog-page .prose :not(pre) > code,
+body.blog-page .prose blockquote {
+  border-color: transparent;
+}
+
 /* Burning title — flame effect when hovering "Onchain Reality" */
 body.hero-title-hovered .hero-title {
   position: relative;
@@ -322,4 +342,106 @@ a.retro-link:hover {
 .ascii-panel-close {
   font-size: 1.25rem;
   line-height: 1;
+}
+
+/* ── Blog page ─────────────────────────────────────── */
+
+.blog-filter-tab {
+  padding: 0.45rem 1.2rem;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+.blog-filter-tab:hover {
+  color: var(--text-heading);
+  border-color: var(--accent-dim);
+}
+.blog-filter-tab--active {
+  background: rgba(240, 160, 192, 0.12);
+  color: var(--text-heading);
+  border-color: var(--accent);
+}
+
+.blog-search {
+  padding: 0.45rem 1rem;
+  width: 14rem;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.blog-search::placeholder {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+.blog-search:focus {
+  border-color: var(--accent);
+}
+
+.blog-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 11rem;
+  padding: 1.4rem 1.5rem;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  cursor: pointer;
+}
+.blog-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow:
+    0 0 12px rgba(240, 160, 192, 0.15),
+    0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.blog-card-category {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-dim);
+  margin-bottom: 0.6rem;
+}
+
+.blog-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-heading);
+  margin: 0 0 auto;
+}
+
+.blog-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  opacity: 0.75;
 }

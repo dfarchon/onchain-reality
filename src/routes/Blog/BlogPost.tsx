@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPostBySlug } from "../../lib/blog";
 import { Markdown } from "../../components/Markdown";
 
 export function BlogPost() {
+  useEffect(() => {
+    document.body.classList.add("blog-page");
+    return () => document.body.classList.remove("blog-page");
+  }, []);
   const { slug } = useParams<{ slug: string }>();
   if (!slug) return null;
 
