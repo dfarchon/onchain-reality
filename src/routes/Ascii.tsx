@@ -38,7 +38,7 @@ export function Ascii() {
         <div className="retro-box ascii-panel">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0 flex-1">
-              <h1 className="font-heading text-3xl font-semibold tracking-wide text-[var(--text-heading)] uppercase">
+              <h1 className="text-3xl font-semibold tracking-wide text-[var(--text-heading)] uppercase">
                 ASCII
               </h1>
               <p

@@ -18,7 +18,7 @@ export function Philosophy() {
       <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 -translate-y-8">
         <div className="pointer-events-auto mx-auto w-full max-w-4xl">
           <div className="rounded-lg bg-[rgba(0,0,0,0.7)] p-8 backdrop-blur-md md:p-12">
-            <h1 className="font-heading text-3xl font-semibold tracking-wide text-[var(--text-heading)] uppercase">
+            <h1 className="text-3xl font-semibold tracking-wide text-[var(--text-heading)] uppercase">
               Philosophy
             </h1>
             <p

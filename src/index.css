@@ -14,10 +14,16 @@
   --border: rgba(240, 160, 192, 0.25);
   --border-light: rgba(240, 160, 192, 0.12);
   --code-bg: rgba(30, 30, 30, 0.9);
-  --font-heading: "Cinzel", "Times New Roman", serif;
-  --font-body: "Cardo", Georgia, serif;
+  --font-body: "Fira Sans", system-ui, sans-serif;
+  --font-heading: "Fira Sans", system-ui, sans-serif;
   --font-mono: "Courier New", Courier, monospace;
   --banner-height: 6rem;
+}
+
+.fonts-home {
+  --font-body: "Cardo", Georgia, serif;
+  --font-heading: "Cinzel", "Times New Roman", serif;
+  font-family: var(--font-body);
 }
 
 * {

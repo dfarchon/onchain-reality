@@ -27,14 +27,14 @@ export function BlogPost() {
           ← Back to Blog
         </Link>
         <header className="mt-6 mb-8">
-          <h1 className="font-heading text-3xl font-semibold tracking-wide text-[var(--text-heading)]">
+          <h1 className="text-3xl font-semibold tracking-wide text-[var(--text-heading)]">
             {post.title}
           </h1>
           <p className="mt-2 text-base text-[var(--text-muted)] font-body">
             {post.date}
           </p>
         </header>
-        <div className="prose max-w-none prose-headings:font-heading prose-headings:text-[var(--text-heading)] prose-headings:uppercase prose-headings:tracking-wide prose-p:font-body prose-p:text-[var(--text)]">
+        <div className="prose max-w-none prose-headings:font-sans prose-headings:text-[var(--text-heading)] prose-headings:uppercase prose-headings:tracking-wide prose-p:font-body prose-p:text-[var(--text)]">
           <Markdown>{post.content}</Markdown>
         </div>
       </div>

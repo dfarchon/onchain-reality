@@ -72,7 +72,7 @@ export function Home() {
   const current = SUBTITLE_LANGUAGES[index];
 
   return (
-    <>
+    <div className="fonts-home">
       <StarryBackground />
       <div className="relative z-[2] mx-auto flex h-[calc(100vh-8rem)] w-full max-w-6xl -translate-y-8 flex-col items-center justify-center px-6 py-16 md:-translate-y-10">
         <div className="retro-box retro-box--hero w-full max-w-4xl flex flex-col items-stretch justify-center text-center">
@@ -113,6 +113,6 @@ export function Home() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

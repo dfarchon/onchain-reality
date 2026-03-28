@@ -8,7 +8,7 @@ export function BlogIndex() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-12">
       <div className="retro-box">
-        <h1 className="font-heading text-3xl font-semibold tracking-wide text-[var(--text-heading)] uppercase">
+        <h1 className="text-3xl font-semibold tracking-wide text-[var(--text-heading)] uppercase">
           Blog
         </h1>
         <p
