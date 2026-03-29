@@ -16,6 +16,7 @@ const CATEGORIES: (Category | "All")[] = [
   "Protocol",
   "Experiment",
   "Reflection",
+  "Technology",
 ];
 
 const BLOG_FILTER_HEIGHT_VAR = "--blog-filter-bar-height";

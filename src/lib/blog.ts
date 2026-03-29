@@ -1,6 +1,11 @@
 import fm from "front-matter";
 
-export type Category = "Reality" | "Protocol" | "Experiment" | "Reflection";
+export type Category =
+  | "Reality"
+  | "Protocol"
+  | "Experiment"
+  | "Reflection"
+  | "Technology";
 
 export type PostMeta = {
   title: string;
