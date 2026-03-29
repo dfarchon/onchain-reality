@@ -3,7 +3,7 @@ import { useEffect } from "react";
 const CLICK_SRC = "/click.ogg";
 
 /** Quieter on phones / touch-primary UIs — speakers feel louder than desktop. */
-const CLICK_VOLUME_DESKTOP = 0.15;
+const CLICK_VOLUME_DESKTOP = 1;
 const CLICK_VOLUME_NARROW = 0.05;
 
 function shouldUseQuietClickVolume(): boolean {
