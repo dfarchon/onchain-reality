@@ -20,9 +20,12 @@ const THUMB_HIDE_DELAY_MS = 500;
 export function BlogPostScrollArea({
   children,
   className = "",
+  rootClassName = "",
 }: {
   children: ReactNode;
   className?: string;
+  /** Applied to the outer flex row (viewport + rail). Use for page layouts that need a definite height (e.g. Philosophy). */
+  rootClassName?: string;
 }) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
@@ -137,7 +140,9 @@ export function BlogPostScrollArea({
   };
 
   return (
-    <div className="content-panel__scroll blog-post-scroll-area">
+    <div
+      className={`content-panel__scroll blog-post-scroll-area ${rootClassName}`.trim()}
+    >
       <div
         ref={viewportRef}
         className={`blog-post-scroll-area__viewport ${className}`.trim()}

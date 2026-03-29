@@ -55,7 +55,11 @@ export function StarrySky() {
       <h1 className="sr-only">Starry Sky</h1>
       <div
         className="absolute bottom-0 left-0 right-0 z-[3] flex items-center bg-transparent"
-        style={{ height: "var(--banner-height)" }}
+        style={{
+          height: "var(--layout-chrome-bottom)",
+          paddingBottom: "var(--safe-bottom)",
+          boxSizing: "border-box",
+        }}
       >
         <div className="mx-auto w-full max-w-5xl px-6 text-center">
           <p className="text-base text-[var(--text-muted)]">

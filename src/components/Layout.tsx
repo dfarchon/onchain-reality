@@ -6,15 +6,16 @@ import { MusicPlayer } from "./MusicPlayer";
 
 export function Layout() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-[var(--app-height)] min-w-0 flex-col">
       <Header />
       <MusicPlayer />
       <ButtonSounds />
       <main
-        className="main-scroll flex-1 overflow-y-auto"
+        className="main-scroll min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto"
         style={{
-          paddingTop: "var(--banner-height)",
-          paddingBottom: "var(--banner-height)",
+          paddingTop:
+            "calc(var(--layout-chrome-top) + var(--layout-main-below-header))",
+          paddingBottom: "var(--layout-chrome-bottom)",
         }}
       >
         <Outlet />

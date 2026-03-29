@@ -13,13 +13,29 @@
   --accent-dim: #c080a0;
   --border: rgba(240, 160, 192, 0.25);
   --border-light: rgba(240, 160, 192, 0.12);
-  --code-bg: rgba(30, 30, 30, 0.9);
+  /* Code surfaces — lifted from pure #000 body/panel so blocks read as distinct */
+  --code-bg: #14141d;
   --font-body: "Fira Sans", system-ui, sans-serif;
   --font-heading: "Fira Sans", system-ui, sans-serif;
   --font-mono: "Courier New", Courier, monospace;
   --banner-height: 6rem;
+  /* Full viewport; dvh when supported (mobile browser chrome) */
+  --app-height: 100vh;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  /* Space from viewport top to nav (below notch); transparent on home/blog/philosophy shows BG. */
+  --layout-header-top-inset: clamp(0.5rem, 0.3rem + 1.2vw, 1.125rem);
+  --layout-chrome-top: calc(
+    var(--banner-height) + var(--safe-top) + var(--layout-header-top-inset)
+  );
+  --layout-chrome-bottom: calc(var(--banner-height) + var(--safe-bottom));
+  /* Breathing room between fixed header and page content (see Layout main padding). */
+  --layout-main-below-header: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem);
   /* Philosophy + blog post: stage height inside padded main (matches both routes) */
-  --content-stage-height: calc(100vh - 8rem);
+  --content-stage-height: calc(
+    var(--app-height) - var(--layout-chrome-top) - var(--layout-chrome-bottom) -
+      var(--layout-main-below-header)
+  );
   /* Shared black panel — max-width 56rem on Philosophy; blog article column matches (max-w-4xl in TSX) */
   --content-panel-height: min(40rem, calc(var(--content-stage-height) - 4rem));
   /* Blog post only: solid black strips above & below the scroll area */
@@ -47,6 +63,12 @@
   --blog-filter-bar-height: 8.75rem;
 }
 
+@supports (height: 100dvh) {
+  :root {
+    --app-height: 100dvh;
+  }
+}
+
 @media (min-width: 768px) {
   :root {
     --blog-filter-bar-height: 5.5rem;
@@ -61,6 +83,12 @@
 
 * {
   box-sizing: border-box;
+  /* Hide native scrollbars everywhere; wheel / touch / trackpad still scroll */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+  display: none;
 }
 
 html {
@@ -68,7 +96,8 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
-  height: 100%;
+  height: var(--app-height);
+  min-height: var(--app-height);
 }
 
 body {
@@ -77,37 +106,94 @@ body {
   font-size: 1.125rem;
   line-height: 1.75;
   color: var(--text);
-  min-height: 100vh;
+  min-height: var(--app-height);
   background: var(--bg);
   overflow: hidden;
-  height: 100%;
+  height: var(--app-height);
 }
 
 #root {
-  min-height: 100vh;
-  height: 100%;
+  min-height: var(--app-height);
+  height: var(--app-height);
   display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Narrow viewports only — desktop (768px+) keeps base body / .prose sizes unchanged */
+@media (max-width: 767px) {
+  :root {
+    --blog-post-scrollbar-width: 0px;
+    --blog-post-scroll-gap: 0;
+  }
+
+  body {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .prose {
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+
+  .prose p,
+  .prose li,
+  .prose td,
+  .prose th {
+    overflow-wrap: anywhere;
+  }
+
+  body.blog-post-page .blog-post-measure .prose {
+    font-size: 1rem;
+  }
+
+  body.blog-post-page .blog-post-measure .prose h1 {
+    font-size: 1.35rem;
+  }
+
+  body.blog-post-page .blog-post-measure .prose h2 {
+    font-size: 1.25rem;
+  }
+
+  body.blog-post-page .blog-post-measure .prose h3 {
+    font-size: 1.0625rem;
+  }
+}
+
+/* Fixed header/footer include safe-area insets (see Layout main padding).
+ * Header adds --layout-header-top-inset below the notch; Header.tsx syncs
+ * --layout-chrome-top to measured height. Layout adds --layout-main-below-header
+ * so content clears the nav with extra air. */
+header.site-header {
+  box-sizing: border-box;
+  padding-top: calc(var(--safe-top) + var(--layout-header-top-inset));
   flex-direction: column;
 }
 
-/* Hide scrollbar on main content, keep scroll */
-.main-scroll {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.main-scroll::-webkit-scrollbar {
-  display: none;
+header.site-header > nav {
+  flex: none;
+  align-content: center;
 }
 
-/* Hide scrollbar on StarrySky page */
-html.starry-scroll,
-html.starry-scroll body {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+/* md+: nav row uses justify-between (Header.tsx) so links stay on the right edge
+ * of the same max-w-7xl column across pages and viewport widths. */
+@media (min-width: 768px) {
+  nav.site-header-nav > ul.site-header-nav__links {
+    flex-wrap: nowrap;
+  }
 }
-html.starry-scroll::-webkit-scrollbar,
-html.starry-scroll body::-webkit-scrollbar {
-  display: none;
+
+footer.site-footer {
+  box-sizing: border-box;
+  height: var(--layout-chrome-bottom);
+  padding-bottom: var(--safe-bottom);
+}
+
+/* Full-height stage between chrome bands (replaces calc(100vh - 8rem) in routes) */
+.h-content-stage {
+  height: var(--content-stage-height);
+  min-height: 0;
 }
 
 /* Content block — pure black panel */
@@ -119,7 +205,7 @@ html.starry-scroll body::-webkit-scrollbar {
     rgba(9, 9, 13, 0.98) 100%
   );
   border: 1px solid rgba(240, 160, 192, 0.28);
-  padding: 2.5rem 3rem;
+  padding: 1.35rem 1.25rem;
   margin: 0 auto;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.02),
@@ -128,6 +214,12 @@ html.starry-scroll body::-webkit-scrollbar {
     background 0.3s ease,
     border-color 0.3s ease,
     box-shadow 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .retro-box {
+    padding: 2.5rem 3rem;
+  }
 }
 
 /* Home hero — no fill so starfield reads through, sized to match Philosophy panel */
@@ -229,15 +321,15 @@ body.blog-post-page .content-panel__inner {
   border-radius: 0.375rem;
 }
 
-/* Article subtree: pure black (prose blocks + highlight.js github-dark on code.hljs) */
+/* Article subtree: code chips sit on --code-bg, not panel #000 */
 body.blog-post-page .content-panel__inner .prose pre,
 body.blog-post-page .content-panel__inner .prose :not(pre) > code {
-  background-color: #000;
+  background-color: var(--code-bg);
 }
 
 body.blog-post-page .content-panel__inner pre code.hljs {
-  background: #000 !important;
-  background-color: #000 !important;
+  background: var(--code-bg) !important;
+  background-color: var(--code-bg) !important;
 }
 
 body.blog-post-page .content-panel__inner pre code.hljs * {
@@ -265,10 +357,10 @@ body.blog-post-page .content-panel__body {
 }
 
 /*
- * Blog post scroll: custom rail + thumb so the bar stays visible on macOS Chrome overlay mode.
- * Native scrollbar is hidden on the viewport; wheel / trackpad still scroll the viewport.
+ * Blog post scroll: custom rail + thumb (native bar hidden globally via * scrollbar rules).
  */
-body.blog-post-page .content-panel__scroll.blog-post-scroll-area {
+body.blog-post-page .content-panel__scroll.blog-post-scroll-area,
+body.philosophy-page .content-panel__scroll.blog-post-scroll-area {
   min-width: 0;
   min-height: 0;
   width: 100%;
@@ -290,7 +382,8 @@ body.blog-post-page .content-panel__scroll.blog-post-scroll-area {
   transform: translateZ(0);
 }
 
-body.blog-post-page .blog-post-scroll-area__viewport {
+body.blog-post-page .blog-post-scroll-area__viewport,
+body.philosophy-page .blog-post-scroll-area__viewport {
   flex: 1 1 0;
   min-width: 0;
   min-height: 0;
@@ -302,15 +395,10 @@ body.blog-post-page .blog-post-scroll-area__viewport {
         var(--blog-post-scroll-gap)
     )
     var(--blog-panel-chrome) var(--blog-scroll-padding-x);
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 
-body.blog-post-page .blog-post-scroll-area__viewport::-webkit-scrollbar {
-  display: none;
-}
-
-body.blog-post-page .blog-post-scroll-area__rail {
+body.blog-post-page .blog-post-scroll-area__rail,
+body.philosophy-page .blog-post-scroll-area__rail {
   flex: 0 0 var(--blog-post-scrollbar-width);
   width: var(--blog-post-scrollbar-width);
   min-height: 0;
@@ -320,7 +408,8 @@ body.blog-post-page .blog-post-scroll-area__rail {
   box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.04);
 }
 
-body.blog-post-page .blog-post-scroll-area__thumb {
+body.blog-post-page .blog-post-scroll-area__thumb,
+body.philosophy-page .blog-post-scroll-area__thumb {
   position: absolute;
   left: var(--blog-post-scrollbar-thumb-inset-left);
   right: 0;
@@ -335,17 +424,20 @@ body.blog-post-page .blog-post-scroll-area__thumb {
   transition: opacity 0.22s ease;
 }
 
-body.blog-post-page .blog-post-scroll-area__thumb--visible {
+body.blog-post-page .blog-post-scroll-area__thumb--visible,
+body.philosophy-page .blog-post-scroll-area__thumb--visible {
   opacity: 1;
   pointer-events: auto;
 }
 
-body.blog-post-page .blog-post-scroll-area__thumb--visible:hover {
+body.blog-post-page .blog-post-scroll-area__thumb--visible:hover,
+body.philosophy-page .blog-post-scroll-area__thumb--visible:hover {
   background: var(--blog-scrollbar-thumb-hover);
   border: none;
 }
 
-body.blog-post-page .blog-post-scroll-area__thumb--visible:active {
+body.blog-post-page .blog-post-scroll-area__thumb--visible:active,
+body.philosophy-page .blog-post-scroll-area__thumb--visible:active {
   cursor: grabbing;
 }
 
@@ -418,13 +510,24 @@ body.blog-page .prose blockquote {
   border-color: transparent;
 }
 
+/* Code blocks / inline code: faint frame so they separate from #000 article column */
+body.blog-page .prose pre {
+  border: 1px solid rgba(240, 160, 192, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+body.blog-page .prose :not(pre) > code {
+  border: 1px solid rgba(240, 160, 192, 0.12);
+}
+
 /* Blog index: inner pane scrolls — main must not scroll; trim bottom (fixed footer clears viewport) */
 body.blog-index-page main.main-scroll {
   overflow: hidden !important;
   display: flex;
   flex-direction: column;
   min-height: 0;
-  padding-bottom: 1.5rem !important;
+  padding-bottom: calc(1.5rem + var(--safe-bottom)) !important;
 }
 
 /* Blog single post: same vertical band as Philosophy — full banner padding on main */
@@ -433,7 +536,7 @@ body.blog-page.blog-post-page main.main-scroll {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  padding-bottom: var(--banner-height) !important;
+  padding-bottom: var(--layout-chrome-bottom) !important;
 }
 
 /* Outlet fills main content box; stage height = 100% so panel max-height matches real slot (no vh overflow clip) */
@@ -566,6 +669,7 @@ a.retro-link:hover {
   @apply overflow-x-auto p-4 text-base;
   background: var(--code-bg);
   border: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
   font-family: var(--font-mono);
   color: var(--text);
 }
@@ -727,6 +831,8 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
 .blog-search {
   padding: 0.45rem 1rem;
   width: 14rem;
+  max-width: 14rem;
+  box-sizing: border-box;
   border: 1px solid var(--border);
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(6px);
@@ -742,6 +848,13 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
 }
 .blog-search:focus {
   border-color: var(--accent);
+}
+
+@media (max-width: 767px) {
+  .blog-search {
+    width: 100%;
+    max-width: min(18rem, 100%);
+  }
 }
 
 .blog-card {

@@ -48,19 +48,32 @@ export function Home() {
     const main = document.querySelector(
       "main.main-scroll",
     ) as HTMLElement | null;
+    const mq = window.matchMedia("(min-width: 768px)");
+
+    const apply = () => {
+      if (!mq.matches) {
+        html.style.overflow = "";
+        body.style.overflow = "";
+        if (main) main.style.overflowY = "";
+        return;
+      }
+      html.style.overflow = "hidden";
+      body.style.overflow = "hidden";
+      if (main) {
+        main.style.overflowY = "hidden";
+        main.scrollTop = 0;
+      }
+    };
 
     const prevHtmlOverflow = html.style.overflow;
     const prevBodyOverflow = body.style.overflow;
     const prevMainOverflowY = main?.style.overflowY ?? "";
 
-    html.style.overflow = "hidden";
-    body.style.overflow = "hidden";
-    if (main) {
-      main.style.overflowY = "hidden";
-      main.scrollTop = 0;
-    }
+    apply();
+    mq.addEventListener("change", apply);
 
     return () => {
+      mq.removeEventListener("change", apply);
       html.style.overflow = prevHtmlOverflow;
       body.style.overflow = prevBodyOverflow;
       if (main) {
@@ -74,11 +87,11 @@ export function Home() {
   return (
     <div className="fonts-home">
       <StarryBackground />
-      <div className="relative z-[2] mx-auto flex h-[calc(100vh-8rem)] w-full max-w-6xl -translate-y-8 flex-col items-center justify-center px-6 py-16 md:-translate-y-10">
-        <div className="retro-box retro-box--hero w-full max-w-4xl flex flex-col items-stretch justify-center text-center">
-          <div className="mx-auto flex w-full flex-col items-center justify-center gap-6">
+      <div className="relative z-[2] mx-auto flex h-content-stage w-full min-w-0 max-w-6xl flex-col items-center justify-center px-6 py-10 md:py-16">
+        <div className="retro-box retro-box--hero w-full min-w-0 max-w-4xl flex flex-col items-stretch justify-center text-center">
+          <div className="mx-auto flex w-full min-w-0 max-w-full flex-col items-center justify-center gap-6">
             <h1
-              className="hero-title font-heading text-4xl font-semibold tracking-wide text-[var(--text-heading)] md:text-5xl uppercase"
+              className="hero-title font-heading text-3xl font-semibold tracking-wide text-[var(--text-heading)] sm:text-4xl md:text-5xl uppercase"
               onMouseEnter={() =>
                 document.body.classList.add("hero-title-hovered")
               }
@@ -88,17 +101,18 @@ export function Home() {
             >
               Onchain Reality
             </h1>
-            <p className="min-h-[3rem] flex items-center justify-center font-body text-xl text-[var(--text)] md:text-3xl">
+            <p className="min-h-[3rem] flex w-full min-w-0 max-w-full items-center justify-center px-1 font-body text-lg text-[var(--text)] sm:text-xl md:text-3xl">
               <span
                 key={index}
                 lang={current.lang}
                 dir={current.lang === "ar" ? "rtl" : undefined}
+                className="max-w-full [overflow-wrap:anywhere]"
               >
                 {current.text}
               </span>
             </p>
 
-            <p className="text-[var(--text)] text-2xl font-medium leading-relaxed md:text-3xl">
+            <p className="w-full min-w-0 max-w-full px-1 text-[var(--text)] text-xl font-medium leading-relaxed [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
               Blockchain creates digital space to shape new realities.
             </p>
           </div>

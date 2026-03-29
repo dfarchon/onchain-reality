@@ -13,7 +13,9 @@ function glitchText(original: string, progress: number): string {
     if (progress > threshold) {
       result.push(original[i]);
     } else {
-      result.push(GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)]);
+      result.push(
+        GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)],
+      );
     }
   }
   return result.join("");
@@ -65,13 +67,11 @@ export function BlogCard({ category, title, author, date }: BlogCardProps) {
 
   return (
     <div
-      className="blog-card group"
+      className="blog-card group text-left"
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
-      {category && (
-        <span className="blog-card-category">{category}</span>
-      )}
+      {category && <span className="blog-card-category">{category}</span>}
 
       <h3 className="blog-card-title">{displayTitle}</h3>
 

@@ -5,15 +5,13 @@ export function Footer() {
   const isHome = pathname === "/";
   const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
   const isTransparentPage = isHome || pathname === "/philosophy" || isBlog;
-  const needsBackdropPill =
-    pathname === "/philosophy" || isBlog;
+  const needsBackdropPill = pathname === "/philosophy" || isBlog;
   /** Blog content uses z-30; keep tagline above scroll layers but below header (z-50). */
   const zFooter = isBlog ? "z-[45]" : "z-10";
 
   return (
     <footer
-      className={`fixed bottom-0 left-0 right-0 ${zFooter} flex min-h-0 flex-col ${isTransparentPage ? "bg-transparent" : "bg-[rgba(0,0,0,0.6)] backdrop-blur-sm"} ${isHome ? "fonts-home" : ""}`}
-      style={{ height: "var(--banner-height)" }}
+      className={`site-footer fixed bottom-0 left-0 right-0 ${zFooter} flex min-h-0 flex-col ${isTransparentPage ? "bg-transparent" : "bg-[rgba(0,0,0,0.6)] backdrop-blur-sm"} ${isHome ? "fonts-home" : ""}`}
     >
       {/* Equal flex bands above / below the tagline so ASCII reads symmetric in the footer strip */}
       <div className="min-h-0 flex-1" aria-hidden />

@@ -1,46 +1,73 @@
+import { useLayoutEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const nav = [
-  { to: "/", label: "Home", width: "6rem" },
-  { to: "/philosophy", label: "Philosophy", width: "10rem" },
-  { to: "/projects", label: "Projects", width: "8rem" },
-  { to: "/blog", label: "Blog", width: "6rem" },
+  { to: "/", label: "Home" },
+  { to: "/philosophy", label: "Philosophy" },
+  { to: "/projects", label: "Projects" },
+  { to: "/blog", label: "Blog" },
 ] as const;
 
+const linkPill = (needsBackdrop: boolean) =>
+  needsBackdrop ? "bg-[rgba(0,0,0,0.55)] backdrop-blur-sm" : "";
+
 export function Header() {
+  const headerRef = useRef<HTMLElement>(null);
   const { pathname } = useLocation();
-  const isHome = pathname === "/";
   const isPhilosophy = pathname === "/philosophy";
   const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
-  const isTransparentPage = isHome || isPhilosophy || isBlog;
+  const isTransparentPage = pathname === "/" || isPhilosophy || isBlog;
   const needsBackdropPill = isPhilosophy || isBlog;
+
+  const navLinkClass = `inline-flex items-center justify-center whitespace-nowrap font-normal text-[var(--accent)] no-underline hover:text-[var(--text-heading)] visited:text-[var(--text-muted)] rounded-md ${linkPill(needsBackdropPill)}`;
+
+  useLayoutEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+
+    const publish = () => {
+      const h = el.getBoundingClientRect().height;
+      document.documentElement.style.setProperty(
+        "--layout-chrome-top",
+        `${Math.ceil(h)}px`,
+      );
+    };
+
+    publish();
+    const ro = new ResizeObserver(publish);
+    ro.observe(el);
+    window.addEventListener("resize", publish);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", publish);
+      document.documentElement.style.removeProperty("--layout-chrome-top");
+    };
+  }, []);
 
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 flex items-center ${isTransparentPage ? "bg-transparent" : "bg-[rgba(0,0,0,0.6)] backdrop-blur-sm"} ${isHome ? "fonts-home" : ""}`}
-      style={{ height: "var(--banner-height)" }}
+      ref={headerRef}
+      className={`site-header fixed left-0 right-0 top-0 z-50 flex ${isTransparentPage ? "bg-transparent" : "bg-[rgba(0,0,0,0.6)] backdrop-blur-sm"}`}
     >
+      {/* Narrow: brand then nav; md+: single row, justify-between (see index.css) */}
       <nav
-        className="mx-auto grid w-full max-w-7xl grid-cols-[14rem_1fr_auto] items-center px-8 sm:px-10 md:grid-cols-[16rem_1fr_auto] md:px-12 lg:px-14"
+        className="site-header-nav mx-auto flex w-full max-w-7xl flex-col gap-2 px-4 py-1 sm:px-8 md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-x-4 md:py-0 md:px-12 lg:px-14"
         aria-label="Main"
       >
         <Link
           to="/"
-          className={`justify-self-start inline-flex items-center justify-center font-heading text-2xl font-semibold uppercase leading-none tracking-wide text-[var(--text-heading)] no-underline hover:text-[var(--accent)] whitespace-nowrap rounded-md py-3.5 pl-[calc(1.75rem+0.025em)] pr-7 ${needsBackdropPill ? "bg-[rgba(0,0,0,0.55)] backdrop-blur-sm" : ""}`}
+          className={`min-w-0 max-w-full shrink truncate inline-flex items-center justify-center font-heading text-2xl font-semibold uppercase leading-none tracking-wide text-[var(--text-heading)] no-underline hover:text-[var(--accent)] rounded-md py-3.5 pl-[calc(1.75rem+0.025em)] pr-7 md:min-w-0 md:py-3 ${linkPill(needsBackdropPill)}`}
         >
           Onchain Reality
         </Link>
 
-        <ul className="col-start-3 flex list-none items-center gap-0 p-0 m-0 text-base uppercase tracking-widest">
-          {nav.map(({ to, label, width }) => (
-            <li
-              key={to}
-              className="flex shrink-0 items-center justify-center"
-              style={{ width }}
-            >
+        <ul className="site-header-nav__links m-0 flex shrink-0 list-none flex-wrap justify-start gap-x-2 gap-y-2 p-0 text-base uppercase tracking-widest md:justify-end">
+          {nav.map(({ to, label }) => (
+            <li key={to} className="flex shrink-0 items-center justify-center">
               <Link
                 to={to}
-                className={`inline-flex items-center justify-center whitespace-nowrap font-normal text-[var(--accent)] no-underline hover:text-[var(--text-heading)] visited:text-[var(--text-muted)] rounded-md px-4 py-2 ${needsBackdropPill ? "bg-[rgba(0,0,0,0.55)] backdrop-blur-sm" : ""}`}
+                className={`${navLinkClass} min-h-[2.5rem] min-w-[4.5rem] px-3 py-2 md:min-h-0 md:min-w-[5.5rem] md:px-4`}
               >
                 {label}
               </Link>

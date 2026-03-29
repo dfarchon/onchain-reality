@@ -34,7 +34,10 @@ export function BlogPost() {
                       <p className="text-[var(--text-muted)] font-body text-[1.0625rem] leading-relaxed">
                         Post not found.
                       </p>
-                      <Link to="/blog" className="retro-link mt-4 inline-block text-sm">
+                      <Link
+                        to="/blog"
+                        className="retro-link mt-4 inline-block text-sm"
+                      >
                         Back to Blog
                       </Link>
                     </div>
@@ -65,7 +68,9 @@ export function BlogPost() {
                       <p className="mt-2 text-[1.0625rem] leading-[1.6] text-[var(--text-muted)] font-body">
                         {post.author ? (
                           <>
-                            <span className="blog-author-name">{post.author}</span>
+                            <span className="blog-author-name">
+                              {post.author}
+                            </span>
                             <span
                               className="mx-2 text-[var(--border-light)]"
                               aria-hidden
