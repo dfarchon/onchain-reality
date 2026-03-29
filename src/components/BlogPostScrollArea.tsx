@@ -30,7 +30,9 @@ export function BlogPostScrollArea({
   const viewportRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const thumbHideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mountedRef = useRef(false);
   const [thumbVisible, setThumbVisible] = useState(false);
+  const [railReady, setRailReady] = useState(false);
   const [m, setM] = useState<Metrics>({
     scrollTop: 0,
     scrollHeight: 1,
@@ -78,7 +80,7 @@ export function BlogPostScrollArea({
     if (!v) return;
     const onScroll = () => {
       measure();
-      revealThumb();
+      if (mountedRef.current) revealThumb();
     };
     v.addEventListener("scroll", onScroll, { passive: true });
     const ro = new ResizeObserver(measure);
@@ -86,9 +88,14 @@ export function BlogPostScrollArea({
     const r = railRef.current;
     if (r) ro.observe(r);
     measure();
+    const mountTimer = window.setTimeout(() => {
+      mountedRef.current = true;
+      setRailReady(true);
+    }, 200);
     return () => {
       v.removeEventListener("scroll", onScroll);
       ro.disconnect();
+      clearTimeout(mountTimer);
       if (thumbHideTimerRef.current) {
         clearTimeout(thumbHideTimerRef.current);
         thumbHideTimerRef.current = null;
@@ -149,7 +156,12 @@ export function BlogPostScrollArea({
       >
         {children}
       </div>
-      <div ref={railRef} className="blog-post-scroll-area__rail" aria-hidden>
+      <div
+        ref={railRef}
+        className="blog-post-scroll-area__rail"
+        aria-hidden
+        style={railReady ? undefined : { visibility: "hidden" }}
+      >
         <div
           className={
             thumbVisible

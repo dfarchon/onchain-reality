@@ -404,8 +404,7 @@ body.philosophy-page .blog-post-scroll-area__rail {
   min-height: 0;
   align-self: stretch;
   position: relative;
-  background: var(--blog-scrollbar-track);
-  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.04);
+  background: transparent;
 }
 
 body.blog-post-page .blog-post-scroll-area__thumb,
