@@ -18,6 +18,39 @@
   --font-heading: "Fira Sans", system-ui, sans-serif;
   --font-mono: "Courier New", Courier, monospace;
   --banner-height: 6rem;
+  /* Philosophy + blog post: stage height inside padded main (matches both routes) */
+  --content-stage-height: calc(100vh - 8rem);
+  /* Shared black panel — max-width 56rem on Philosophy; blog article column matches (max-w-4xl in TSX) */
+  --content-panel-height: min(40rem, calc(var(--content-stage-height) - 4rem));
+  /* Blog post only: solid black strips above & below the scroll area */
+  --content-panel-cap-height: 1rem;
+  /* Blog: scroll strip inset — 0 = content sits flush in the black column (symmetric padding only) */
+  --content-panel-scroll-inset: 0;
+  /* Blog post: outer maroon ring (body) + inner black column share this on block axis */
+  --blog-panel-chrome: clamp(1rem, 0.75rem + 1.1vw, 1.25rem);
+  /* Blog post: extra horizontal inset inside the black column (distance from red to prose) */
+  --blog-scroll-padding-x: clamp(1.35rem, 1rem + 2vw, 1.85rem);
+  /* Single-post article column — ~720px, between common 700–800px reading widths */
+  --blog-post-text-measure: 45rem;
+  /* Blog post scrollbar: translucent pink thumb; visible track so bar stays on-screen */
+  --blog-scrollbar-thumb: rgba(240, 160, 192, 0.32);
+  --blog-scrollbar-thumb-hover: rgba(240, 160, 192, 0.48);
+  --blog-scrollbar-border: rgba(240, 160, 192, 0.45);
+  --blog-scrollbar-track: rgba(240, 160, 192, 0.08);
+  /* Blog post custom rail (wider than legacy 12px native strip) */
+  --blog-post-scrollbar-width: 16px;
+  --blog-post-scrollbar-thumb-inset-left: 2px;
+  /* Space between rail and black panel’s right edge (left uses --blog-scroll-padding-x) */
+  --blog-post-scroll-padding-right: clamp(0.2rem, 0.12rem + 0.45vw, 0.4rem);
+  --blog-post-scroll-gap: 0.25rem;
+  /* Blog index: fixed filter row height — must clear scrollable content below site header */
+  --blog-filter-bar-height: 8.75rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --blog-filter-bar-height: 5.5rem;
+  }
 }
 
 .fonts-home {
@@ -120,6 +153,208 @@ html.starry-scroll body::-webkit-scrollbar {
   z-index: 1;
 }
 
+/* Philosophy + blog post: one shared black panel size (width & height) */
+.content-panel {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 56rem;
+  height: var(--content-panel-height);
+  max-height: var(--content-panel-height);
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  /* Outer shell — gutter keeps text away from the rounded edge */
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Blog article: single scroll column (no cap strip) */
+body.blog-post-page .content-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  grid-row-gap: 0;
+  align-content: stretch;
+  align-items: stretch;
+  max-width: none;
+  padding: 0;
+  background: #000;
+  border: none;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+
+.content-panel__inner {
+  min-height: 0;
+  flex: 1 1 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  border-radius: 0;
+  border-style: solid;
+  border-color: var(--bg);
+  /* Side rails only on non–blog-post panels */
+  border-width: 0 2px 0 2px;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 1.5rem 1.75rem;
+}
+
+@media (min-width: 768px) {
+  .content-panel__inner {
+    padding: 2rem 2.5rem;
+  }
+}
+
+/*
+ * Blog post: outer strip holds side borders; inner scroll lives in .content-panel__scroll with
+ * symmetric block margins so the scrollbar doesn’t run flush to the bottom while leaving a gap at the top.
+ */
+body.blog-post-page .content-panel__inner {
+  grid-row: 1;
+  flex: unset;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  border: none;
+  border-radius: 0.375rem;
+}
+
+/* Article subtree: pure black (prose blocks + highlight.js github-dark on code.hljs) */
+body.blog-post-page .content-panel__inner .prose pre,
+body.blog-post-page .content-panel__inner .prose :not(pre) > code {
+  background-color: #000;
+}
+
+body.blog-post-page .content-panel__inner pre code.hljs {
+  background: #000 !important;
+  background-color: #000 !important;
+}
+
+body.blog-post-page .content-panel__inner pre code.hljs * {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/*
+ * Grid cell = content box inside padding only. Do not use height:100% on the scroll child: percentage
+ * block-size often resolves against the padded box and paints past the cell, hiding bottom padding (red ring).
+ */
+body.blog-post-page .content-panel__body {
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  align-content: stretch;
+  justify-content: stretch;
+  padding: var(--blog-panel-chrome);
+  overflow: hidden;
+  border-radius: 0.375rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/*
+ * Blog post scroll: custom rail + thumb so the bar stays visible on macOS Chrome overlay mode.
+ * Native scrollbar is hidden on the viewport; wheel / trackpad still scroll the viewport.
+ */
+body.blog-post-page .content-panel__scroll.blog-post-scroll-area {
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  max-width: 100%;
+  place-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: var(--blog-post-scroll-gap);
+  overflow: hidden;
+  margin: var(--content-panel-scroll-inset);
+  box-sizing: border-box;
+  border: none;
+  padding: var(--blog-panel-chrome) var(--blog-post-scroll-padding-right)
+    var(--blog-panel-chrome) var(--blog-scroll-padding-x);
+  /* Padding box must paint black (not only content); border-box clip includes padding */
+  background-color: #000;
+  background-clip: border-box;
+  transform: translateZ(0);
+}
+
+body.blog-post-page .blog-post-scroll-area__viewport {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scroll-padding: var(--blog-panel-chrome)
+    calc(
+      var(--blog-post-scroll-padding-right) + var(--blog-post-scrollbar-width) +
+        var(--blog-post-scroll-gap)
+    )
+    var(--blog-panel-chrome) var(--blog-scroll-padding-x);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body.blog-post-page .blog-post-scroll-area__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+body.blog-post-page .blog-post-scroll-area__rail {
+  flex: 0 0 var(--blog-post-scrollbar-width);
+  width: var(--blog-post-scrollbar-width);
+  min-height: 0;
+  align-self: stretch;
+  position: relative;
+  background: var(--blog-scrollbar-track);
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.04);
+}
+
+body.blog-post-page .blog-post-scroll-area__thumb {
+  position: absolute;
+  left: var(--blog-post-scrollbar-thumb-inset-left);
+  right: 0;
+  width: auto;
+  border-radius: 0;
+  background: var(--blog-scrollbar-thumb);
+  border: none;
+  box-sizing: border-box;
+  cursor: grab;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+
+body.blog-post-page .blog-post-scroll-area__thumb--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.blog-post-page .blog-post-scroll-area__thumb--visible:hover {
+  background: var(--blog-scrollbar-thumb-hover);
+  border: none;
+}
+
+body.blog-post-page .blog-post-scroll-area__thumb--visible:active {
+  cursor: grabbing;
+}
+
+/* Keep code blocks and prose from visually colliding with the inner border */
+body.blog-page .content-panel__scroll .prose pre {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
 /* All text flame effect on hover */
 body.hero-title-hovered .retro-box {
   background: transparent;
@@ -173,7 +408,7 @@ body.philosophy-page .music-panel button {
 body.blog-page .music-panel,
 body.blog-page .music-panel button,
 body.blog-page .blog-filter-tab,
-body.blog-page .blog-filter-tab--active,
+body.blog-page .blog-empty-state,
 body.blog-page .blog-search,
 body.blog-page .blog-card,
 body.blog-page .retro-box,
@@ -181,6 +416,40 @@ body.blog-page .prose pre,
 body.blog-page .prose :not(pre) > code,
 body.blog-page .prose blockquote {
   border-color: transparent;
+}
+
+/* Blog index: inner pane scrolls — main must not scroll; trim bottom (fixed footer clears viewport) */
+body.blog-index-page main.main-scroll {
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding-bottom: 1.5rem !important;
+}
+
+/* Blog single post: same vertical band as Philosophy — full banner padding on main */
+body.blog-page.blog-post-page main.main-scroll {
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding-bottom: var(--banner-height) !important;
+}
+
+/* Outlet fills main content box; stage height = 100% so panel max-height matches real slot (no vh overflow clip) */
+body.blog-page.blog-post-page main.main-scroll > * {
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 0;
+}
+
+/*
+ * Blog post route: panel height follows main, not 100vh — avoids bottom clip vs maroon ring.
+ * Overlay uses default align-items: stretch so the max-w column has a definite height for %.
+ */
+body.blog-post-page .blog-post-stage {
+  /* Fill overlay column (top inset is overlay padding only; bottom flush with stage = footer seam) */
+  --content-panel-height: 100%;
 }
 
 /* Burning title — flame effect when hovering "Onchain Reality" */
@@ -305,6 +574,11 @@ a.retro-link:hover {
   font-size: 0.9em;
   color: var(--accent);
 }
+/* Block code: don't shrink nested <code> relative to <pre> */
+.prose pre code {
+  font-size: inherit;
+  line-height: inherit;
+}
 .prose :not(pre) > code {
   @apply px-1 py-0.5;
   background: var(--code-bg);
@@ -338,6 +612,65 @@ a.retro-link:hover {
   color: var(--text-heading);
 }
 
+/* Blog post article: centered measure + reference-like type scale (≈16–18px body, ~1.6 leading) */
+.blog-post-measure {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--blog-post-text-measure);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.blog-post-page .blog-post-measure .prose {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+body.blog-post-page .blog-post-measure .prose p,
+body.blog-post-page .blog-post-measure .prose li {
+  line-height: 1.6;
+}
+
+body.blog-post-page .blog-post-measure .prose pre {
+  font-size: 1em;
+  line-height: 1.55;
+}
+
+body.blog-post-page .blog-post-measure .prose h1 {
+  font-size: 1.5rem;
+  line-height: 1.35;
+  font-weight: 600;
+  margin-top: 1.75em;
+  margin-bottom: 0.5em;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+body.blog-post-page .blog-post-measure .prose h2 {
+  font-size: 1.375rem;
+  line-height: 1.35;
+  font-weight: 600;
+  margin-top: 1.75em;
+  margin-bottom: 0.5em;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+body.blog-post-page .blog-post-measure .prose h3 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.4em;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+body.blog-post-page .blog-post-measure .prose > h1:first-child,
+body.blog-post-page .blog-post-measure .prose > h2:first-child {
+  margin-top: 0;
+}
+
 /* ASCII page — panel close button */
 .ascii-panel-close {
   font-size: 1.25rem;
@@ -366,10 +699,29 @@ a.retro-link:hover {
   color: var(--text-heading);
   border-color: var(--accent-dim);
 }
+/* Selected: same dark + blur as others, no pink tint */
 .blog-filter-tab--active {
-  background: rgba(240, 160, 192, 0.12);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
   color: var(--text-heading);
   border-color: var(--accent);
+}
+
+.blog-empty-state {
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3rem;
+  padding: 0.65rem 1.35rem;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .blog-search {
@@ -397,19 +749,17 @@ a.retro-link:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 11rem;
-  padding: 1.4rem 1.5rem;
+  min-height: 14rem;
+  padding: 1.75rem 1.5rem;
   background: rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(8px);
   border: 1px solid var(--border);
   transition:
-    transform 0.25s ease,
     border-color 0.25s ease,
     box-shadow 0.25s ease;
   cursor: pointer;
 }
 .blog-card:hover {
-  transform: translateY(-2px);
   border-color: var(--accent);
   box-shadow:
     0 0 12px rgba(240, 160, 192, 0.15),
@@ -418,18 +768,18 @@ a.retro-link:hover {
 
 .blog-card-category {
   display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--accent-dim);
-  margin-bottom: 0.6rem;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
 }
 
 .blog-card-title {
   font-family: var(--font-heading);
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.35;
   color: var(--text-heading);
   margin: 0 0 auto;
@@ -438,10 +788,17 @@ a.retro-link:hover {
 .blog-card-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   color: var(--text-muted);
-  opacity: 0.75;
+}
+
+/* Author from frontmatter is often lowercase; avoid all-caps while keeping readable title case */
+.blog-author-name {
+  text-transform: capitalize;
 }

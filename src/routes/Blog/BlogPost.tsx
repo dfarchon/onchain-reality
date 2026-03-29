@@ -1,12 +1,20 @@
 import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPostBySlug } from "../../lib/blog";
+import { AsciiGameOfLife } from "../../components/AsciiGameOfLife";
+import { BlogPostScrollArea } from "../../components/BlogPostScrollArea";
 import { Markdown } from "../../components/Markdown";
 
+/**
+ * Panel bottom aligns with the main content floor (top of footer strip) so ASCII from panel→tagline
+ * matches tagline→viewport bottom when the tagline is vertically centered in --banner-height.
+ */
 export function BlogPost() {
   useEffect(() => {
-    document.body.classList.add("blog-page");
-    return () => document.body.classList.remove("blog-page");
+    document.body.classList.add("blog-page", "blog-post-page");
+    return () => {
+      document.body.classList.remove("blog-page", "blog-post-page");
+    };
   }, []);
   const { slug } = useParams<{ slug: string }>();
   if (!slug) return null;
@@ -14,35 +22,76 @@ export function BlogPost() {
   const post = getPostBySlug(slug);
   if (!post) {
     return (
-      <div className="mx-auto max-w-5xl px-6 py-16 text-center">
-        <div className="retro-box inline-block">
-          <p className="text-[var(--text-muted)] font-body">Post not found.</p>
-          <Link to="/blog" className="retro-link mt-4 inline-block">
-            Back to Blog
-          </Link>
+      <div className="blog-post-stage relative w-full min-h-0 overflow-hidden">
+        <AsciiGameOfLife />
+        <div className="pointer-events-none absolute inset-0 z-10 flex justify-center px-8 pt-3 pb-0 sm:px-10 sm:pt-3.5 md:px-12 lg:px-14">
+          <div className="pointer-events-auto mx-auto flex h-full min-h-0 w-full max-w-4xl flex-col justify-end">
+            <div className="content-panel">
+              <div className="content-panel__inner">
+                <div className="content-panel__body">
+                  <BlogPostScrollArea className="flex min-h-0 flex-1 flex-col items-center justify-center text-center">
+                    <div className="blog-post-measure">
+                      <p className="text-[var(--text-muted)] font-body text-[1.0625rem] leading-relaxed">
+                        Post not found.
+                      </p>
+                      <Link to="/blog" className="retro-link mt-4 inline-block text-sm">
+                        Back to Blog
+                      </Link>
+                    </div>
+                  </BlogPostScrollArea>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <article className="mx-auto max-w-4xl px-6 py-12">
-      <div className="retro-box">
-        <Link to="/blog" className="retro-link text-base">
-          ← Back to Blog
-        </Link>
-        <header className="mt-6 mb-8">
-          <h1 className="text-3xl font-semibold tracking-wide text-[var(--text-heading)]">
-            {post.title}
-          </h1>
-          <p className="mt-2 text-base text-[var(--text-muted)] font-body">
-            {post.date}
-          </p>
-        </header>
-        <div className="prose max-w-none prose-headings:font-sans prose-headings:text-[var(--text-heading)] prose-headings:uppercase prose-headings:tracking-wide prose-p:font-body prose-p:text-[var(--text)]">
-          <Markdown>{post.content}</Markdown>
+    <div className="blog-post-stage relative w-full min-h-0 overflow-hidden">
+      <AsciiGameOfLife />
+      <div className="pointer-events-none absolute inset-0 z-10 flex justify-center px-8 pt-3 pb-0 sm:px-10 sm:pt-3.5 md:px-12 lg:px-14">
+        <div className="pointer-events-auto mx-auto flex h-full min-h-0 w-full max-w-4xl flex-col justify-end">
+          <div className="content-panel">
+            <div className="content-panel__inner">
+              <div className="content-panel__body">
+                <BlogPostScrollArea>
+                  <div className="blog-post-measure">
+                    <header className="mb-8">
+                      <h1 className="text-[1.75rem] font-semibold leading-snug tracking-tight text-[var(--text-heading)] font-sans">
+                        {post.title}
+                      </h1>
+                      <p className="mt-2 text-[1.0625rem] leading-[1.6] text-[var(--text-muted)] font-body">
+                        {post.author ? (
+                          <>
+                            <span className="blog-author-name">{post.author}</span>
+                            <span
+                              className="mx-2 text-[var(--border-light)]"
+                              aria-hidden
+                            >
+                              ·
+                            </span>
+                          </>
+                        ) : null}
+                        {post.date}
+                      </p>
+                    </header>
+                    <div className="prose max-w-none prose-headings:font-sans prose-headings:text-[var(--text-heading)] prose-p:font-body prose-p:text-[var(--text)]">
+                      <Markdown>{post.content}</Markdown>
+                    </div>
+                    <p className="mt-10 mb-0 text-sm">
+                      <Link to="/blog" className="retro-link">
+                        ← Back to Blog
+                      </Link>
+                    </p>
+                  </div>
+                </BlogPostScrollArea>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </article>
+    </div>
   );
 }

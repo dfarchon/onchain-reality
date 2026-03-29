@@ -18,8 +18,10 @@ const CATEGORIES: (Category | "All")[] = [
 
 export function BlogIndex() {
   useEffect(() => {
-    document.body.classList.add("blog-page");
-    return () => document.body.classList.remove("blog-page");
+    document.body.classList.add("blog-page", "blog-index-page");
+    return () => {
+      document.body.classList.remove("blog-page", "blog-index-page");
+    };
   }, []);
   const posts = getPostList();
   const [activeCategory, setActiveCategory] = useState<Category | "All">("All");
@@ -41,7 +43,7 @@ export function BlogIndex() {
   }, [posts, activeCategory, search]);
 
   return (
-    <div className="relative min-h-[calc(100vh-8rem)]">
+    <div className="relative flex min-h-0 flex-1 flex-col">
       <AsciiGameOfLife />
 
       {SHOW_DEBUG_BG_BUTTON && (
@@ -54,51 +56,66 @@ export function BlogIndex() {
         </button>
       )}
 
-      <div className={`relative z-10 mx-auto max-w-6xl px-6 py-10 sm:px-10 md:px-12 transition-opacity ${debugBg ? "opacity-0 pointer-events-none" : ""}`}>
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-          <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`blog-filter-tab ${activeCategory === cat ? "blog-filter-tab--active" : ""}`}
+      <div
+        className={`fixed left-0 right-0 z-40 bg-transparent transition-opacity ${debugBg ? "opacity-0 pointer-events-none" : ""}`}
+        style={{ top: "var(--banner-height)" }}
+      >
+        <div className="mx-auto max-w-6xl px-6 py-4 sm:px-10 md:px-12">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-wrap gap-3">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setActiveCategory(cat)}
+                  className={`blog-filter-tab${activeCategory === cat ? " blog-filter-tab--active" : ""}`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search..."
+              className="blog-search"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll only this pane — content is clipped at the top edge (no sliding under chrome) */}
+      <div
+        className={`fixed inset-x-0 z-[30] overflow-y-auto overflow-x-hidden overscroll-y-contain px-6 pb-10 sm:px-10 md:px-12 transition-opacity ${debugBg ? "opacity-0 pointer-events-none" : ""}`}
+        style={{
+          top: "calc(var(--banner-height) + var(--blog-filter-bar-height))",
+          bottom: "var(--banner-height)",
+        }}
+      >
+        <div className="mx-auto flex min-h-full w-full max-w-6xl flex-col">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((post: PostMeta) => (
+              <Link
+                key={post.slug}
+                to={`/blog/${post.slug}`}
+                className="no-underline"
               >
-                {cat}
-              </button>
+                <BlogCard
+                  category={post.category}
+                  title={post.title}
+                  author={post.author}
+                  date={post.date}
+                />
+              </Link>
             ))}
           </div>
 
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search..."
-            className="blog-search"
-          />
+          {filtered.length === 0 && (
+            <p className="blog-empty-state">No posts found.</p>
+          )}
         </div>
-
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((post: PostMeta) => (
-            <Link
-              key={post.slug}
-              to={`/blog/${post.slug}`}
-              className="no-underline"
-            >
-              <BlogCard
-                category={post.category}
-                title={post.title}
-                author={post.author}
-                date={post.date}
-              />
-            </Link>
-          ))}
-        </div>
-
-        {filtered.length === 0 && (
-          <p className="mt-12 text-center text-[var(--text-muted)] text-lg">
-            No posts found.
-          </p>
-        )}
       </div>
     </div>
   );

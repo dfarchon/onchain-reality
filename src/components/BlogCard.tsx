@@ -61,13 +61,7 @@ export function BlogCard({ category, title, author, date }: BlogCardProps) {
   }, []);
 
   const isGlitching = hovered && glitchProgress < 1;
-
   const displayTitle = isGlitching ? glitchText(title, glitchProgress) : title;
-  const displayAuthor =
-    author && isGlitching ? glitchText(author, glitchProgress) : author;
-  const displayDate = isGlitching ? glitchText(date, glitchProgress) : date;
-  const displayCategory =
-    category && isGlitching ? glitchText(category, glitchProgress) : category;
 
   return (
     <div
@@ -75,15 +69,15 @@ export function BlogCard({ category, title, author, date }: BlogCardProps) {
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
-      {displayCategory && (
-        <span className="blog-card-category">{displayCategory}</span>
+      {category && (
+        <span className="blog-card-category">{category}</span>
       )}
 
       <h3 className="blog-card-title">{displayTitle}</h3>
 
       <div className="blog-card-meta">
-        {displayAuthor && <span>{displayAuthor}</span>}
-        <span>{displayDate}</span>
+        {author && <span className="blog-author-name">{author}</span>}
+        <span>{date}</span>
       </div>
     </div>
   );

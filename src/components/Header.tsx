@@ -17,7 +17,7 @@ export function Header() {
 
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-10 flex items-center ${isTransparentPage ? "bg-transparent" : "bg-[rgba(0,0,0,0.6)] backdrop-blur-sm"} ${isHome ? "fonts-home" : ""}`}
+      className={`fixed left-0 right-0 top-0 z-50 flex items-center ${isTransparentPage ? "bg-transparent" : "bg-[rgba(0,0,0,0.6)] backdrop-blur-sm"} ${isHome ? "fonts-home" : ""}`}
       style={{ height: "var(--banner-height)" }}
     >
       <nav
@@ -26,7 +26,7 @@ export function Header() {
       >
         <Link
           to="/"
-          className={`justify-self-start font-heading text-2xl font-semibold uppercase tracking-wide text-[var(--text-heading)] no-underline hover:text-[var(--accent)] whitespace-nowrap rounded-md px-4 py-2 ${needsBackdropPill ? "bg-[rgba(0,0,0,0.55)] backdrop-blur-sm" : ""}`}
+          className={`justify-self-start inline-flex items-center justify-center font-heading text-2xl font-semibold uppercase leading-none tracking-wide text-[var(--text-heading)] no-underline hover:text-[var(--accent)] whitespace-nowrap rounded-md py-3.5 pl-[calc(1.75rem+0.025em)] pr-7 ${needsBackdropPill ? "bg-[rgba(0,0,0,0.55)] backdrop-blur-sm" : ""}`}
         >
           Onchain Reality
         </Link>

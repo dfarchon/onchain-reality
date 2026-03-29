@@ -60,6 +60,8 @@ export function getPostBySlug(slug: string): Post | null {
     title: (attributes.title as string) ?? slug,
     date: dateToString(attributes.date),
     summary: attributes.summary as string | undefined,
+    author: attributes.author as string | undefined,
+    category: attributes.category as Category | undefined,
     content: body,
   };
 }
