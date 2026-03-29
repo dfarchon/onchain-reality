@@ -766,12 +766,6 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
   margin-top: 0;
 }
 
-/* ASCII page — panel close button */
-.ascii-panel-close {
-  font-size: 1.25rem;
-  line-height: 1;
-}
-
 /* ── Blog page ─────────────────────────────────────── */
 
 /* Filter tabs + card/post category: match header nav type scale (Header.tsx site-header-nav__links) */
