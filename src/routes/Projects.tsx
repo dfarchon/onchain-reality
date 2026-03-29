@@ -1,3 +1,5 @@
+import { Seo } from "../components/Seo";
+import { PAGE_DESCRIPTIONS } from "../lib/site";
 import projectsData from "../data/projects.json";
 
 type Project = {
@@ -13,6 +15,11 @@ const projects = projectsData as Project[];
 export function Projects() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-12">
+      <Seo
+        title="Projects"
+        description={PAGE_DESCRIPTIONS.projects}
+        pathname="/projects"
+      />
       <div className="retro-box">
         <h1 className="text-3xl font-semibold tracking-wide text-[var(--text-heading)] uppercase">
           Projects

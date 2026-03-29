@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { AsciiClouds } from "../components/AsciiClouds";
 import { BlogPostScrollArea } from "../components/BlogPostScrollArea";
+import { Seo } from "../components/Seo";
+import { PAGE_DESCRIPTIONS } from "../lib/site";
 
 export function Philosophy() {
   useEffect(() => {
@@ -17,6 +19,11 @@ export function Philosophy() {
 
   return (
     <div className="relative h-content-stage overflow-hidden">
+      <Seo
+        title="Philosophy"
+        description={PAGE_DESCRIPTIONS.philosophy}
+        pathname="/philosophy"
+      />
       <AsciiClouds />
       <div className="pointer-events-none absolute inset-0 z-10 flex min-h-0 items-stretch justify-center px-4 py-4 sm:px-6 md:py-2">
         <div className="pointer-events-auto h-full min-h-0 w-full max-w-4xl overflow-hidden">

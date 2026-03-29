@@ -4,6 +4,8 @@ import { getPostList } from "../../lib/blog";
 import type { Category, PostMeta } from "../../lib/blog";
 import { AsciiGameOfLife } from "../../components/AsciiGameOfLife";
 import { BlogCard } from "../../components/BlogCard";
+import { Seo } from "../../components/Seo";
+import { PAGE_DESCRIPTIONS } from "../../lib/site";
 
 /** Set to `true` to show the "Debug BG" toggle on the blog index. */
 const SHOW_DEBUG_BG_BUTTON = false;
@@ -76,6 +78,7 @@ export function BlogIndex() {
 
   return (
     <div className="relative flex min-h-0 flex-1 flex-col">
+      <Seo title="Blog" description={PAGE_DESCRIPTIONS.blog} pathname="/blog" />
       <AsciiGameOfLife />
 
       {SHOW_DEBUG_BG_BUTTON && (

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Seo } from "../components/Seo";
 import { StarryBackground } from "../components/StarryBackground";
+import { DEFAULT_DESCRIPTION, SITE_NAME, absoluteUrl } from "../lib/site";
 
 const SUBTITLE_LANGUAGES: { lang: string; text: string }[] = [
   { lang: "ar", text: "الواقع على السلسلة" },
@@ -86,6 +88,17 @@ export function Home() {
 
   return (
     <div className="fonts-home">
+      <Seo
+        description={DEFAULT_DESCRIPTION}
+        pathname="/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: SITE_NAME,
+          url: absoluteUrl("/"),
+          description: DEFAULT_DESCRIPTION,
+        }}
+      />
       <StarryBackground />
       <div className="relative z-[2] mx-auto flex h-content-stage w-full min-w-0 max-w-6xl flex-col items-center justify-center px-6 py-10 md:py-16">
         <div className="retro-box retro-box--hero w-full min-w-0 max-w-4xl flex flex-col items-stretch justify-center text-center">
