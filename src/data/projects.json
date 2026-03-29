@@ -1,8 +1,8 @@
 [
   {
-    "id": "example",
-    "title": "Example Project",
-    "description": "A placeholder for the first Onchain Reality project. Replace with real projects in src/data/projects.json.",
+    "id": "coming-soon",
+    "title": "Coming soon",
+    "description": "More projects are in the works. Stay tuned.",
     "url": "#",
     "cover": null
   }
