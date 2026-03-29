@@ -17,7 +17,7 @@ export function Footer() {
       <div className="min-h-0 flex-1" aria-hidden />
       <div className="mx-auto flex w-full max-w-5xl shrink-0 justify-center px-6">
         <p
-          className={`m-0 text-center text-base leading-normal text-[var(--text-muted)] ${needsBackdropPill ? "inline-block rounded-md bg-[rgba(0,0,0,0.55)] px-4 py-2 backdrop-blur-sm" : ""}`}
+          className={`m-0 text-center text-[11px] leading-normal text-[var(--text-muted)] sm:text-xs md:text-base ${needsBackdropPill ? "inline-block rounded-md bg-[rgba(0,0,0,0.55)] px-4 py-2 backdrop-blur-sm" : ""}`}
         >
           Building New Realities on the Blockchain
         </p>

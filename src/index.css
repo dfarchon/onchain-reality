@@ -176,14 +176,6 @@ header.site-header > nav {
   align-content: center;
 }
 
-/* md+: nav row uses justify-between (Header.tsx) so links stay on the right edge
- * of the same max-w-7xl column across pages and viewport widths. */
-@media (min-width: 768px) {
-  nav.site-header-nav > ul.site-header-nav__links {
-    flex-wrap: nowrap;
-  }
-}
-
 footer.site-footer {
   box-sizing: border-box;
   height: var(--layout-chrome-bottom);
@@ -782,16 +774,36 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
 
 /* ── Blog page ─────────────────────────────────────── */
 
+/* Filter tabs + card/post category: match header nav type scale (Header.tsx site-header-nav__links) */
+.blog-filter-tab,
+.blog-card-category {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+@media (min-width: 640px) {
+  .blog-filter-tab,
+  .blog-card-category {
+    font-size: 0.75rem;
+  }
+}
+@media (min-width: 768px) {
+  .blog-filter-tab,
+  .blog-card-category {
+    font-size: 0.9rem;
+  }
+}
+
 .blog-filter-tab {
+  margin: 0;
   padding: 0.45rem 1.2rem;
   border: 1px solid var(--border);
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(6px);
   color: var(--text-muted);
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   cursor: pointer;
   transition:
     background 0.2s,
@@ -880,10 +892,6 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
 
 .blog-card-category {
   display: inline-block;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 0.75rem;
 }

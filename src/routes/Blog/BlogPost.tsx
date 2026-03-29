@@ -62,6 +62,11 @@ export function BlogPost() {
                 <BlogPostScrollArea>
                   <div className="blog-post-measure">
                     <header className="mb-8">
+                      {post.category ? (
+                        <span className="blog-card-category">
+                          {post.category}
+                        </span>
+                      ) : null}
                       <h1 className="text-[1.75rem] font-semibold leading-snug tracking-tight text-[var(--text-heading)] font-sans">
                         {post.title}
                       </h1>

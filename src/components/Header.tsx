@@ -62,12 +62,15 @@ export function Header() {
           Onchain Reality
         </Link>
 
-        <ul className="site-header-nav__links m-0 flex shrink-0 list-none flex-wrap justify-start gap-x-2 gap-y-2 p-0 text-base uppercase tracking-widest md:justify-end">
+        <ul className="site-header-nav__links m-0 flex w-full min-w-0 list-none flex-nowrap justify-start gap-x-0.5 p-0 text-[11px] uppercase tracking-wide sm:gap-x-1.5 sm:text-xs md:w-auto md:shrink-0 md:justify-end md:gap-x-2 md:text-base md:tracking-widest">
           {nav.map(({ to, label }) => (
-            <li key={to} className="flex shrink-0 items-center justify-center">
+            <li
+              key={to}
+              className="flex min-w-0 flex-1 items-center justify-center md:flex-none"
+            >
               <Link
                 to={to}
-                className={`${navLinkClass} min-h-[2.5rem] min-w-[4.5rem] px-3 py-2 md:min-h-0 md:min-w-[5.5rem] md:px-4`}
+                className={`${navLinkClass} min-h-[2.5rem] w-full px-1.5 py-1.5 text-center sm:px-2 md:min-h-0 md:w-auto md:min-w-[5.5rem] md:px-4`}
               >
                 {label}
               </Link>
