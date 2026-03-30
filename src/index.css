@@ -9,6 +9,8 @@
   --text: #eeb4c6;
   --text-muted: #d09aac;
   --text-heading: #fff0f4;
+  /* Blog article body: same pink as site --text (strong still uses --text-heading for contrast) */
+  --prose-body: var(--text);
   --accent: #f0a0c0;
   --accent-dim: #c080a0;
   --border: rgba(240, 160, 192, 0.25);
@@ -707,6 +709,40 @@ a.retro-link:hover {
   color: var(--text-heading);
 }
 
+.prose strong,
+.prose b {
+  color: var(--text-heading);
+  font-weight: 600;
+}
+
+/* Preflight zeros p margin and list markers; restore readable block + list layout */
+.prose > * + * {
+  margin-top: 1.125em;
+}
+.prose ul {
+  list-style-type: disc;
+  padding-inline-start: 1.5em;
+}
+.prose ol {
+  list-style-type: decimal;
+  padding-inline-start: 1.5em;
+}
+.prose ul ul {
+  list-style-type: circle;
+}
+.prose ul ul ul {
+  list-style-type: square;
+}
+.prose ol ol {
+  list-style-type: lower-alpha;
+}
+.prose ol ol ol {
+  list-style-type: lower-roman;
+}
+.prose li + li {
+  margin-top: 0.35em;
+}
+
 /* Blog post article: centered measure + reference-like type scale (≈16–18px body, ~1.6 leading) */
 .blog-post-measure {
   box-sizing: border-box;
@@ -718,12 +754,18 @@ a.retro-link:hover {
 
 body.blog-post-page .blog-post-measure .prose {
   font-size: 1.0625rem;
-  line-height: 1.6;
+  line-height: 1.7;
+  color: var(--prose-body);
 }
 
 body.blog-post-page .blog-post-measure .prose p,
 body.blog-post-page .blog-post-measure .prose li {
-  line-height: 1.6;
+  line-height: 1.7;
+  color: var(--prose-body);
+}
+
+body.blog-post-page .blog-post-measure .prose > * + * {
+  margin-top: 1.35em;
 }
 
 body.blog-post-page .blog-post-measure .prose pre {
@@ -912,7 +954,7 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
   color: var(--text-muted);
 }
 
-/* Author from frontmatter is often lowercase; avoid all-caps while keeping readable title case */
+/* Author from frontmatter: show exactly as written (no forced title case) */
 .blog-author-name {
-  text-transform: capitalize;
+  text-transform: none;
 }

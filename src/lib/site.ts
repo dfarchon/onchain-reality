@@ -10,7 +10,7 @@ export const PAGE_DESCRIPTIONS = {
     "Reality is what we commit to the blockchain. Thoughts on onchain identity, value, and verifiable truth.",
   projects:
     "Initiatives and builds under the Onchain Reality umbrella — links to experiments and work.",
-  blog: "Essays and updates from Onchain Reality — reflection, protocol, experiments, and onchain reality.",
+  blog: "Essays and updates from Onchain Reality — manifesto, reflection, technology, and more.",
 } as const;
 
 /**
