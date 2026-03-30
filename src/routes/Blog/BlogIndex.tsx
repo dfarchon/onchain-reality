@@ -12,6 +12,7 @@ const SHOW_DEBUG_BG_BUTTON = false;
 
 const CATEGORIES: (Category | "All")[] = [
   "All",
+  "Intro",
   "Manifesto",
   "Reflection",
   "Technology",

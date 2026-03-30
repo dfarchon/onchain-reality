@@ -101,7 +101,7 @@ export function BlogPost() {
                           {post.category}
                         </span>
                       ) : null}
-                      <h1 className="text-[1.75rem] font-semibold leading-snug tracking-tight text-[var(--text-heading)] font-sans">
+                      <h1 className="text-[1.875rem] font-semibold leading-snug tracking-tight text-[var(--text-heading)] font-sans md:text-[2rem]">
                         {post.title}
                       </h1>
                       <p className="mt-2 text-[1.0625rem] leading-[1.6] text-[var(--text-muted)] font-body">

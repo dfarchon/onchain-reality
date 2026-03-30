@@ -1,6 +1,7 @@
 import fm from "front-matter";
 
 export type Category =
+  | "Intro"
   | "Manifesto"
   | "Reflection"
   | "Technology";
