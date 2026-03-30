@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPostBySlug } from "../../lib/blog";
 import { AsciiGameOfLife } from "../../components/AsciiGameOfLife";
@@ -16,6 +16,9 @@ import { Markdown } from "../../components/Markdown";
  * matches tagline→viewport bottom when the tagline is vertically centered in --banner-height.
  */
 export function BlogPost() {
+  /** Black article strip (viewport + scrollbar); used to size the image lightbox. */
+  const articleScrollRootRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     document.body.classList.add("blog-page", "blog-post-page");
     return () => {
@@ -40,7 +43,10 @@ export function BlogPost() {
             <div className="content-panel">
               <div className="content-panel__inner">
                 <div className="content-panel__body">
-                  <BlogPostScrollArea className="flex min-h-0 flex-1 flex-col items-center justify-center text-center">
+                  <BlogPostScrollArea
+                    scrollRootRef={articleScrollRootRef}
+                    className="flex min-h-0 flex-1 flex-col items-center justify-center text-center"
+                  >
                     <div className="blog-post-measure">
                       <p className="text-[var(--text-muted)] font-body text-[1.0625rem] leading-relaxed">
                         Post not found.
@@ -93,7 +99,7 @@ export function BlogPost() {
           <div className="content-panel">
             <div className="content-panel__inner">
               <div className="content-panel__body">
-                <BlogPostScrollArea>
+                <BlogPostScrollArea scrollRootRef={articleScrollRootRef}>
                   <div className="blog-post-measure">
                     <header className="mb-8">
                       {post.category ? (
@@ -122,7 +128,9 @@ export function BlogPost() {
                       </p>
                     </header>
                     <div className="prose max-w-none prose-headings:font-sans prose-headings:text-[var(--text-heading)] prose-p:font-body prose-p:text-[var(--text)]">
-                      <Markdown>{post.content}</Markdown>
+                      <Markdown lightboxBoundsRef={articleScrollRootRef}>
+                        {post.content}
+                      </Markdown>
                     </div>
                     <p className="mt-10 mb-0 text-sm">
                       <Link to="/blog" className="retro-link">

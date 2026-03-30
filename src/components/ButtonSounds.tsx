@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const CLICK_SRC = "/click.ogg";
+const CLICK_SRC = "/audio/sfx/click.ogg";
 
 /** Quieter on phones / touch-primary UIs — speakers feel louder than desktop. */
 const CLICK_VOLUME_DESKTOP = 1;
@@ -70,6 +70,11 @@ export function ButtonSounds() {
     };
 
     const onClick = (e: MouseEvent) => {
+      const t = e.target;
+      if (t instanceof Element) {
+        if (t.closest(".markdown-lightbox-root")) return;
+        if (t.closest("img.prose-img-zoom")) return;
+      }
       const btn = findControlTarget(e.target);
       if (!btn) return;
       playClick();

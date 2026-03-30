@@ -40,7 +40,7 @@ export function Seo({
   description,
   pathname,
   ogType = "website",
-  imagePath = "/favicon.svg",
+  imagePath = "/images/icons/favicon.svg",
   articlePublishedTime,
   articleModifiedTime,
   articleAuthor,

@@ -30,7 +30,7 @@ export function Philosophy() {
           <BlogPostScrollArea rootClassName="h-full min-h-0 w-full">
             <div className="rounded-lg bg-[rgba(0,0,0,0.7)] p-6 backdrop-blur-md sm:p-8 md:p-12 relative">
               <img
-                src="/favicon.svg"
+                src="/images/icons/favicon.svg"
                 alt=""
                 className="absolute top-4 right-4 h-24 w-24 opacity-60 sm:top-6 sm:right-6 sm:h-28 sm:w-28 md:top-8 md:right-8 md:h-32 md:w-32"
               />

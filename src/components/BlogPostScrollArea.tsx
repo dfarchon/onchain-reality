@@ -4,8 +4,16 @@ import {
   useRef,
   useState,
   type ReactNode,
+  type MutableRefObject,
+  type Ref,
   type MouseEvent as ReactMouseEvent,
 } from "react";
+
+function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
+  if (ref == null) return;
+  if (typeof ref === "function") ref(value);
+  else (ref as MutableRefObject<T | null>).current = value;
+}
 
 type Metrics = {
   scrollTop: number;
@@ -21,13 +29,32 @@ export function BlogPostScrollArea({
   children,
   className = "",
   rootClassName = "",
+  viewportRef: externalViewportRef,
+  scrollRootRef: externalScrollRootRef,
 }: {
   children: ReactNode;
   className?: string;
   /** Applied to the outer flex row (viewport + rail). Use for page layouts that need a definite height (e.g. Philosophy). */
   rootClassName?: string;
+  /** Optional ref to the scroll viewport (merged with the internal ref). */
+  viewportRef?: Ref<HTMLDivElement | null>;
+  /** Optional ref to the outer row (`.content-panel__scroll`, black article strip including scrollbar). */
+  scrollRootRef?: Ref<HTMLDivElement | null>;
 }) {
   const viewportRef = useRef<HTMLDivElement>(null);
+  const setViewportRef = useCallback(
+    (el: HTMLDivElement | null) => {
+      viewportRef.current = el;
+      assignRef(externalViewportRef, el);
+    },
+    [externalViewportRef],
+  );
+  const setScrollRootRef = useCallback(
+    (el: HTMLDivElement | null) => {
+      assignRef(externalScrollRootRef, el);
+    },
+    [externalScrollRootRef],
+  );
   const railRef = useRef<HTMLDivElement>(null);
   const thumbHideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const mountedRef = useRef(false);
@@ -148,10 +175,11 @@ export function BlogPostScrollArea({
 
   return (
     <div
+      ref={setScrollRootRef}
       className={`content-panel__scroll blog-post-scroll-area ${rootClassName}`.trim()}
     >
       <div
-        ref={viewportRef}
+        ref={setViewportRef}
         className={`blog-post-scroll-area__viewport ${className}`.trim()}
       >
         {children}

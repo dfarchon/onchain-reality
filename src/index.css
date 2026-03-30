@@ -381,14 +381,37 @@ body.philosophy-page .blog-post-scroll-area__viewport {
   flex: 1 1 0;
   min-width: 0;
   min-height: 0;
+  overflow-x: hidden;
   overflow-y: auto;
-  overscroll-behavior-y: contain;
+  overscroll-behavior: contain;
   scroll-padding: var(--blog-panel-chrome)
     calc(
       var(--blog-post-scroll-padding-right) + var(--blog-post-scrollbar-width) +
         var(--blog-post-scroll-gap)
     )
     var(--blog-panel-chrome) var(--blog-scroll-padding-x);
+}
+
+/* Mobile: symmetric horizontal inset (no custom scrollbar rail); vertical pan; pre/table pan-x */
+@media (max-width: 767px) {
+  body.blog-post-page .content-panel__scroll.blog-post-scroll-area,
+  body.philosophy-page .content-panel__scroll.blog-post-scroll-area {
+    padding: var(--blog-panel-chrome) var(--blog-scroll-padding-x);
+  }
+
+  body.blog-post-page .blog-post-scroll-area__viewport,
+  body.philosophy-page .blog-post-scroll-area__viewport {
+    touch-action: pan-y;
+    scroll-padding: var(--blog-panel-chrome) var(--blog-scroll-padding-x)
+      var(--blog-panel-chrome) var(--blog-scroll-padding-x);
+  }
+
+  body.blog-post-page .blog-post-scroll-area__viewport .prose pre,
+  body.philosophy-page .blog-post-scroll-area__viewport .prose pre,
+  body.blog-post-page .blog-post-scroll-area__viewport .prose table,
+  body.philosophy-page .blog-post-scroll-area__viewport .prose table {
+    touch-action: pan-x pan-y;
+  }
 }
 
 body.blog-post-page .blog-post-scroll-area__rail,
@@ -688,6 +711,77 @@ a.retro-link:hover {
   color: var(--text-muted);
   font-style: italic;
   font-family: var(--font-body);
+}
+/* Image + caption (Markdown raw HTML: <figure><img … /><figcaption>…</figcaption></figure>) */
+.prose figure {
+  margin: 0;
+}
+.prose figure > img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+/* Optional alignment on raw HTML: <figure class="figure--align-left|center|right"> */
+.prose figure.figure--align-left > img {
+  margin-inline: 0 auto;
+}
+.prose figure.figure--align-right > img {
+  margin-inline: auto 0;
+}
+.prose figure.figure--align-center > img {
+  margin-inline: auto;
+}
+.prose figure.figure--align-left figcaption {
+  text-align: start;
+}
+.prose figure.figure--align-right figcaption {
+  text-align: end;
+}
+.prose figure.figure--align-center figcaption {
+  text-align: center;
+}
+/* Blog Markdown: click-to-zoom lightbox (see Markdown.tsx) */
+.prose img.prose-img-zoom {
+  cursor: zoom-in;
+}
+.prose img.prose-img-zoom:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.prose img.prose-img-zoom.prose-img-zoom--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+/* While Markdown image lightbox is open (class toggled from Markdown.tsx) */
+.markdown-lightbox-bounds-lock {
+  overflow: hidden !important;
+}
+.prose figcaption {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+/* YouTube (or any 16:9 embed) — raw HTML: <div class="embed-youtube"><iframe … /></div> */
+.prose .embed-youtube {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  border: 1px solid var(--border-light);
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--code-bg);
+}
+.prose .embed-youtube iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 .prose a {
   color: var(--accent);

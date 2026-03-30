@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 
 /** Background music — MP3 is universally supported and hardware-decoded on iOS */
-const BGM_SRC = "/bgm.mp3";
+const BGM_SRC = "/audio/music/bgm.mp3";
 /** Silence between each full play before restarting */
 const LOOP_GAP_MS = 5000;
 /** Fade duration in ms */
