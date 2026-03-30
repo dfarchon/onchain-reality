@@ -2,7 +2,7 @@
 title: Onchain Reality Maximalism
 date: 2024-10-13
 author: cherryblue
-category: Reflection
+category: Manifesto
 summary: Reality embodies enduring truth and order, while the virtual is inherently fragile and illogical. Subjective attention often blurs the boundary between the two, making familiar experiences feel real. Games and digital interactions can create meaningful realities that shift our sense of self. Onchain Reality Maximalism leverages blockchain's decentralization and immutability to build large, persistent digital worlds that go beyond entertainment and foster responsibility, creativity, and long-term value. Fully onchain applications allow participants to actively shape freer, more authentic, and imaginative realities, with potential that may surpass the physical world.
 ---
 
