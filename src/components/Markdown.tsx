@@ -1,9 +1,12 @@
 import {
+  Children,
+  isValidElement,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
+  type ReactNode,
   type RefObject,
 } from "react";
 import { createPortal } from "react-dom";
@@ -13,6 +16,33 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/github-dark.css";
+import { TwitterEmbed } from "./TwitterEmbed";
+import { parseTwitterStatusUrl } from "../lib/twitterStatusUrl";
+
+/** Standalone paragraph that is only a status URL → embed (GFM autolink or plain URL). */
+function extractStandaloneTweetUrl(children: ReactNode): string | null {
+  const arr = Children.toArray(children).filter(
+    (c) => !(typeof c === "string" && c.trim() === ""),
+  );
+  if (arr.length !== 1) return null;
+  const child = arr[0];
+  if (typeof child === "string") {
+    return parseTwitterStatusUrl(child.trim());
+  }
+  if (isValidElement(child) && child.type === "a") {
+    const href = (child.props as { href?: string }).href;
+    return href ? parseTwitterStatusUrl(href) : null;
+  }
+  if (
+    isValidElement(child) &&
+    (child.type === "strong" || child.type === "em")
+  ) {
+    return extractStandaloneTweetUrl(
+      (child.props as { children?: ReactNode }).children,
+    );
+  }
+  return null;
+}
 
 type Props = {
   children: string;
@@ -134,6 +164,13 @@ export function Markdown({ children, lightboxBoundsRef }: Props) {
 
   const components = useMemo<Partial<Components>>(
     () => ({
+      p: ({ children, ...props }) => {
+        const tweetUrl = extractStandaloneTweetUrl(children);
+        if (tweetUrl) {
+          return <TwitterEmbed url={tweetUrl} />;
+        }
+        return <p {...props}>{children}</p>;
+      },
       img: ({ src, alt, className, ...rest }) => {
         if (!src) {
           return (
