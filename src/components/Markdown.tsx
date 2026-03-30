@@ -66,8 +66,7 @@ export function Markdown({ children, lightboxBoundsRef }: Props) {
       ro.observe(el);
       el.classList.add("markdown-lightbox-bounds-lock");
       const viewportEl = el.querySelector(".blog-post-scroll-area__viewport");
-      const scrollTarget =
-        viewportEl instanceof HTMLElement ? viewportEl : el;
+      const scrollTarget = viewportEl instanceof HTMLElement ? viewportEl : el;
       const onScroll = () => syncRect();
       scrollTarget.addEventListener("scroll", onScroll, { passive: true });
       if (viewportEl instanceof HTMLElement) {
@@ -137,9 +136,13 @@ export function Markdown({ children, lightboxBoundsRef }: Props) {
     () => ({
       img: ({ src, alt, className, ...rest }) => {
         if (!src) {
-          return <img src={src} alt={alt ?? ""} className={className} {...rest} />;
+          return (
+            <img src={src} alt={alt ?? ""} className={className} {...rest} />
+          );
         }
-        const mergedClass = [className, "prose-img-zoom"].filter(Boolean).join(" ");
+        const mergedClass = [className, "prose-img-zoom"]
+          .filter(Boolean)
+          .join(" ");
         const label = (alt && alt.trim()) || "View image larger";
         return (
           <img
@@ -168,34 +171,33 @@ export function Markdown({ children, lightboxBoundsRef }: Props) {
     [openLightbox],
   );
 
-  const lightboxNode =
-    lightbox ? (
-      <div
-        className="markdown-lightbox-root fixed z-[200] box-border flex min-h-0 min-w-0 items-center justify-center overflow-hidden bg-black p-4"
-        style={{
-          top: lightbox.panelRect.top,
-          left: lightbox.panelRect.left,
-          width: lightbox.panelRect.width,
-          height: lightbox.panelRect.height,
-        }}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Enlarged image"
-      >
-        <button
-          type="button"
-          className="absolute inset-0 z-0 w-full cursor-zoom-out border-0 bg-black p-0"
-          aria-label="Close enlarged image"
-          onClick={closeLightbox}
-        />
-        <img
-          src={lightbox.src}
-          alt={lightbox.alt}
-          className="relative z-[1] max-h-full max-w-full object-contain shadow-2xl pointer-events-none min-h-0 min-w-0"
-          draggable={false}
-        />
-      </div>
-    ) : null;
+  const lightboxNode = lightbox ? (
+    <div
+      className="markdown-lightbox-root fixed z-[200] box-border flex min-h-0 min-w-0 items-center justify-center overflow-hidden bg-black p-4"
+      style={{
+        top: lightbox.panelRect.top,
+        left: lightbox.panelRect.left,
+        width: lightbox.panelRect.width,
+        height: lightbox.panelRect.height,
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Enlarged image"
+    >
+      <button
+        type="button"
+        className="absolute inset-0 z-0 w-full cursor-zoom-out border-0 bg-black p-0"
+        aria-label="Close enlarged image"
+        onClick={closeLightbox}
+      />
+      <img
+        src={lightbox.src}
+        alt={lightbox.alt}
+        className="relative z-[1] max-h-full max-w-full object-contain shadow-2xl pointer-events-none min-h-0 min-w-0"
+        draggable={false}
+      />
+    </div>
+  ) : null;
 
   return (
     <>

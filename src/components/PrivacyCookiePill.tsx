@@ -35,13 +35,11 @@ export function PrivacyCookiePill({ isHome = false }: PrivacyCookiePillProps) {
   return (
     <nav aria-label="Privacy and cookies" className="w-full sm:w-fit">
       {/* Narrow viewport: side by side, flush right */}
-      <div className="flex w-full min-w-0 flex-row flex-nowrap items-center justify-end gap-x-2 sm:hidden">
+      <div className="flex w-full min-w-0 flex-row flex-nowrap items-center justify-end gap-x-1 sm:hidden">
         <Link to="/privacy" className={`${narrowChip} ${linkClass} shrink-0`}>
           Privacy & cookies
         </Link>
-        <span aria-hidden className="shrink-0 text-[var(--border)]">
-          ·
-        </span>
+
         <button
           type="button"
           onClick={openCookieSettings}
@@ -53,7 +51,7 @@ export function PrivacyCookiePill({ isHome = false }: PrivacyCookiePillProps) {
 
       {/* sm+: single pill, right column */}
       <div
-        className={`hidden w-fit max-w-full flex-col items-end gap-y-1 rounded-lg px-3 py-1.5 text-[10px] text-[var(--text-muted)] sm:inline-flex sm:flex-col sm:items-end lg:flex-row lg:items-center lg:gap-x-3 lg:gap-y-0 lg:text-[11px] ${shellClass}`}
+        className={`hidden w-fit max-w-full flex-col items-end gap-y-1 rounded-lg px-3 py-1.5 text-[10px] text-[var(--text-muted)] sm:inline-flex sm:flex-col sm:items-end lg:flex-row lg:items-center lg:gap-x-1.5 lg:gap-y-0 lg:text-[11px] ${shellClass}`}
       >
         <Link to="/privacy" className={linkClass}>
           Privacy & cookies
