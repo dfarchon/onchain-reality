@@ -38,7 +38,7 @@
     var(--app-height) - var(--layout-chrome-top) - var(--layout-chrome-bottom) -
       var(--layout-main-below-header)
   );
-  /* Shared black panel — max-width 56rem on Philosophy; blog article column matches (max-w-4xl in TSX) */
+  /* Shared black panel — max-width 56rem on Philosophy; blog post shell uses header max-w-7xl (see headerLayout.ts) */
   --content-panel-height: min(40rem, calc(var(--content-stage-height) - 4rem));
   /* Blog post only: solid black strips above & below the scroll area */
   --content-panel-cap-height: 1rem;

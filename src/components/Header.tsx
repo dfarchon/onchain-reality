@@ -1,5 +1,9 @@
 import { useLayoutEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+import {
+  HEADER_NAV_MAX_WIDTH_CLASS,
+  HEADER_NAV_PADDING_X_CLASS,
+} from "../lib/headerLayout";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -52,7 +56,7 @@ export function Header() {
     >
       {/* Narrow: brand then nav; md+: single row, justify-between (see index.css) */}
       <nav
-        className="site-header-nav mx-auto flex w-full max-w-7xl flex-col gap-2 px-4 py-1 sm:px-8 md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-x-4 md:py-0 md:px-12 lg:px-14"
+        className={`site-header-nav mx-auto flex w-full ${HEADER_NAV_MAX_WIDTH_CLASS} flex-col gap-2 ${HEADER_NAV_PADDING_X_CLASS} py-1 md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-x-4 md:py-0`}
         aria-label="Main"
       >
         <Link

@@ -16,7 +16,7 @@ const baseRaw =
     ? process.env.VITE_SITE_URL.trim().replace(/\/$/, "")
     : "http://localhost:5173";
 
-const staticPaths = ["/", "/philosophy", "/projects", "/blog"];
+const staticPaths = ["/", "/philosophy", "/projects", "/blog", "/privacy"];
 
 function listBlogSlugs() {
   try {

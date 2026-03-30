@@ -10,6 +10,10 @@ import {
 } from "../../lib/site";
 import { BlogPostScrollArea } from "../../components/BlogPostScrollArea";
 import { Markdown } from "../../components/Markdown";
+import {
+  HEADER_NAV_MAX_WIDTH_CLASS,
+  HEADER_NAV_PADDING_X_CLASS,
+} from "../../lib/headerLayout";
 
 /**
  * Panel bottom aligns with the main content floor (top of footer strip) so ASCII from panel→tagline
@@ -38,8 +42,10 @@ export function BlogPost() {
           pathname={`/blog/${slug}`}
         />
         <AsciiGameOfLife />
-        <div className="pointer-events-none absolute inset-0 z-10 flex justify-center px-8 pt-3 pb-0 sm:px-10 sm:pt-3.5 md:px-12 lg:px-14">
-          <div className="pointer-events-auto mx-auto flex h-full min-h-0 w-full max-w-4xl flex-col justify-end">
+        <div className="pointer-events-none absolute inset-0 z-10 flex justify-center pt-3 pb-0 sm:pt-3.5">
+          <div
+            className={`pointer-events-auto mx-auto flex h-full min-h-0 w-full flex-col justify-end ${HEADER_NAV_MAX_WIDTH_CLASS} ${HEADER_NAV_PADDING_X_CLASS}`}
+          >
             <div className="content-panel">
               <div className="content-panel__inner">
                 <div className="content-panel__body">
@@ -94,8 +100,10 @@ export function BlogPost() {
         jsonLd={blogPostingLd}
       />
       <AsciiGameOfLife />
-      <div className="pointer-events-none absolute inset-0 z-10 flex justify-center px-8 pt-3 pb-0 sm:px-10 sm:pt-3.5 md:px-12 lg:px-14">
-        <div className="pointer-events-auto mx-auto flex h-full min-h-0 w-full max-w-4xl flex-col justify-end">
+      <div className="pointer-events-none absolute inset-0 z-10 flex justify-center pt-3 pb-0 sm:pt-3.5">
+        <div
+          className={`pointer-events-auto mx-auto flex h-full min-h-0 w-full flex-col justify-end ${HEADER_NAV_MAX_WIDTH_CLASS} ${HEADER_NAV_PADDING_X_CLASS}`}
+        >
           <div className="content-panel">
             <div className="content-panel__inner">
               <div className="content-panel__body">
