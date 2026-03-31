@@ -45,9 +45,9 @@ export function BlogPost() {
           pathname={`/blog/${slug}`}
         />
         {theme === "light" ? <AsciiClouds /> : <AsciiGameOfLife />}
-        <div className="pointer-events-none absolute inset-0 z-10 flex justify-center pt-3 pb-0 sm:pt-3.5">
+        <div className="pointer-events-none absolute inset-0 z-10 flex justify-center max-md:pt-0 pb-0 md:pt-3.5">
           <div
-            className={`pointer-events-auto mx-auto flex h-full min-h-0 w-full flex-col justify-end ${HEADER_NAV_MAX_WIDTH_CLASS} ${HEADER_NAV_PADDING_X_CLASS}`}
+            className={`pointer-events-auto mx-auto flex h-full min-h-0 w-full flex-col justify-start md:justify-end ${HEADER_NAV_MAX_WIDTH_CLASS} ${HEADER_NAV_PADDING_X_CLASS}`}
           >
             <div className="content-panel">
               <div className="content-panel__inner">
@@ -103,9 +103,9 @@ export function BlogPost() {
         jsonLd={blogPostingLd}
       />
       {theme === "light" ? <AsciiClouds /> : <AsciiGameOfLife />}
-      <div className="pointer-events-none absolute inset-0 z-10 flex justify-center pt-3 pb-0 sm:pt-3.5">
+      <div className="pointer-events-none absolute inset-0 z-10 flex justify-center max-md:pt-0 pb-0 md:pt-3.5">
         <div
-          className={`pointer-events-auto mx-auto flex h-full min-h-0 w-full flex-col justify-end ${HEADER_NAV_MAX_WIDTH_CLASS} ${HEADER_NAV_PADDING_X_CLASS}`}
+          className={`pointer-events-auto mx-auto flex h-full min-h-0 w-full flex-col justify-start md:justify-end ${HEADER_NAV_MAX_WIDTH_CLASS} ${HEADER_NAV_PADDING_X_CLASS}`}
         >
           <div className="content-panel">
             <div className="content-panel__inner">

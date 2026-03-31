@@ -56,37 +56,37 @@ export function Header() {
       ref={headerRef}
       className={`site-header fixed left-0 right-0 top-0 z-50 flex ${isTransparentPage ? "bg-transparent" : "bg-[var(--chrome-backdrop)] backdrop-blur-sm"}`}
     >
-      {/* Narrow: brand then nav; md+: single row, justify-between (see index.css) */}
+      {/* <md: stacked; md+: wrap so nav moves below before squeezing the title */}
       <nav
-        className={`site-header-nav mx-auto flex w-full ${HEADER_NAV_MAX_WIDTH_CLASS} flex-col gap-2 ${HEADER_NAV_PADDING_X_CLASS} py-1 md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-x-4 md:py-0`}
+        className={`site-header-nav mx-auto flex w-full ${HEADER_NAV_MAX_WIDTH_CLASS} flex-col max-md:gap-[var(--layout-main-below-header)] ${HEADER_NAV_PADDING_X_CLASS} py-0 md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-x-4 md:gap-y-2 md:py-0`}
         aria-label="Main"
       >
         <Link
           to="/"
-          className={`min-w-0 max-w-full shrink truncate inline-flex items-center justify-center font-heading text-2xl font-semibold uppercase leading-none tracking-wide text-[var(--text-heading)] no-underline hover:text-[var(--accent)] rounded-md py-3.5 pl-[calc(1.75rem+0.025em)] pr-7 md:min-w-0 md:py-3 ${linkPill(needsBackdropPill)}`}
+          className={`shrink-0 whitespace-nowrap inline-flex items-center justify-center font-heading text-2xl font-semibold uppercase leading-none tracking-wide text-[var(--text-heading)] no-underline hover:text-[var(--accent)] rounded-md max-md:w-full max-md:border-0 max-md:!bg-[var(--chrome-backdrop)] max-md:backdrop-blur-sm max-md:px-4 max-md:py-3.5 md:w-auto md:border-none md:py-3 md:pl-[calc(1.75rem+0.025em)] md:pr-7 ${linkPill(needsBackdropPill)}`}
         >
           Onchain Reality
         </Link>
 
-        <div className="flex w-full min-w-0 flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-end md:w-auto md:gap-3">
-          <ul className="site-header-nav__links m-0 flex w-full min-w-0 list-none flex-nowrap justify-start gap-x-0.5 p-0 text-[11px] uppercase tracking-wide sm:gap-x-1.5 sm:text-xs md:w-auto md:shrink-0 md:justify-end md:gap-x-2 md:text-base md:tracking-widest">
+        <div className="flex w-full min-w-0 flex-1 max-md:justify-start md:min-w-max md:justify-end">
+          <ul className="site-header-nav__links m-0 flex w-full list-none flex-wrap items-center justify-start gap-x-2 gap-y-2 p-0 text-sm uppercase tracking-wide sm:gap-x-3 md:flex-nowrap md:justify-end md:gap-x-2 md:gap-y-0 md:text-base md:tracking-widest">
             {nav.map(({ to, label }) => (
-              <li
-                key={to}
-                className="flex min-w-0 flex-1 items-center justify-center md:flex-none"
-              >
+              <li key={to} className="flex min-w-0 justify-start md:flex-none">
                 <Link
                   to={to}
-                  className={`${navLinkClass} min-h-[2.5rem] w-full px-1.5 py-1.5 text-center sm:px-2 md:min-h-0 md:w-auto md:min-w-[5.5rem] md:px-4`}
+                  className={`${navLinkClass} min-h-[2.5rem] whitespace-nowrap px-3 py-2 sm:px-4 md:min-h-0 md:min-w-[5.5rem] md:px-4 md:py-1.5`}
                 >
                   {label}
                 </Link>
               </li>
             ))}
+            <li className="flex shrink-0 items-center justify-center">
+              <ThemeToggle
+                transparentBackground={isHomeLike}
+                className="min-h-[2.5rem] !px-3 md:min-h-0 md:!px-2"
+              />
+            </li>
           </ul>
-          <div className="flex shrink-0 justify-center sm:justify-end">
-            <ThemeToggle transparentBackground={isHomeLike} />
-          </div>
         </div>
       </nav>
     </header>

@@ -38,10 +38,13 @@ function IconMoonOutline({ className }: { className?: string }) {
 type ThemeToggleProps = {
   /** When true (e.g. Home over starfield), no pill fill — icon floats on the page background. */
   transparentBackground?: boolean;
+  /** Merged onto the root button (e.g. size tweaks in the header). */
+  className?: string;
 };
 
 export function ThemeToggle({
   transparentBackground = false,
+  className = "",
 }: ThemeToggleProps) {
   const { theme, toggleTheme } = useTheme();
   const isLight = theme === "light";
@@ -54,7 +57,7 @@ export function ThemeToggle({
     <button
       type="button"
       onClick={toggleTheme}
-      className={`inline-flex h-9 min-w-[2.25rem] shrink-0 items-center justify-center rounded-md border-0 px-2 text-[var(--text-heading)] transition hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] ${surfaceClass}`}
+      className={`inline-flex h-9 min-w-[2.25rem] shrink-0 items-center justify-center rounded-md border-0 px-2 text-[var(--text-heading)] transition hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] ${surfaceClass} ${className}`}
       aria-label={isLight ? "Switch to dark theme" : "Switch to light theme"}
       title={isLight ? "Dark mode" : "Light mode"}
     >
@@ -63,7 +66,7 @@ export function ThemeToggle({
       </span>
       <span
         aria-hidden
-        className="inline-flex [&>svg]:h-[1.125rem] [&>svg]:w-[1.125rem]"
+        className="inline-flex [&>svg]:h-5 [&>svg]:w-5 md:[&>svg]:h-[1.125rem] md:[&>svg]:w-[1.125rem]"
       >
         {isLight ? <IconMoonOutline /> : <IconSunOutline />}
       </span>

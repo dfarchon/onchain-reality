@@ -87,6 +87,17 @@
   --blog-filter-bar-height: 8.75rem;
 }
 
+/*
+ * Stacked header (< md): one token for (1) gap between title row and nav row and
+ * (2) space below the fixed header before main content — kept equal (BlogPost
+ * overlay pt is zero on max-md so this is not doubled).
+ */
+@media (max-width: 767px) {
+  :root {
+    --layout-main-below-header: 0.5rem;
+  }
+}
+
 @supports (height: 100dvh) {
   :root {
     --app-height: 100dvh;

@@ -101,8 +101,8 @@ export function BlogIndex() {
           top: "calc(var(--layout-chrome-top) + var(--layout-main-below-header))",
         }}
       >
-        <div className="mx-auto max-w-6xl px-6 pb-3 pt-2 sm:px-10 md:px-12 md:pb-4 md:pt-3">
-          <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-4">
+        <div className="mx-auto max-w-6xl px-6 pb-2 pt-1 sm:px-10 md:px-12 md:pb-4 md:pt-3">
+          <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-4">
             <div className="flex flex-wrap justify-start gap-2 md:gap-3">
               {CATEGORIES.map((cat) => (
                 <button
