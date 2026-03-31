@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 
 const PERM = new Uint8Array(512);
 {
@@ -74,6 +75,12 @@ export function AsciiClouds() {
   const mouseX = useRef(0);
   const mouseY = useRef(0);
   const influenceGrid = useRef<Float32Array>(new Float32Array(0));
+  const { theme } = useTheme();
+  const themeRef = useRef(theme);
+
+  useEffect(() => {
+    themeRef.current = theme;
+  }, [theme]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -231,10 +238,29 @@ export function AsciiClouds() {
               : 0.3 + baseDensity * 0.3;
 
           if (inf > 0.001) {
-            r = Math.round(lerp(r, 160, inf * 0.5));
-            g = Math.round(lerp(g, 235, inf * 0.5));
-            b = Math.round(lerp(b, 255, inf * 0.5));
+            if (themeRef.current === "light") {
+              r = Math.round(lerp(r, 255, inf * 0.45));
+              g = Math.round(lerp(g, 165, inf * 0.45));
+              b = Math.round(lerp(b, 210, inf * 0.45));
+            } else {
+              r = Math.round(lerp(r, 160, inf * 0.5));
+              g = Math.round(lerp(g, 235, inf * 0.5));
+              b = Math.round(lerp(b, 255, inf * 0.5));
+            }
             alpha = Math.min(1, alpha + inf * 0.3);
+          }
+
+          if (themeRef.current === "light") {
+            /* Saturated rose / magenta — lively vs --bg, not flat gray-purple */
+            const lr = 198;
+            const lg = 78;
+            const lb = 148;
+            const mix = 0.44;
+            r = Math.round(lerp(r, lr, mix));
+            g = Math.round(lerp(g, lg, mix));
+            b = Math.round(lerp(b, lb, mix));
+            alpha = Math.min(1, alpha * 1.22);
+            if (alpha < 0.22) alpha = Math.min(0.42, alpha * 1.55);
           }
 
           ctx!.fillStyle = `rgba(${r},${g},${b},${alpha})`;

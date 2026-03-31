@@ -17,7 +17,6 @@ import remarkMath from "remark-math";
 import rehypeHighlight from "rehype-highlight";
 import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
-import "highlight.js/styles/github-dark.css";
 import "katex/dist/katex.min.css";
 import { Link } from "react-router-dom";
 import { TwitterEmbed } from "./TwitterEmbed";
@@ -202,7 +201,8 @@ export function Markdown({ children, lightboxBoundsRef }: Props) {
         }
         return <p {...props}>{children}</p>;
       },
-      a: ({ href, children, className, node: _node, ...rest }) => {
+      a: ({ href, children, className, node, ...rest }) => {
+        void node;
         const to = routerToForMarkdownLink(href);
         if (to != null) {
           return (
@@ -276,7 +276,7 @@ export function Markdown({ children, lightboxBoundsRef }: Props) {
 
   const lightboxNode = lightbox ? (
     <div
-      className="markdown-lightbox-root fixed z-[200] box-border flex min-h-0 min-w-0 items-center justify-center overflow-hidden bg-black p-4"
+      className="markdown-lightbox-root fixed z-[200] box-border flex min-h-0 min-w-0 items-center justify-center overflow-hidden bg-[var(--lightbox-bg)] p-4"
       style={{
         top: lightbox.panelRect.top,
         left: lightbox.panelRect.left,
@@ -289,7 +289,7 @@ export function Markdown({ children, lightboxBoundsRef }: Props) {
     >
       <button
         type="button"
-        className="absolute inset-0 z-0 w-full cursor-zoom-out border-0 bg-black p-0"
+        className="absolute inset-0 z-0 w-full cursor-zoom-out border-0 bg-[var(--lightbox-bg)] p-0"
         aria-label="Close enlarged image"
         onClick={closeLightbox}
       />

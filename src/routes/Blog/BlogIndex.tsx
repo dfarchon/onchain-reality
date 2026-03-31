@@ -2,7 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getPostList } from "../../lib/blog";
 import type { Category, PostMeta } from "../../lib/blog";
+import { AsciiClouds } from "../../components/AsciiClouds";
 import { AsciiGameOfLife } from "../../components/AsciiGameOfLife";
+import { useTheme } from "../../contexts/ThemeContext";
 import { BlogCard } from "../../components/BlogCard";
 import { Seo } from "../../components/Seo";
 import { PAGE_DESCRIPTIONS } from "../../lib/site";
@@ -21,6 +23,7 @@ const CATEGORIES: (Category | "All")[] = [
 const BLOG_FILTER_HEIGHT_VAR = "--blog-filter-bar-height";
 
 export function BlogIndex() {
+  const { theme } = useTheme();
   const filterBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -79,13 +82,13 @@ export function BlogIndex() {
   return (
     <div className="relative flex min-h-0 flex-1 flex-col">
       <Seo title="Blog" description={PAGE_DESCRIPTIONS.blog} pathname="/blog" />
-      <AsciiGameOfLife />
+      {theme === "light" ? <AsciiClouds /> : <AsciiGameOfLife />}
 
       {SHOW_DEBUG_BG_BUTTON && (
         <button
           type="button"
           onClick={() => setDebugBg((v) => !v)}
-          className="fixed top-3 right-3 z-50 rounded border border-white/20 bg-black/60 px-2 py-1 font-mono text-xs text-white/70 backdrop-blur hover:bg-black/80 hover:text-white transition-colors"
+          className="fixed top-3 right-3 z-50 rounded border border-[var(--border)] bg-[var(--chrome-pill)] px-2 py-1 font-mono text-xs text-[var(--text-muted)] backdrop-blur transition-colors hover:bg-[var(--blog-ui-surface)] hover:text-[var(--text-heading)]"
         >
           {debugBg ? "Show UI" : "Debug BG"}
         </button>

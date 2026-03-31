@@ -1,4 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from "react";
+import { useLocation } from "react-router-dom";
+import { useTheme } from "../contexts/ThemeContext";
 
 /** Background music — MP3 is universally supported and hardware-decoded on iOS */
 const BGM_SRC = "/audio/music/bgm.mp3";
@@ -57,6 +59,16 @@ function clampToViewport(
 }
 
 export function MusicPlayer() {
+  const { pathname } = useLocation();
+  const { theme } = useTheme();
+  const isHome = pathname === "/";
+  const isPhilosophy = pathname === "/philosophy";
+  const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
+  const isProjects = pathname === "/projects";
+  /** Philosophy + Blog + Projects in light: flat chrome, no drop shadow. */
+  const philosophyOrBlogLightFlat =
+    (isPhilosophy || isBlog || isProjects) && theme === "light";
+
   const audioRef = useRef<HTMLAudioElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const ctxRef = useRef<AudioContext | null>(null);
@@ -462,10 +474,26 @@ export function MusicPlayer() {
   /*  Render                                                            */
   /* ------------------------------------------------------------------ */
 
+  const panelShellClass = isHome
+    ? theme === "light"
+      ? "border-[var(--border-light)] bg-[color-mix(in_srgb,var(--bg)_38%,transparent)] shadow-[0_4px_28px_rgba(60,30,55,0.1)] backdrop-blur-md"
+      : "border-[var(--border)] bg-[rgba(6,4,10,0.42)] shadow-[0_6px_24px_rgba(0,0,0,0.4)] backdrop-blur-md"
+    : philosophyOrBlogLightFlat
+      ? "border-transparent bg-[var(--bg)] shadow-none backdrop-blur-none"
+      : "border-[var(--border)] bg-[var(--bg-surface)] shadow-lg";
+
+  const playBtnClass = isHome
+    ? theme === "light"
+      ? "border-[var(--border-light)] bg-white/30 hover:bg-white/45"
+      : "border-[var(--border)] bg-white/[0.07] hover:bg-white/[0.12]"
+    : philosophyOrBlogLightFlat
+      ? "border-[var(--border-light)] bg-[color-mix(in_srgb,var(--bg)_92%,var(--accent)_8%)] hover:bg-[color-mix(in_srgb,var(--bg)_82%,var(--accent)_18%)]"
+      : "border-[var(--border)] hover:bg-[var(--border)] hover:bg-opacity-20";
+
   return (
     <div
       ref={panelRef}
-      className="music-panel fixed z-[100] flex max-w-[calc(100vw-12px)] touch-none cursor-grab items-center gap-2 rounded border border-[var(--border)] bg-[var(--bg-surface)] px-2 py-2 shadow-lg active:cursor-grabbing md:max-w-none md:gap-3 md:px-3"
+      className={`music-panel fixed z-[100] flex max-w-[calc(100vw-12px)] touch-none cursor-grab items-center gap-2 rounded border px-2 py-2 active:cursor-grabbing md:max-w-none md:gap-3 md:px-3 ${panelShellClass}`}
       style={{ left: position.x, top: position.y }}
       aria-label="Music player"
       onPointerDown={handlePointerDown}
@@ -481,7 +509,7 @@ export function MusicPlayer() {
           togglePlay();
         }}
         disabled={!hasSource}
-        className="flex h-9 w-9 shrink-0 cursor-pointer touch-auto items-center justify-center rounded border border-[var(--border)] text-[var(--text-heading)] transition hover:bg-[var(--border)] hover:bg-opacity-20 disabled:cursor-not-allowed disabled:opacity-50"
+        className={`flex h-9 w-9 shrink-0 cursor-pointer touch-auto items-center justify-center rounded border text-[var(--text-heading)] transition disabled:cursor-not-allowed disabled:opacity-50 ${playBtnClass}`}
         aria-label={
           isPlaying
             ? "Pause"

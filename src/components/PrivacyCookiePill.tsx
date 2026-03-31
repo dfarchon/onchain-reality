@@ -20,7 +20,7 @@ export function PrivacyCookiePill({ isHome = false }: PrivacyCookiePillProps) {
 
   const shellClass = isHome
     ? "bg-transparent shadow-none backdrop-blur-none"
-    : "bg-[rgba(0,0,0,0.55)] shadow-[0_4px_16px_rgba(0,0,0,0.35)] backdrop-blur-sm";
+    : "bg-[var(--chrome-pill)] shadow-[var(--shadow-cookie)] backdrop-blur-sm";
 
   const linkClass =
     "text-[10px] text-[var(--accent)] underline underline-offset-2 hover:text-[var(--text-heading)] sm:text-[11px]";

@@ -1,7 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPostBySlug } from "../../lib/blog";
+import { AsciiClouds } from "../../components/AsciiClouds";
 import { AsciiGameOfLife } from "../../components/AsciiGameOfLife";
+import { useTheme } from "../../contexts/ThemeContext";
 import { Seo } from "../../components/Seo";
 import {
   DEFAULT_DESCRIPTION,
@@ -20,6 +22,7 @@ import {
  * matches tagline→viewport bottom when the tagline is vertically centered in --banner-height.
  */
 export function BlogPost() {
+  const { theme } = useTheme();
   /** Black article strip (viewport + scrollbar); used to size the image lightbox. */
   const articleScrollRootRef = useRef<HTMLDivElement>(null);
 
@@ -41,7 +44,7 @@ export function BlogPost() {
           description="The requested blog post does not exist on Onchain Reality."
           pathname={`/blog/${slug}`}
         />
-        <AsciiGameOfLife />
+        {theme === "light" ? <AsciiClouds /> : <AsciiGameOfLife />}
         <div className="pointer-events-none absolute inset-0 z-10 flex justify-center pt-3 pb-0 sm:pt-3.5">
           <div
             className={`pointer-events-auto mx-auto flex h-full min-h-0 w-full flex-col justify-end ${HEADER_NAV_MAX_WIDTH_CLASS} ${HEADER_NAV_PADDING_X_CLASS}`}
@@ -99,7 +102,7 @@ export function BlogPost() {
         articleAuthor={post.author}
         jsonLd={blogPostingLd}
       />
-      <AsciiGameOfLife />
+      {theme === "light" ? <AsciiClouds /> : <AsciiGameOfLife />}
       <div className="pointer-events-none absolute inset-0 z-10 flex justify-center pt-3 pb-0 sm:pt-3.5">
         <div
           className={`pointer-events-auto mx-auto flex h-full min-h-0 w-full flex-col justify-end ${HEADER_NAV_MAX_WIDTH_CLASS} ${HEADER_NAV_PADDING_X_CLASS}`}

@@ -17,6 +17,28 @@
   --border-light: rgba(240, 160, 192, 0.12);
   /* Code surfaces — lifted from pure #000 body/panel so blocks read as distinct */
   --code-bg: #14141d;
+  /* Semantic surfaces — dark defaults; light overrides in html[data-theme="light"] */
+  --chrome-backdrop: rgba(0, 0, 0, 0.6);
+  --chrome-pill: rgba(0, 0, 0, 0.55);
+  --panel-outer-bg: rgba(0, 0, 0, 0.7);
+  --panel-inner-bg: rgba(0, 0, 0, 0.45);
+  --article-column-bg: #000000;
+  --lightbox-bg: #000000;
+  --retro-box-grad-start: rgba(11, 11, 15, 0.97);
+  --retro-box-grad-end: rgba(9, 9, 13, 0.98);
+  --retro-box-border: rgba(240, 160, 192, 0.28);
+  --retro-box-shadow-outer: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover:
+    0 0 12px rgba(240, 160, 192, 0.15), 0 8px 24px rgba(0, 0, 0, 0.4);
+  --blog-code-outer-glow: rgba(0, 0, 0, 0.35);
+  --cta-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --cta-shadow-hover:
+    0 0 20px rgba(240, 160, 192, 0.18), 0 6px 28px rgba(0, 0, 0, 0.4);
+  --content-panel-inset-line: rgba(255, 255, 255, 0.08);
+  --blog-ui-surface: rgba(0, 0, 0, 0.5);
+  --blog-card-surface: rgba(0, 0, 0, 0.65);
+  --shadow-cookie: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-consent: 0 -4px 32px rgba(0, 0, 0, 0.45);
   --font-body: "Fira Sans", system-ui, sans-serif;
   --font-heading: "Fira Sans", system-ui, sans-serif;
   --font-mono: "Courier New", Courier, monospace;
@@ -71,6 +93,105 @@
   }
 }
 
+html[data-theme="light"] {
+  /* Soft lavender base; StarryBackground SCENE_BG.light matches */
+  --bg: #e8e0ee;
+  --bg-surface: rgba(255, 255, 255, 0.95);
+  /* Light mode type: vivid rose / magenta pink (not muddy gray-mauve) */
+  --text: #923d68;
+  --text-muted: #a56782;
+  --text-heading: #702050;
+  --prose-body: var(--text);
+  --accent: #d04088;
+  --accent-dim: #a82868;
+  --border: rgba(140, 60, 95, 0.35);
+  --border-light: rgba(140, 60, 95, 0.18);
+  --code-bg: #ede4e8;
+  --chrome-backdrop: rgba(255, 255, 255, 0.78);
+  --chrome-pill: rgba(255, 255, 255, 0.65);
+  --panel-outer-bg: rgba(255, 255, 255, 0.88);
+  --panel-inner-bg: rgba(255, 255, 255, 0.55);
+  --article-column-bg: #faf9fc;
+  --lightbox-bg: #0f0f12;
+  --retro-box-grad-start: rgba(250, 245, 248, 0.97);
+  --retro-box-grad-end: rgba(240, 232, 236, 0.98);
+  --retro-box-border: rgba(160, 80, 120, 0.35);
+  --retro-box-shadow-outer: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-card-hover:
+    0 0 12px rgba(120, 60, 90, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08);
+  --blog-code-outer-glow: rgba(0, 0, 0, 0.12);
+  --cta-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  --cta-shadow-hover:
+    0 0 20px rgba(180, 100, 130, 0.2), 0 6px 28px rgba(0, 0, 0, 0.1);
+  --content-panel-inset-line: rgba(0, 0, 0, 0.08);
+  --blog-scrollbar-thumb: rgba(140, 60, 95, 0.35);
+  --blog-scrollbar-thumb-hover: rgba(120, 45, 80, 0.5);
+  --blog-scrollbar-border: rgba(140, 60, 95, 0.4);
+  --blog-scrollbar-track: rgba(140, 60, 95, 0.1);
+  --blog-ui-surface: rgba(255, 255, 255, 0.72);
+  --blog-card-surface: rgba(255, 255, 255, 0.82);
+  --shadow-cookie: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-consent: 0 -4px 32px rgba(0, 0, 0, 0.12);
+}
+
+/*
+ * Philosophy + light: match dark-mode logic — scroll column uses the same solid as
+ * the page (--bg). BlogPostScrollArea paints --article-column-bg; light default
+ * reads as a separate card on the page; align it to --bg so the ASCII
+ * field only shows in the margins (clean center), like black-on-black in dark.
+ */
+html[data-theme="light"] body.philosophy-page {
+  /* Local pills only — same as page bg, no ASCII behind nav / tagline / footer */
+  --chrome-pill: var(--bg);
+  --chrome-backdrop: transparent;
+  --panel-outer-bg: transparent;
+  --article-column-bg: var(--bg);
+  /* One step deeper than global — still clearly pink vs ASCII layer */
+  --text: #823560;
+  --text-heading: #5c1838;
+  --text-muted: #8f5a72;
+  --accent: #c82878;
+  --accent-dim: #9e2060;
+}
+
+html[data-theme="light"] body.philosophy-page .backdrop-blur-sm {
+  backdrop-filter: none;
+}
+
+html[data-theme="dark"] body.philosophy-page {
+  --chrome-pill: var(--bg);
+}
+
+/* Blog + light: match Philosophy — AsciiClouds field, chrome pills, flat column */
+html[data-theme="light"] body.blog-page {
+  --chrome-pill: var(--bg);
+  --chrome-backdrop: transparent;
+  --panel-outer-bg: transparent;
+  --article-column-bg: var(--bg);
+  --blog-ui-surface: var(--bg);
+  --blog-card-surface: color-mix(in srgb, var(--bg) 72%, #ffffff);
+  --text: #823560;
+  --text-heading: #5c1838;
+  --text-muted: #8f5a72;
+  --accent: #c82878;
+  --accent-dim: #9e2060;
+}
+
+html[data-theme="light"] body.blog-page .backdrop-blur-sm {
+  backdrop-filter: none;
+}
+
+html[data-theme="light"] body.blog-page .blog-filter-tab,
+html[data-theme="light"] body.blog-page .blog-search,
+html[data-theme="light"] body.blog-page .blog-empty-state,
+html[data-theme="light"] body.blog-page .blog-card {
+  backdrop-filter: none;
+}
+
+html[data-theme="dark"] body.blog-page {
+  --chrome-pill: var(--bg);
+}
+
 @media (min-width: 768px) {
   :root {
     --blog-filter-bar-height: 5.5rem;
@@ -115,6 +236,8 @@ body {
 }
 
 #root {
+  position: relative;
+  z-index: 2;
   min-height: var(--app-height);
   height: var(--app-height);
   display: flex;
@@ -195,15 +318,15 @@ footer.site-footer {
   position: relative;
   background: linear-gradient(
     180deg,
-    rgba(11, 11, 15, 0.97) 0%,
-    rgba(9, 9, 13, 0.98) 100%
+    var(--retro-box-grad-start) 0%,
+    var(--retro-box-grad-end) 100%
   );
-  border: 1px solid rgba(240, 160, 192, 0.28);
+  border: 1px solid var(--retro-box-border);
   padding: 1.35rem 1.25rem;
   margin: 0 auto;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.02),
-    0 8px 24px rgba(0, 0, 0, 0.5);
+    var(--retro-box-shadow-outer);
   transition:
     background 0.3s ease,
     border-color 0.3s ease,
@@ -214,6 +337,13 @@ footer.site-footer {
   .retro-box {
     padding: 2.5rem 3rem;
   }
+}
+
+/* Light: same as page --bg, no card shadow/border */
+html[data-theme="light"] .retro-box:not(.retro-box--hero) {
+  background: var(--bg);
+  border-color: transparent;
+  box-shadow: none;
 }
 
 /* Home hero — no fill so starfield reads through, sized to match Philosophy panel */
@@ -250,7 +380,7 @@ footer.site-footer {
   border-radius: 0.5rem;
   /* Outer shell — gutter keeps text away from the rounded edge */
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.7);
+  background: var(--panel-outer-bg);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   display: flex;
@@ -269,7 +399,7 @@ body.blog-post-page .content-panel {
   align-items: stretch;
   max-width: none;
   padding: 0;
-  background: #000;
+  background: var(--article-column-bg);
   border: none;
   box-shadow: none;
   -webkit-backdrop-filter: none;
@@ -288,7 +418,7 @@ body.blog-post-page .content-panel {
   border-color: var(--bg);
   /* Side rails only on non–blog-post panels */
   border-width: 0 2px 0 2px;
-  background: rgba(0, 0, 0, 0.45);
+  background: var(--panel-inner-bg);
   padding: 1.5rem 1.75rem;
 }
 
@@ -310,12 +440,12 @@ body.blog-post-page .content-panel__inner {
   padding: 0;
   display: flex;
   flex-direction: column;
-  background: #000;
+  background: var(--article-column-bg);
   border: none;
   border-radius: 0.375rem;
 }
 
-/* Article subtree: code chips sit on --code-bg, not panel #000 */
+/* Article subtree: code chips sit on --code-bg, not panel fill */
 body.blog-post-page .content-panel__inner .prose pre,
 body.blog-post-page .content-panel__inner .prose :not(pre) > code {
   background-color: var(--code-bg);
@@ -347,7 +477,6 @@ body.blog-post-page .content-panel__body {
   padding: var(--blog-panel-chrome);
   overflow: hidden;
   border-radius: 0.375rem;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 /*
@@ -370,8 +499,8 @@ body.philosophy-page .content-panel__scroll.blog-post-scroll-area {
   border: none;
   padding: var(--blog-panel-chrome) var(--blog-post-scroll-padding-right)
     var(--blog-panel-chrome) var(--blog-scroll-padding-x);
-  /* Padding box must paint black (not only content); border-box clip includes padding */
-  background-color: #000;
+  /* Padding box must paint column fill (not only content); border-box clip includes padding */
+  background-color: var(--article-column-bg);
   background-clip: border-box;
   transform: translateZ(0);
 }
@@ -526,12 +655,12 @@ body.blog-page .prose blockquote {
   border-color: transparent;
 }
 
-/* Code blocks / inline code: faint frame so they separate from #000 article column */
+/* Code blocks / inline code: faint frame so they separate from article column */
 body.blog-page .prose pre {
   border: 1px solid rgba(240, 160, 192, 0.14);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 0 0 1px rgba(0, 0, 0, 0.35);
+    0 0 0 1px var(--blog-code-outer-glow);
 }
 body.blog-page .prose :not(pre) > code {
   border: 1px solid rgba(240, 160, 192, 0.12);
@@ -637,6 +766,36 @@ body.hero-title-hovered .hero-title::after {
       0 -22px 90px rgba(180, 10, 0, 0.2);
     transform: translateY(-2px);
   }
+}
+
+/* Light mode: hero flame — dark text + warm glow (readable on pale starfield) */
+html[data-theme="light"] body.hero-title-hovered .retro-box p,
+html[data-theme="light"] body.hero-title-hovered .retro-box span,
+html[data-theme="light"] body.hero-title-hovered .retro-box a,
+html[data-theme="light"] body.hero-title-hovered .retro-box h1 {
+  color: #5c1a0a !important;
+  text-shadow:
+    0 0 10px rgba(255, 120, 50, 0.45),
+    0 0 22px rgba(200, 50, 30, 0.3),
+    0 1px 0 rgba(0, 0, 0, 0.12);
+  animation: none;
+}
+
+html[data-theme="light"] body.hero-title-hovered .hero-title {
+  color: #5c1a0a;
+  text-shadow:
+    0 0 12px rgba(255, 120, 50, 0.5),
+    0 0 24px rgba(200, 50, 30, 0.35),
+    0 1px 0 rgba(0, 0, 0, 0.12);
+  animation: none;
+}
+
+html[data-theme="light"] body.hero-title-hovered .hero-title::after {
+  opacity: 0.35;
+  text-shadow:
+    0 -2px 14px rgba(200, 60, 30, 0.25),
+    0 -6px 28px rgba(160, 40, 20, 0.15);
+  animation: none;
 }
 
 /* Section rule */
@@ -966,7 +1125,7 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
   margin: 0;
   padding: 0.45rem 1.2rem;
   border: 1px solid var(--border);
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--blog-ui-surface);
   backdrop-filter: blur(6px);
   color: var(--text-muted);
   cursor: pointer;
@@ -979,9 +1138,9 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
   color: var(--text-heading);
   border-color: var(--accent-dim);
 }
-/* Selected: same dark + blur as others, no pink tint */
+/* Selected: same surface + blur as others, no pink tint */
 .blog-filter-tab--active {
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--blog-ui-surface);
   backdrop-filter: blur(6px);
   color: var(--text-heading);
   border-color: var(--accent);
@@ -995,7 +1154,7 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
   margin-top: 3rem;
   padding: 0.65rem 1.35rem;
   border: 1px solid var(--border);
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--blog-ui-surface);
   backdrop-filter: blur(6px);
   color: var(--text-muted);
   font-family: var(--font-body);
@@ -1010,7 +1169,7 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
   max-width: 14rem;
   box-sizing: border-box;
   border: 1px solid var(--border);
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--blog-ui-surface);
   backdrop-filter: blur(6px);
   color: var(--text);
   font-family: var(--font-body);
@@ -1040,7 +1199,7 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
   justify-content: space-between;
   min-height: 14rem;
   padding: 1.75rem 1.5rem;
-  background: rgba(0, 0, 0, 0.65);
+  background: var(--blog-card-surface);
   backdrop-filter: blur(8px);
   border: 1px solid var(--border);
   transition:
@@ -1050,9 +1209,7 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
 }
 .blog-card:hover {
   border-color: var(--accent);
-  box-shadow:
-    0 0 12px rgba(240, 160, 192, 0.15),
-    0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .blog-card-category {

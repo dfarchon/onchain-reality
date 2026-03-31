@@ -133,7 +133,7 @@ export function Home() {
           <div className="mt-12 flex w-full justify-center px-1">
             <Link
               to="/blog"
-              className="font-heading inline-flex w-fit max-w-full shrink-0 items-center justify-center border border-[rgba(240,160,192,0.55)] bg-[rgba(240,160,192,0.08)] px-10 py-4 text-[var(--text-heading)] text-sm font-semibold uppercase tracking-[0.12em] shadow-[0_4px_20px_rgba(0,0,0,0.35)] transition-colors md:px-12 md:py-4 md:text-base hover:border-[rgba(240,160,192,0.85)] hover:bg-[rgba(240,160,192,0.14)] hover:text-[var(--accent)] hover:shadow-[0_0_20px_rgba(240,160,192,0.18),0_6px_28px_rgba(0,0,0,0.4)]"
+              className="font-heading inline-flex w-fit max-w-full shrink-0 items-center justify-center border border-[rgba(240,160,192,0.55)] bg-[rgba(240,160,192,0.08)] px-10 py-4 text-[var(--text-heading)] text-sm font-semibold uppercase tracking-[0.12em] shadow-[var(--cta-shadow)] transition-colors md:px-12 md:py-4 md:text-base hover:border-[rgba(240,160,192,0.85)] hover:bg-[rgba(240,160,192,0.14)] hover:text-[var(--accent)] hover:shadow-[var(--cta-shadow-hover)]"
             >
               Explore Writings
             </Link>

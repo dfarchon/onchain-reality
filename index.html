@@ -30,6 +30,18 @@
     />
     <meta name="twitter:image" content="/images/og-image.png" />
     <title>Onchain Reality</title>
+    <script>
+      (function () {
+        try {
+          var k = "onchain-reality-theme";
+          var t = localStorage.getItem(k);
+          document.documentElement.dataset.theme =
+            t === "light" || t === "dark" ? t : "dark";
+        } catch (e) {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

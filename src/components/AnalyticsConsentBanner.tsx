@@ -19,7 +19,7 @@ export function AnalyticsConsentBanner() {
       role="dialog"
       aria-labelledby="cookie-consent-title"
       aria-describedby="cookie-consent-desc"
-      className="fixed bottom-0 left-1/2 z-[60] w-[min(36rem,calc(100vw-2rem))] max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-t-xl border border-b-0 border-[var(--border)] bg-[var(--bg-surface)] p-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] shadow-[0_-4px_32px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:p-5 sm:pb-[max(1.25rem,env(safe-area-inset-bottom,0px))]"
+      className="fixed bottom-0 left-1/2 z-[60] w-[min(36rem,calc(100vw-2rem))] max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-t-xl border border-b-0 border-[var(--border)] bg-[var(--bg-surface)] p-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] shadow-[var(--shadow-consent)] backdrop-blur-sm sm:p-5 sm:pb-[max(1.25rem,env(safe-area-inset-bottom,0px))]"
     >
       <div className="flex flex-col gap-4">
         <div className="min-w-0 text-sm leading-snug text-[var(--text)]">

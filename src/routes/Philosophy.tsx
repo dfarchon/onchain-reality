@@ -28,7 +28,7 @@ export function Philosophy() {
       <div className="pointer-events-none absolute inset-0 z-10 flex min-h-0 items-stretch justify-center px-4 py-4 sm:px-6 md:py-2">
         <div className="pointer-events-auto h-full min-h-0 w-full max-w-4xl overflow-hidden">
           <BlogPostScrollArea rootClassName="h-full min-h-0 w-full">
-            <div className="rounded-lg bg-[rgba(0,0,0,0.7)] p-6 backdrop-blur-md sm:p-8 md:p-12 relative">
+            <div className="relative rounded-lg bg-transparent p-6 sm:p-8 md:p-12">
               <img
                 src="/images/icons/favicon.svg"
                 alt=""
