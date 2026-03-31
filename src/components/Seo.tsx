@@ -40,7 +40,7 @@ export function Seo({
   description,
   pathname,
   ogType = "website",
-  imagePath = "/images/icons/favicon.svg",
+  imagePath = "/images/og-image.png",
   articlePublishedTime,
   articleModifiedTime,
   articleAuthor,
@@ -67,6 +67,8 @@ export function Seo({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonical} />
       {ogImage ? <meta property="og:image" content={ogImage} /> : null}
+      {ogImage ? <meta property="og:image:width" content="1200" /> : null}
+      {ogImage ? <meta property="og:image:height" content="630" /> : null}
       <meta property="og:locale" content="en_US" />
 
       <meta name="twitter:card" content="summary_large_image" />

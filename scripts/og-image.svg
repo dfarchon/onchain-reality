@@ -1,0 +1,68 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&amp;display=swap');
+    </style>
+    <filter id="logoGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+
+  <!-- translate(77,0): centers logo+text block in 1200px width; translate(0,315): canvas vertical midline -->
+  <g transform="translate(77, 0)">
+  <g transform="translate(0, 315)">
+  <!-- Logo: center on midline (y=0 here = canvas y=315); scale 0.8 → ~410px wide -->
+  <g transform="translate(255, 0) scale(0.8)" filter="url(#logoGlow)">
+    <g transform="translate(-256,-256)">
+      <ellipse cx="256" cy="256" rx="168" ry="56"
+        fill="none" stroke="#f0a0c0" stroke-width="16" stroke-linecap="round"/>
+      <ellipse cx="256" cy="256" rx="168" ry="56"
+        fill="none" stroke="#f0a0c0" stroke-width="16" stroke-linecap="round"
+        transform="rotate(30 256 256)"/>
+      <line x1="256" y1="68" x2="256" y2="444"
+        stroke="#f0a0c0" stroke-width="18" stroke-linecap="round"
+        transform="rotate(15 256 256)"/>
+      <circle cx="256" cy="256" r="30"
+        fill="none" stroke="#f0a0c0" stroke-width="16"/>
+      <g filter="url(#logoGlow)">
+        <circle cx="256" cy="256" r="14" fill="#f0a0c0"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Text: y relative to midline; +18px vs previous absolute layout = slightly lower; x clears logo right (~460) -->
+  <text text-anchor="start">
+    <tspan x="478" y="-32"
+      font-family="'Fira Sans', sans-serif"
+      font-size="95"
+      font-weight="700"
+      fill="#f5f5f5"
+      letter-spacing="2">ONCHAIN</tspan>
+    <tspan x="478" y="78"
+      font-family="'Fira Sans', sans-serif"
+      font-size="104"
+      font-weight="700"
+      fill="#f5f5f5"
+      letter-spacing="2">REALITY</tspan>
+    <tspan x="478" y="143"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="30"
+      fill="#f0a0c0"
+      fill-opacity="0.75"
+      letter-spacing="0.8">Blockchain Creates Digital Space</tspan>
+    <tspan x="478" y="183"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="30"
+      fill="#f0a0c0"
+      fill-opacity="0.75"
+      letter-spacing="0.8"> to Shape New Realities</tspan>
+  </text>
+  </g>
+  </g>
+</svg>
