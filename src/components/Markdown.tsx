@@ -13,9 +13,12 @@ import { createPortal } from "react-dom";
 import ReactMarkdown from "react-markdown";
 import type { Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 import rehypeHighlight from "rehype-highlight";
+import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/github-dark.css";
+import "katex/dist/katex.min.css";
 import { Link } from "react-router-dom";
 import { TwitterEmbed } from "./TwitterEmbed";
 import { parseTwitterStatusUrl } from "../lib/twitterStatusUrl";
@@ -302,8 +305,8 @@ export function Markdown({ children, lightboxBoundsRef }: Props) {
   return (
     <>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw, rehypeHighlight]}
+        remarkPlugins={[remarkGfm, remarkMath]}
+        rehypePlugins={[rehypeKatex, rehypeRaw, rehypeHighlight]}
         components={components}
       >
         {children}

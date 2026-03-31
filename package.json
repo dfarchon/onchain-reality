@@ -18,14 +18,17 @@
   "dependencies": {
     "front-matter": "4.0.2",
     "highlight.js": "11.9.0",
+    "katex": "0.16.22",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-helmet-async": "3.0.0",
     "react-markdown": "9.0.1",
     "react-router-dom": "6.28.0",
     "rehype-highlight": "7.0.0",
+    "rehype-katex": "7.0.1",
     "rehype-raw": "7.0.0",
     "remark-gfm": "4.0.0",
+    "remark-math": "6.0.0",
     "three": "0.183.2"
   },
   "devDependencies": {
