@@ -16,8 +16,36 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import "highlight.js/styles/github-dark.css";
+import { Link } from "react-router-dom";
 import { TwitterEmbed } from "./TwitterEmbed";
 import { parseTwitterStatusUrl } from "../lib/twitterStatusUrl";
+
+/** When non-null, render `<Link to={...}>` so in-app navigation does not full-reload the SPA. */
+function routerToForMarkdownLink(href: string | undefined): string | null {
+  if (!href?.trim()) return null;
+  const trimmed = href.trim();
+  if (trimmed.startsWith("#")) return null;
+  if (trimmed.startsWith("mailto:") || trimmed.startsWith("tel:")) return null;
+  if (trimmed.startsWith("/")) {
+    if (trimmed.startsWith("//")) return null;
+    return trimmed;
+  }
+  if (/^https?:\/\//i.test(trimmed)) {
+    try {
+      const u = new URL(trimmed);
+      if (
+        typeof window !== "undefined" &&
+        u.origin === window.location.origin
+      ) {
+        return `${u.pathname}${u.search}${u.hash}`;
+      }
+    } catch {
+      return null;
+    }
+    return null;
+  }
+  return null;
+}
 
 /** Standalone paragraph that is only a status URL → embed (GFM autolink or plain URL). */
 function extractStandaloneTweetUrl(children: ReactNode): string | null {
@@ -170,6 +198,41 @@ export function Markdown({ children, lightboxBoundsRef }: Props) {
           return <TwitterEmbed url={tweetUrl} />;
         }
         return <p {...props}>{children}</p>;
+      },
+      a: ({ href, children, className, node: _node, ...rest }) => {
+        const to = routerToForMarkdownLink(href);
+        if (to != null) {
+          return (
+            <Link to={to} className={className} {...rest}>
+              {children}
+            </Link>
+          );
+        }
+        const external =
+          href &&
+          /^https?:\/\//i.test(href) &&
+          (() => {
+            try {
+              return (
+                typeof window !== "undefined" &&
+                new URL(href).origin !== window.location.origin
+              );
+            } catch {
+              return false;
+            }
+          })();
+        return (
+          <a
+            href={href}
+            className={className}
+            {...(external
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
+            {...rest}
+          >
+            {children}
+          </a>
+        );
       },
       img: ({ src, alt, className, ...rest }) => {
         if (!src) {

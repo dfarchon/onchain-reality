@@ -810,15 +810,26 @@ a.retro-link:hover {
 }
 
 /*
- * Markdown *em* / <em>: browsers ignore oblique angle when a real italic face exists
- * (e.g. Fira Sans Italic). Use roman + skew so the slant is always visible.
+ * Bold + italic (**_…_**): need real semibold/bold italic faces (see Fira Sans weights in index.html).
+ */
+.prose strong em,
+.prose strong i,
+.prose b em,
+.prose b i,
+.prose em strong,
+.prose i strong,
+.prose em b,
+.prose i b {
+  font-weight: 700;
+}
+
+/*
+ * Markdown *em* / <em>: real italic only (no CSS skew). Skew + inline-block broke straight left
+ * margins; true Bold Italic from the font gives slant without jagged alignment (see Fira weights).
  */
 .prose em,
 .prose i {
-  font-style: normal;
-  display: inline-block;
-  transform: skewX(-18deg);
-  vertical-align: baseline;
+  font-style: italic;
 }
 
 /* Preflight zeros p margin and list markers; restore readable block + list layout */
