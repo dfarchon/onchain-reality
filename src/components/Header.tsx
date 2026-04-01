@@ -63,7 +63,7 @@ export function Header() {
       >
         <Link
           to="/"
-          className={`shrink-0 whitespace-nowrap inline-flex items-center justify-center font-heading text-2xl font-semibold uppercase leading-none tracking-wide text-[var(--text-heading)] no-underline hover:text-[var(--accent)] rounded-md max-md:w-full max-md:border-0 max-md:!bg-[var(--chrome-backdrop)] max-md:backdrop-blur-sm max-md:px-4 max-md:py-3.5 md:w-auto md:border-none md:py-3 md:pl-[calc(1.75rem+0.025em)] md:pr-7 ${linkPill(needsBackdropPill)}`}
+          className={`shrink-0 whitespace-nowrap inline-flex items-center justify-center font-heading text-2xl font-semibold uppercase leading-none tracking-wide text-[var(--text-heading)] no-underline hover:text-[var(--accent)] rounded-md max-md:w-full max-md:border-0 max-md:!bg-[var(--chrome-pill)] max-md:backdrop-blur-sm max-md:px-4 max-md:py-3.5 md:w-auto md:border-none md:py-3 md:pl-[calc(1.75rem+0.025em)] md:pr-7 ${linkPill(needsBackdropPill)}`}
         >
           Onchain Reality
         </Link>

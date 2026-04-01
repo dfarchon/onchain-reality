@@ -15,6 +15,7 @@ export type Theme = "light" | "dark";
 const STORAGE_KEY = "onchain-reality-theme";
 
 const HLJS_LINK_ID = "hljs-theme";
+const THEME_SWITCHING_ATTR = "data-theme-switching";
 
 function readStored(): Theme | null {
   try {
@@ -28,6 +29,14 @@ function readStored(): Theme | null {
 
 function applyDomTheme(theme: Theme) {
   document.documentElement.dataset.theme = theme;
+}
+
+function markThemeSwitching() {
+  document.documentElement.setAttribute(THEME_SWITCHING_ATTR, "true");
+}
+
+function clearThemeSwitching() {
+  document.documentElement.removeAttribute(THEME_SWITCHING_ATTR);
 }
 
 type ThemeContextValue = {
@@ -48,13 +57,30 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     } catch {
       /* ignore */
     }
+
+    let raf1 = 0;
+    let raf2 = 0;
+    if (document.documentElement.hasAttribute(THEME_SWITCHING_ATTR)) {
+      raf1 = requestAnimationFrame(() => {
+        raf2 = requestAnimationFrame(() => {
+          clearThemeSwitching();
+        });
+      });
+    }
+
+    return () => {
+      if (raf1) cancelAnimationFrame(raf1);
+      if (raf2) cancelAnimationFrame(raf2);
+    };
   }, [theme]);
 
   const setTheme = useCallback((next: Theme) => {
+    markThemeSwitching();
     setThemeState(next);
   }, []);
 
   const toggleTheme = useCallback(() => {
+    markThemeSwitching();
     setThemeState((prev) => (prev === "dark" ? "light" : "dark"));
   }, []);
 

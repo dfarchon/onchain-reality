@@ -1145,6 +1145,10 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
     color 0.2s,
     border-color 0.2s;
 }
+.blog-filter-tab:focus,
+.blog-filter-tab:focus-visible {
+  outline: none;
+}
 .blog-filter-tab:hover {
   color: var(--text-heading);
   border-color: var(--accent-dim);
@@ -1155,6 +1159,19 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
   backdrop-filter: blur(6px);
   color: var(--text-heading);
   border-color: var(--accent);
+}
+
+/* Theme switch: keep chrome controls from briefly flashing during repaint. */
+html[data-theme-switching="true"] .music-panel,
+html[data-theme-switching="true"] .music-panel button,
+html[data-theme-switching="true"] .blog-filter-tab,
+html[data-theme-switching="true"] .blog-filter-tab--active,
+html[data-theme-switching="true"] .theme-toggle,
+html[data-theme-switching="true"] .theme-toggle * {
+  transition: none !important;
+  animation: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 
 .blog-empty-state {
