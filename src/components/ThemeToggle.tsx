@@ -59,7 +59,6 @@ export function ThemeToggle({
       onClick={toggleTheme}
       className={`inline-flex h-9 min-w-[2.25rem] shrink-0 items-center justify-center rounded-md border-0 px-2 text-[var(--text-heading)] transition hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] ${surfaceClass} ${className}`}
       aria-label={isLight ? "Switch to dark theme" : "Switch to light theme"}
-      title={isLight ? "Dark mode" : "Light mode"}
     >
       <span className="sr-only">
         {isLight ? "Switch to dark theme" : "Switch to light theme"}

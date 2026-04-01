@@ -16,6 +16,8 @@ import {
   HEADER_NAV_MAX_WIDTH_CLASS,
   HEADER_NAV_PADDING_X_CLASS,
 } from "../../lib/headerLayout";
+import { usePageEngagement } from "../../hooks/usePageEngagement";
+import { useAnalyticsConsent } from "../../contexts/AnalyticsConsentContext";
 
 /**
  * Panel bottom aligns with the main content floor (top of footer strip) so ASCII from panel→tagline
@@ -23,8 +25,10 @@ import {
  */
 export function BlogPost() {
   const { theme } = useTheme();
+  const { consent } = useAnalyticsConsent();
   /** Black article strip (viewport + scrollbar); used to size the image lightbox. */
   const articleScrollRootRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.body.classList.add("blog-page", "blog-post-page");
@@ -33,6 +37,15 @@ export function BlogPost() {
     };
   }, []);
   const { slug } = useParams<{ slug: string }>();
+
+  usePageEngagement({
+    scrollRef: viewportRef,
+    pageType: "blog_post",
+    consent,
+    contentId: slug,
+    contentType: "article",
+  });
+
   if (!slug) return null;
 
   const post = getPostBySlug(slug);
@@ -110,7 +123,10 @@ export function BlogPost() {
           <div className="content-panel">
             <div className="content-panel__inner">
               <div className="content-panel__body">
-                <BlogPostScrollArea scrollRootRef={articleScrollRootRef}>
+                <BlogPostScrollArea
+                  viewportRef={viewportRef}
+                  scrollRootRef={articleScrollRootRef}
+                >
                   <div className="blog-post-measure">
                     <header className="mb-8">
                       {post.category ? (

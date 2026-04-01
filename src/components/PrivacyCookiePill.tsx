@@ -24,19 +24,23 @@ export function PrivacyCookiePill({ isHome = false }: PrivacyCookiePillProps) {
 
   const linkClass =
     "text-[10px] text-[var(--accent)] underline underline-offset-2 hover:text-[var(--text-heading)] sm:text-[11px]";
+  const focusResetClass = "focus:outline-none focus-visible:outline-none";
 
   const narrowChip = isHome
     ? "inline-block w-fit max-w-full text-right"
     : `inline-block w-fit max-w-full rounded-md px-2 py-1 text-right ${shellClass}`;
 
   /** Same typography as `<Link>` — native `<button>` ignores `text-inherit` from body and can look huge on mobile */
-  const narrowControlClass = `${narrowChip} ${linkClass} cursor-pointer border-0 bg-transparent p-0 font-sans font-normal`;
+  const narrowControlClass = `${narrowChip} ${linkClass} ${focusResetClass} cursor-pointer border-0 bg-transparent p-0 font-sans font-normal`;
 
   return (
     <nav aria-label="Privacy and cookies" className="w-full sm:w-fit">
       {/* Narrow viewport: side by side, flush right */}
       <div className="flex w-full min-w-0 flex-row flex-nowrap items-center justify-end gap-x-1 sm:hidden">
-        <Link to="/privacy" className={`${narrowChip} ${linkClass} shrink-0`}>
+        <Link
+          to="/privacy"
+          className={`${narrowChip} ${linkClass} ${focusResetClass} shrink-0`}
+        >
           Privacy & cookies
         </Link>
 
@@ -53,7 +57,7 @@ export function PrivacyCookiePill({ isHome = false }: PrivacyCookiePillProps) {
       <div
         className={`hidden w-fit max-w-full flex-col items-end gap-y-1 rounded-lg px-3 py-1.5 text-[10px] text-[var(--text-muted)] sm:inline-flex sm:flex-col sm:items-end lg:flex-row lg:items-center lg:gap-x-1.5 lg:gap-y-0 lg:text-[11px] ${shellClass}`}
       >
-        <Link to="/privacy" className={linkClass}>
+        <Link to="/privacy" className={`${linkClass} ${focusResetClass}`}>
           Privacy & cookies
         </Link>
         <span aria-hidden className="hidden text-[var(--border)] lg:inline">
@@ -62,7 +66,7 @@ export function PrivacyCookiePill({ isHome = false }: PrivacyCookiePillProps) {
         <button
           type="button"
           onClick={openCookieSettings}
-          className="cursor-pointer border-0 bg-transparent p-0 font-sans text-[10px] font-normal text-[var(--accent)] underline underline-offset-2 hover:text-[var(--text-heading)] sm:text-[11px]"
+          className={`cursor-pointer border-0 bg-transparent p-0 font-sans text-[10px] font-normal text-[var(--accent)] underline underline-offset-2 hover:text-[var(--text-heading)] sm:text-[11px] ${focusResetClass}`}
         >
           Cookie settings
         </button>

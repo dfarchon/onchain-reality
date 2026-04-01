@@ -24,9 +24,11 @@ function readStored(): AnalyticsConsentState {
 
 type AnalyticsConsentContextValue = {
   consent: AnalyticsConsentState;
+  isCookieSettingsOpen: boolean;
   setConsent: (value: "granted" | "denied") => void;
-  /** Clears stored choice and resets consent to `unknown` so the banner appears again (no page reload). */
+  /** Opens the cookie settings UI without clearing any previously stored choice. */
   openCookieSettings: () => void;
+  closeCookieSettings: () => void;
 };
 
 const AnalyticsConsentContext =
@@ -40,6 +42,7 @@ export function AnalyticsConsentProvider({
   const [consent, setConsentState] = useState<AnalyticsConsentState>(() =>
     typeof window !== "undefined" ? readStored() : "unknown",
   );
+  const [isCookieSettingsOpen, setIsCookieSettingsOpen] = useState(false);
 
   const setConsent = useCallback((value: "granted" | "denied") => {
     try {
@@ -48,20 +51,32 @@ export function AnalyticsConsentProvider({
       /* ignore */
     }
     setConsentState(value);
+    setIsCookieSettingsOpen(false);
   }, []);
 
   const openCookieSettings = useCallback(() => {
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch {
-      /* ignore */
-    }
-    setConsentState("unknown");
+    setIsCookieSettingsOpen(true);
+  }, []);
+
+  const closeCookieSettings = useCallback(() => {
+    setIsCookieSettingsOpen(false);
   }, []);
 
   const value = useMemo(
-    () => ({ consent, setConsent, openCookieSettings }),
-    [consent, setConsent, openCookieSettings],
+    () => ({
+      consent,
+      isCookieSettingsOpen,
+      setConsent,
+      openCookieSettings,
+      closeCookieSettings,
+    }),
+    [
+      consent,
+      isCookieSettingsOpen,
+      setConsent,
+      openCookieSettings,
+      closeCookieSettings,
+    ],
   );
 
   return (
