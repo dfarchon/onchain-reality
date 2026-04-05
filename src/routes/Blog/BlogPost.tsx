@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPostBySlug } from "../../lib/blog";
 import { AsciiClouds } from "../../components/AsciiClouds";
@@ -30,7 +30,7 @@ export function BlogPost() {
   const articleScrollRootRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.body.classList.add("blog-page", "blog-post-page");
     return () => {
       document.body.classList.remove("blog-page", "blog-post-page");
@@ -124,6 +124,7 @@ export function BlogPost() {
             <div className="content-panel__inner">
               <div className="content-panel__body">
                 <BlogPostScrollArea
+                  key={slug}
                   viewportRef={viewportRef}
                   scrollRootRef={articleScrollRootRef}
                 >

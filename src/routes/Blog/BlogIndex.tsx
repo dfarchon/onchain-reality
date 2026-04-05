@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getPostList } from "../../lib/blog";
 import type { Category, PostMeta } from "../../lib/blog";
@@ -26,25 +26,23 @@ export function BlogIndex() {
   const { theme } = useTheme();
   const filterBarRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.body.classList.add("blog-page", "blog-index-page");
     return () => {
       document.body.classList.remove("blog-page", "blog-index-page");
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = filterBarRef.current;
     if (!el) return;
 
     const publish = () => {
-      requestAnimationFrame(() => {
-        const h = el.offsetHeight;
-        document.body.style.setProperty(
-          BLOG_FILTER_HEIGHT_VAR,
-          `${Math.ceil(h)}px`,
-        );
-      });
+      const h = el.offsetHeight;
+      document.body.style.setProperty(
+        BLOG_FILTER_HEIGHT_VAR,
+        `${Math.ceil(h)}px`,
+      );
     };
 
     publish();
