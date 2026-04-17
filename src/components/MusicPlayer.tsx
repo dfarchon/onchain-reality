@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
+import { useSound } from "../contexts/SoundContext";
 import { useTheme } from "../contexts/ThemeContext";
 
 /** Background music — MP3 is universally supported and hardware-decoded on iOS */
@@ -61,6 +62,8 @@ function clampToViewport(
 export function MusicPlayer() {
   const { pathname } = useLocation();
   const { theme } = useTheme();
+  const { bgmEnabled, enableBgm, disableBgm, registerBgmPlaybackRequest } =
+    useSound();
   const isHome = pathname === "/";
   const isPhilosophy = pathname === "/philosophy";
   const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
@@ -74,7 +77,7 @@ export function MusicPlayer() {
   const ctxRef = useRef<AudioContext | null>(null);
   const gainRef = useRef<GainNode | null>(null);
   const sourceConnectedRef = useRef(false);
-  const userWantsPlaybackRef = useRef(true);
+  const userWantsPlaybackRef = useRef(bgmEnabled);
   const loopTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gapTickRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const fadeRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -208,6 +211,42 @@ export function MusicPlayer() {
     setGapSecondsLeft(null);
   }, [clearFade]);
 
+  const startPlayback = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    userWantsPlaybackRef.current = true;
+    clearLoopSchedule();
+    fadingOutAtEndRef.current = false;
+    setVol(0);
+
+    audio
+      .play()
+      .then(() => {
+        connectGain();
+        autoplayedRef.current = true;
+        setHasSource(true);
+        setIsPlaying(true);
+        setHasEverPlayed(true);
+        fadeIn();
+      })
+      .catch(() => {
+        setIsPlaying(false);
+      });
+  }, [clearLoopSchedule, connectGain, fadeIn, setVol]);
+
+  const stopPlayback = useCallback(() => {
+    const audio = audioRef.current;
+
+    userWantsPlaybackRef.current = false;
+    clearLoopSchedule();
+    fadingOutAtEndRef.current = false;
+    clearFade();
+    audio?.pause();
+    setVol(0);
+    setIsPlaying(false);
+  }, [clearLoopSchedule, clearFade, setVol]);
+
   /* ------------------------------------------------------------------ */
   /*  Main playback effect                                              */
   /* ------------------------------------------------------------------ */
@@ -218,16 +257,6 @@ export function MusicPlayer() {
     audio.volume = 0;
 
     /* ---------- helpers ------------------------------------------- */
-
-    /** Called after audio.play() resolves. Connects GainNode then fades in. */
-    const onPlayStarted = () => {
-      connectGain(); // try GainNode; no-op if already connected or unsupported
-      autoplayedRef.current = true;
-      setHasSource(true);
-      setIsPlaying(true);
-      setHasEverPlayed(true);
-      fadeIn();
-    };
 
     /* ---------- audio element events ------------------------------ */
 
@@ -326,10 +355,11 @@ export function MusicPlayer() {
     };
 
     const onGesture = (evt: Event) => {
-      if (autoplayedRef.current || !userWantsPlaybackRef.current) {
+      if (autoplayedRef.current) {
         removeGestureListeners();
         return;
       }
+      if (!userWantsPlaybackRef.current) return;
       // Don't fight the play button's own handler
       if (panelRef.current?.contains(evt.target as Node)) return;
 
@@ -339,7 +369,12 @@ export function MusicPlayer() {
       audio
         .play()
         .then(() => {
-          onPlayStarted();
+          connectGain();
+          autoplayedRef.current = true;
+          setHasSource(true);
+          setIsPlaying(true);
+          setHasEverPlayed(true);
+          fadeIn();
           removeGestureListeners();
         })
         .catch(() => {
@@ -372,6 +407,20 @@ export function MusicPlayer() {
     setVol,
     getVol,
   ]);
+
+  useEffect(() => {
+    registerBgmPlaybackRequest(startPlayback);
+    return () => {
+      registerBgmPlaybackRequest(null);
+    };
+  }, [registerBgmPlaybackRequest, startPlayback]);
+
+  useEffect(() => {
+    userWantsPlaybackRef.current = bgmEnabled;
+    if (!bgmEnabled) {
+      queueMicrotask(stopPlayback);
+    }
+  }, [bgmEnabled, stopPlayback]);
 
   /* ------------------------------------------------------------------ */
   /*  Drag-to-move                                                      */
@@ -437,37 +486,13 @@ export function MusicPlayer() {
   /*  Play / pause                                                      */
   /* ------------------------------------------------------------------ */
 
-  const togglePlay = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (isPlaying) {
-      userWantsPlaybackRef.current = false;
-      clearLoopSchedule();
-      fadingOutAtEndRef.current = false;
-      clearFade();
-      audio.pause();
-      setVol(0);
-      setIsPlaying(false);
-    } else if (isBetweenLoops) {
-      userWantsPlaybackRef.current = false;
-      clearLoopSchedule();
-      setIsPlaying(false);
-    } else {
-      userWantsPlaybackRef.current = true;
-      setVol(0);
-      audio
-        .play()
-        .then(() => {
-          connectGain();
-          autoplayedRef.current = true;
-          setIsPlaying(true);
-          fadeIn();
-        })
-        .catch(() => {
-          setIsPlaying(false);
-          userWantsPlaybackRef.current = false;
-        });
+  const toggleBgm = () => {
+    if (bgmEnabled) {
+      disableBgm();
+      return;
     }
+
+    enableBgm();
   };
 
   /* ------------------------------------------------------------------ */
@@ -506,19 +531,15 @@ export function MusicPlayer() {
         type="button"
         onPointerUp={(e) => {
           e.stopPropagation();
-          togglePlay();
+          toggleBgm();
         }}
         disabled={!hasSource}
         className={`flex h-9 w-9 shrink-0 cursor-pointer touch-auto items-center justify-center rounded border text-[var(--text-heading)] transition disabled:cursor-not-allowed disabled:opacity-50 ${playBtnClass}`}
         aria-label={
-          isPlaying
-            ? "Pause"
-            : isBetweenLoops
-              ? "Stop (cancel next loop)"
-              : "Play"
+          bgmEnabled ? "Mute background music" : "Enable background music"
         }
       >
-        {isPlaying ? (
+        {bgmEnabled && isPlaying ? (
           <svg
             className="h-4 w-4"
             fill="currentColor"
@@ -527,7 +548,7 @@ export function MusicPlayer() {
           >
             <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
           </svg>
-        ) : isBetweenLoops ? (
+        ) : bgmEnabled && isBetweenLoops ? (
           <svg
             className="h-4 w-4"
             fill="currentColor"
@@ -548,17 +569,19 @@ export function MusicPlayer() {
         )}
       </button>
       <span className="music-panel-label min-w-0 max-w-[min(7rem,36vw)] shrink truncate text-sm text-[var(--text-muted)] select-none md:max-w-[140px]">
-        {!hasSource && !loadError
-          ? "Loading…"
-          : loadError
-            ? "No track"
-            : isPlaying
-              ? "Playing"
-              : isBetweenLoops && gapSecondsLeft != null
-                ? `Next loop in ${gapSecondsLeft}s`
-                : !hasEverPlayed
-                  ? "Tap to play"
-                  : "Paused"}
+        {!bgmEnabled
+          ? "Muted"
+          : !hasSource && !loadError
+            ? "Loading…"
+            : loadError
+              ? "No track"
+              : isPlaying
+                ? "Playing"
+                : isBetweenLoops && gapSecondsLeft != null
+                  ? `Next loop in ${gapSecondsLeft}s`
+                  : !hasEverPlayed
+                    ? "Tap to play"
+                    : "Paused"}
       </span>
     </div>
   );

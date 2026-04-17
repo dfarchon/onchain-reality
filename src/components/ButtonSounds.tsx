@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useSound } from "../contexts/SoundContext";
 
 const CLICK_SRC = "/audio/sfx/click.ogg";
 
@@ -43,17 +44,24 @@ function findControlTarget(node: EventTarget | null): HTMLElement | null {
 
 /** Global delegated click sound for native buttons, button-like inputs, and links. */
 export function ButtonSounds() {
+  const { sfxEnabled } = useSound();
+
   useEffect(() => {
+    if (!sfxEnabled) return;
+
+    let cancelled = false;
     let ctx: AudioContext | null = null;
     let buffer: AudioBuffer | null = null;
 
     fetch(CLICK_SRC)
       .then((res) => res.arrayBuffer())
       .then((arr) => {
+        if (cancelled) return null;
         ctx = new AudioContext();
         return ctx.decodeAudioData(arr);
       })
       .then((decoded) => {
+        if (cancelled || !decoded) return;
         buffer = decoded;
       })
       .catch(() => {});
@@ -83,10 +91,11 @@ export function ButtonSounds() {
     document.addEventListener("click", onClick, true);
 
     return () => {
+      cancelled = true;
       document.removeEventListener("click", onClick, true);
       if (ctx) void ctx.close();
     };
-  }, []);
+  }, [sfxEnabled]);
 
   return null;
 }

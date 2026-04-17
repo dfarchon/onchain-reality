@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnalyticsConsentBanner } from "./components/AnalyticsConsentBanner";
 import { GoogleAnalytics } from "./components/GoogleAnalytics";
 import { AnalyticsConsentProvider } from "./contexts/AnalyticsConsentContext";
+import { SoundProvider } from "./contexts/SoundContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { Layout } from "./components/Layout";
 import { Home } from "./routes/Home";
@@ -15,20 +16,22 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider>
-        <AnalyticsConsentProvider>
-          <GoogleAnalytics />
-          <AnalyticsConsentBanner />
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="philosophy" element={<Philosophy />} />
-              <Route path="projects" element={<Projects />} />
-              <Route path="blog" element={<BlogIndex />} />
-              <Route path="blog/:slug" element={<BlogPost />} />
-              <Route path="privacy" element={<Privacy />} />
-            </Route>
-          </Routes>
-        </AnalyticsConsentProvider>
+        <SoundProvider>
+          <AnalyticsConsentProvider>
+            <GoogleAnalytics />
+            <AnalyticsConsentBanner />
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="philosophy" element={<Philosophy />} />
+                <Route path="projects" element={<Projects />} />
+                <Route path="blog" element={<BlogIndex />} />
+                <Route path="blog/:slug" element={<BlogPost />} />
+                <Route path="privacy" element={<Privacy />} />
+              </Route>
+            </Routes>
+          </AnalyticsConsentProvider>
+        </SoundProvider>
       </ThemeProvider>
     </BrowserRouter>
   );

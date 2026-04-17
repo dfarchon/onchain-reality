@@ -4,6 +4,7 @@ import {
   HEADER_NAV_MAX_WIDTH_CLASS,
   HEADER_NAV_PADDING_X_CLASS,
 } from "../lib/headerLayout";
+import { SoundToggle } from "./SoundToggle";
 import { ThemeToggle } from "./ThemeToggle";
 
 const nav = [
@@ -80,6 +81,13 @@ export function Header() {
                 </Link>
               </li>
             ))}
+            <li className="flex shrink-0 items-center justify-center">
+              <SoundToggle
+                kind="sfx"
+                transparentBackground={isHomeLike}
+                className="min-h-[2.5rem] !px-3 md:min-h-0 md:!px-2"
+              />
+            </li>
             <li className="flex shrink-0 items-center justify-center">
               <ThemeToggle
                 transparentBackground={isHomeLike}
