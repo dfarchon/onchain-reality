@@ -7,6 +7,7 @@
     "dev": "vite",
     "prebuild": "node scripts/generate-og-image.mjs && node scripts/generate-sitemap.mjs",
     "build": "tsc -b && vite build",
+    "postbuild": "node scripts/generate-static-html.mjs",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
