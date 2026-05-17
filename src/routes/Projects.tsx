@@ -10,7 +10,7 @@ const projects = projectsData as {
   cover: string | null;
 }[];
 
-/** Same markup for light + dark — colors come from theme CSS variables. */
+/** Same markup for light + dark. Colors come from theme CSS variables. */
 function ProjectsBody() {
   return (
     <>
@@ -21,10 +21,13 @@ function ProjectsBody() {
         className="mt-2 font-body text-base text-[var(--text-muted)]"
         lang="ja"
       >
-        — プロジェクト
+        プロジェクト
       </p>
       <p className="mt-4 font-body text-base text-[var(--text-muted)]">
-        Initiatives and builds under the Onchain Reality umbrella.
+        Each one is a service.
+      </p>
+      <p className="mt-2 font-body text-base text-[var(--text-muted)]">
+        Under "Onchain Reality".
       </p>
 
       <hr className="section-rule" />

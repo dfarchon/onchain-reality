@@ -125,8 +125,8 @@ export function Home() {
               </span>
             </p>
 
-            <p className="w-full min-w-0 max-w-full px-1 text-[var(--text)] text-xl font-medium leading-relaxed [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
-              Blockchain creates digital space to shape new realities.
+            <p className="w-full min-w-0 max-w-full whitespace-pre-line px-1 text-[var(--text)] text-xl font-medium leading-relaxed [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
+              {"The chain is a space.\n\nWe shape reality on it."}
             </p>
           </div>
 
@@ -135,7 +135,7 @@ export function Home() {
               to="/blog"
               className="font-heading inline-flex w-fit max-w-full shrink-0 items-center justify-center border border-[rgba(240,160,192,0.55)] bg-[rgba(240,160,192,0.08)] px-10 py-4 text-[var(--text-heading)] text-sm font-semibold uppercase tracking-[0.12em] shadow-[var(--cta-shadow)] transition-colors md:px-12 md:py-4 md:text-base hover:border-[rgba(240,160,192,0.85)] hover:bg-[rgba(240,160,192,0.14)] hover:text-[var(--accent)] hover:shadow-[var(--cta-shadow-hover)]"
             >
-              Explore Writings
+              Read.
             </Link>
           </div>
         </div>

@@ -29,7 +29,7 @@ export function Footer() {
           <p
             className={`${taglineClass(needsBackdropPill)} sm:col-start-2 sm:max-w-none`}
           >
-            Building New Realities on the Blockchain
+            We shape reality on the chain.
           </p>
           <div className="flex min-w-0 justify-end">
             <PrivacyCookiePill isHome={isHome || pathname === "/projects"} />
@@ -38,7 +38,7 @@ export function Footer() {
       ) : (
         <div className="mx-auto w-full max-w-5xl shrink-0 px-6">
           <p className={`${taglineClass(needsBackdropPill)} mx-auto max-w-5xl`}>
-            Building New Realities on the Blockchain
+            We shape reality on the chain.
           </p>
         </div>
       )}

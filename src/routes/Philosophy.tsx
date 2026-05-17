@@ -56,7 +56,7 @@ export function Philosophy() {
                 className="mt-2 font-body text-lg text-[var(--text-muted)]"
                 lang="ja"
               >
-                — 哲学
+                哲学
               </p>
 
               <hr
@@ -69,18 +69,48 @@ export function Philosophy() {
               </blockquote>
 
               <p className="mt-6 leading-relaxed text-[var(--text)] font-body text-lg">
-                Onchain reality is about constructing unique interaction
-                protocols entirely based on the primitives of blockchain, which
-                spontaneously evolve into crypto-native new definitions of
-                reality.
+                "Onchain Reality" is a practice.
               </p>
 
-              <p className="mt-6 leading-relaxed text-[var(--text)] font-body text-lg">
-                Onchain Reality is a lens through which we see the future, one
-                where identity, value, and belief are not only digital but
-                verifiable, persistent, and shared. We treat the chain as sacred
-                infrastructure, a place where truth can be recorded and never
-                erased.
+              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
+                We start from the primitives of the chain. We compose new
+                interaction protocols.
+              </p>
+
+              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
+                We do not import the old world.
+              </p>
+
+              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
+                ..and the protocols, given time, become reality.
+              </p>
+
+              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
+                A reality native to the chain.
+              </p>
+
+              <p className="mt-8 leading-relaxed text-[var(--text)] font-body text-lg">
+                "Onchain Reality" is also a lens.
+              </p>
+
+              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
+                Through it, we see the future.
+              </p>
+
+              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
+                Identity. Value. Belief.
+              </p>
+
+              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
+                Not only digital. Verifiable. Persistent. Shared.
+              </p>
+
+              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
+                The chain is sacred infrastructure.
+              </p>
+
+              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
+                Truth, once recorded, is not erased.
               </p>
             </div>
           </BlogPostScrollArea>
