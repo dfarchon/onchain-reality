@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import { AnalyticsConsentBanner } from "./components/AnalyticsConsentBanner";
 import { GoogleAnalytics } from "./components/GoogleAnalytics";
 import { AnalyticsConsentProvider } from "./contexts/AnalyticsConsentContext";
@@ -12,9 +18,21 @@ import { BlogIndex } from "./routes/Blog/BlogIndex";
 import { BlogPost } from "./routes/Blog/BlogPost";
 import { Privacy } from "./routes/Privacy";
 
+/** Normalize /philosophy/ → /philosophy so path checks and SEO stay consistent. */
+function TrailingSlashRedirect() {
+  const { pathname, search, hash } = useLocation();
+  if (pathname.length > 1 && pathname.endsWith("/")) {
+    return (
+      <Navigate to={pathname.replace(/\/+$/, "") + search + hash} replace />
+    );
+  }
+  return null;
+}
+
 function App() {
   return (
     <BrowserRouter>
+      <TrailingSlashRedirect />
       <ThemeProvider>
         <SoundProvider>
           <AnalyticsConsentProvider>
