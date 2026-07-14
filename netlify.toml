@@ -2,31 +2,6 @@
   command = "pnpm build"
   publish = "dist"
 
-# Canonicalize trailing-slash routes so Header/Footer path checks match.
-[[redirects]]
-  from = "/philosophy/"
-  to = "/philosophy"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/projects/"
-  to = "/projects"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/blog/"
-  to = "/blog"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/privacy/"
-  to = "/privacy"
-  status = 301
-  force = true
-
 [[redirects]]
   from = "/*"
   to = "/index.html"
