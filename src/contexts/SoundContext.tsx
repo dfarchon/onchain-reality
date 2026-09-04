@@ -26,22 +26,32 @@ function readStored(key: string): boolean | null {
 type SoundContextValue = {
   bgmEnabled: boolean;
   sfxEnabled: boolean;
+  bgmStatus: BgmPlaybackStatus;
   enableBgm: () => void;
   disableBgm: () => void;
   toggleBgm: () => void;
   toggleSfx: () => void;
+  muteAll: () => void;
+  setBgmStatus: (status: BgmPlaybackStatus) => void;
   registerBgmPlaybackRequest: (handler: (() => void) | null) => void;
 };
+
+export type BgmPlaybackStatus =
+  | "loading"
+  | "playing"
+  | "paused"
+  | "unavailable";
 
 const SoundContext = createContext<SoundContextValue | null>(null);
 
 export function SoundProvider({ children }: { children: React.ReactNode }) {
   const [bgmEnabled, setBgmEnabled] = useState<boolean>(
-    () => readStored(BGM_STORAGE_KEY) ?? true,
+    () => readStored(BGM_STORAGE_KEY) ?? false,
   );
   const [sfxEnabled, setSfxEnabled] = useState<boolean>(
-    () => readStored(SFX_STORAGE_KEY) ?? true,
+    () => readStored(SFX_STORAGE_KEY) ?? false,
   );
+  const [bgmStatus, setBgmStatus] = useState<BgmPlaybackStatus>("paused");
   const bgmPlaybackRequestRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
@@ -83,6 +93,11 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     setSfxEnabled((prev) => !prev);
   }, []);
 
+  const muteAll = useCallback(() => {
+    setBgmEnabled(false);
+    setSfxEnabled(false);
+  }, []);
+
   const registerBgmPlaybackRequest = useCallback(
     (handler: (() => void) | null) => {
       bgmPlaybackRequestRef.current = handler;
@@ -94,19 +109,24 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     () => ({
       bgmEnabled,
       sfxEnabled,
+      bgmStatus,
       enableBgm,
       disableBgm,
       toggleBgm,
       toggleSfx,
+      muteAll,
+      setBgmStatus,
       registerBgmPlaybackRequest,
     }),
     [
       bgmEnabled,
       sfxEnabled,
+      bgmStatus,
       enableBgm,
       disableBgm,
       toggleBgm,
       toggleSfx,
+      muteAll,
       registerBgmPlaybackRequest,
     ],
   );

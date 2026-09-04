@@ -3,7 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { ButtonSounds } from "./ButtonSounds";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { MusicPlayer } from "./MusicPlayer";
+import { BackgroundAudio } from "./BackgroundAudio";
 
 function isBlogPostPath(pathname: string | null) {
   return pathname != null && /^\/blog\/[^/]+$/.test(pathname);
@@ -28,7 +28,7 @@ export function Layout() {
   return (
     <div className="flex min-h-[var(--app-height)] min-w-0 flex-col">
       <Header />
-      <MusicPlayer />
+      <BackgroundAudio />
       <ButtonSounds />
       <main
         ref={mainRef}

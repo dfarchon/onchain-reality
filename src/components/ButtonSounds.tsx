@@ -80,6 +80,7 @@ export function ButtonSounds() {
     const onClick = (e: MouseEvent) => {
       const t = e.target;
       if (t instanceof Element) {
+        if (t.closest(".sound-menu")) return;
         if (t.closest(".markdown-lightbox-root")) return;
         if (t.closest("img.prose-img-zoom")) return;
       }

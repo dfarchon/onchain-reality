@@ -7,6 +7,8 @@ export function Footer() {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
   const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
+  const isBlogPost = /^\/blog\/[^/]+$/.test(pathname);
+  if (isBlogPost) return null;
   const isTransparentPage = isHome || pathname === "/philosophy" || isBlog;
   const needsBackdropPill =
     pathname === "/philosophy" || pathname === "/privacy" || isBlog;

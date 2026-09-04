@@ -18,6 +18,8 @@
   --mark-primary: #ffffff;
   --mark-world: #ffb7c5;
   --mark-knockout: #000000;
+  --reading-control-bg: rgba(0, 0, 0, 0.78);
+  --reading-control-text: #ede4e8;
   /* Code surfaces — lifted from pure #000 body/panel so blocks read as distinct */
   --code-bg: #14141d;
   /* Semantic surfaces — dark defaults; light overrides in html[data-theme="light"] */
@@ -123,6 +125,8 @@ html[data-theme="light"] {
   --mark-primary: #ffb7c5;
   --mark-world: #e78398;
   --mark-knockout: #ffffff;
+  --reading-control-bg: rgba(255, 255, 255, 0.96);
+  --reading-control-text: #7d1c35;
   --code-bg: #ede4e8;
   --chrome-backdrop: rgba(255, 255, 255, 0.78);
   --chrome-pill: rgba(255, 255, 255, 0.65);
@@ -649,28 +653,18 @@ body.hero-title-hovered .retro-box h1 {
   will-change: text-shadow;
 }
 
-/* Hide header, footer, music player when hero title hovered */
+/* Hide chrome when the home title effect is active. */
 header,
-footer,
-.music-panel {
+footer {
   transition: opacity 0.3s ease;
 }
 body.hero-title-hovered header,
-body.hero-title-hovered footer,
-body.hero-title-hovered .music-panel {
+body.hero-title-hovered footer {
   opacity: 0;
   pointer-events: none;
 }
 
-/* Philosophy page — borderless music panel */
-body.philosophy-page .music-panel,
-body.philosophy-page .music-panel button {
-  border-color: transparent;
-}
-
 /* Blog pages — remove all pink borders */
-body.blog-page .music-panel,
-body.blog-page .music-panel button,
 body.blog-page .blog-filter-tab,
 body.blog-page .blog-empty-state,
 body.blog-page .blog-search,
@@ -700,31 +694,6 @@ body.blog-index-page main.main-scroll {
   flex-direction: column;
   min-height: 0;
   padding-bottom: calc(1.5rem + var(--safe-bottom)) !important;
-}
-
-/* Blog single post: same vertical band as Philosophy — full banner padding on main */
-body.blog-page.blog-post-page main.main-scroll {
-  overflow: hidden !important;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  padding-bottom: var(--layout-chrome-bottom) !important;
-}
-
-/* Outlet fills main content box; stage height = 100% so panel max-height matches real slot (no vh overflow clip) */
-body.blog-page.blog-post-page main.main-scroll > * {
-  flex: 1 1 0;
-  min-height: 0;
-  min-width: 0;
-}
-
-/*
- * Blog post route: panel height follows main, not 100vh — avoids bottom clip vs maroon ring.
- * Overlay uses default align-items: stretch so the max-w column has a definite height for %.
- */
-body.blog-post-page .blog-post-stage {
-  /* Fill overlay column (top inset is overlay padding only; bottom flush with stage = footer seam) */
-  --content-panel-height: 100%;
 }
 
 /* Burning title — flame effect when hovering "Onchain Reality" */
@@ -1122,6 +1091,21 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
 
 /* ── Blog page ─────────────────────────────────────── */
 
+.site-nav-link,
+.site-nav-link:visited {
+  color: var(--text-muted);
+}
+
+.site-nav-link:hover,
+.site-nav-link--active,
+.site-nav-link--active:visited {
+  color: var(--text-heading);
+}
+
+.site-nav-link--active {
+  font-weight: 600;
+}
+
 /* Filter tabs + card/post category: match header nav type scale (Header.tsx site-header-nav__links) */
 .blog-filter-tab,
 .blog-card-category {
@@ -1175,18 +1159,103 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
 }
 
 /* Theme switch: keep chrome controls from briefly flashing during repaint. */
-html[data-theme-switching="true"] .music-panel,
-html[data-theme-switching="true"] .music-panel button,
 html[data-theme-switching="true"] .blog-filter-tab,
 html[data-theme-switching="true"] .blog-filter-tab--active,
 html[data-theme-switching="true"] .theme-toggle,
 html[data-theme-switching="true"] .theme-toggle *,
-html[data-theme-switching="true"] .sound-toggle,
-html[data-theme-switching="true"] .sound-toggle * {
+html[data-theme-switching="true"] .sound-menu,
+html[data-theme-switching="true"] .sound-menu * {
   transition: none !important;
   animation: none !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
+}
+
+/* Minimal reading mode: one calm column over the existing ASCII environment. */
+header.reading-header {
+  background: transparent;
+  border: 0;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.reading-back-link,
+.reading-back-link:visited {
+  color: var(--reading-control-text);
+  background: var(--reading-control-bg);
+  border: 0;
+  box-shadow: none;
+}
+
+.reading-back-link:hover {
+  color: var(--text-heading);
+}
+
+body.blog-post-page {
+  height: var(--app-height);
+  overflow-x: hidden;
+  overflow-y: auto !important;
+  overscroll-behavior-y: auto;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+body.blog-post-page #root {
+  height: auto;
+  min-height: 100%;
+}
+
+body.blog-post-page main.main-scroll {
+  position: relative;
+  display: block !important;
+  flex: none;
+  width: 100%;
+  min-height: var(--app-height);
+  padding-bottom: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+body.blog-post-page main.main-scroll > * {
+  min-height: 100%;
+}
+
+.minimal-reading-stage {
+  position: relative;
+  min-height: 100%;
+  padding: 1rem 0 clamp(5rem, 12vh, 9rem);
+}
+
+.minimal-reading-column {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  width: min(calc(100% - 2rem), 48rem);
+  min-height: calc(100vh - var(--layout-chrome-top) - 2rem);
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 3vw, 1.5rem);
+  background: var(--bg);
+}
+
+.minimal-reading-column .prose {
+  width: 100%;
+  max-width: var(--blog-post-text-measure);
+}
+
+@media (max-width: 767px) {
+  body.blog-post-page {
+    --layout-main-below-header: 0px;
+  }
+
+  .minimal-reading-stage {
+    padding-top: 0;
+  }
+
+  .minimal-reading-column {
+    width: 100%;
+    min-height: calc(100vh - var(--layout-chrome-top));
+    padding: 2rem 1.25rem 3.5rem;
+  }
 }
 
 .blog-empty-state {
