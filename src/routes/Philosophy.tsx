@@ -2,20 +2,11 @@ import { useEffect, useRef } from "react";
 import { AsciiClouds } from "../components/AsciiClouds";
 import { BlogPostScrollArea } from "../components/BlogPostScrollArea";
 import { Seo } from "../components/Seo";
+import { OrbitMark } from "../components/OrbitMark";
 import { PAGE_DESCRIPTIONS } from "../lib/site";
-import { usePageEngagement } from "../hooks/usePageEngagement";
-import { useAnalyticsConsent } from "../contexts/AnalyticsConsentContext";
 
 export function Philosophy() {
-  const { consent } = useAnalyticsConsent();
   const viewportRef = useRef<HTMLDivElement>(null);
-
-  usePageEngagement({
-    scrollRef: viewportRef,
-    pageType: "philosophy",
-    consent,
-    contentType: "essay",
-  });
 
   useEffect(() => {
     document.body.classList.add("philosophy-page");
@@ -44,11 +35,7 @@ export function Philosophy() {
             rootClassName="h-full min-h-0 w-full"
           >
             <div className="relative rounded-lg bg-transparent p-6 sm:p-8 md:p-12">
-              <img
-                src="/images/icons/favicon.svg"
-                alt=""
-                className="absolute top-4 right-4 h-24 w-24 opacity-60 sm:top-6 sm:right-6 sm:h-28 sm:w-28 md:top-8 md:right-8 md:h-32 md:w-32"
-              />
+              <OrbitMark className="absolute top-4 right-4 h-24 w-24 sm:top-6 sm:right-6 sm:h-28 sm:w-28 md:top-8 md:right-8 md:h-32 md:w-32" />
               <h1 className="text-3xl font-semibold tracking-wide text-[var(--text-heading)] uppercase">
                 Philosophy
               </h1>

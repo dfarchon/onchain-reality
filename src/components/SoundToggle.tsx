@@ -109,7 +109,7 @@ export function SoundToggle({
     <button
       type="button"
       onClick={onClick}
-      className={`sound-toggle inline-flex h-9 min-w-[2.25rem] shrink-0 items-center justify-center rounded-md border-0 px-2 text-[var(--text-heading)] transition hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] ${surfaceClass} ${className}`}
+      className={`sound-toggle inline-flex h-9 min-w-[2.25rem] shrink-0 items-center justify-center rounded-md border-0 px-2 text-[var(--text-heading)] transition hover:text-[var(--accent)] ${surfaceClass} ${className}`}
       aria-label={label}
       aria-pressed={enabled}
       title={isBgm ? "BGM" : "SFX"}

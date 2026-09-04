@@ -2,19 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Dark black + pink — data-stream / maximalist, religious, early-web */
+/* DFArchon canon: ink, sakura, and pink-warmed interface neutrals. */
 :root {
-  --bg: #0a0a0a;
-  --bg-surface: rgba(18, 18, 18, 0.95);
-  --text: #eeb4c6;
-  --text-muted: #d09aac;
-  --text-heading: #fff0f4;
+  --bg: #000000;
+  --bg-surface: rgba(24, 18, 21, 0.95);
+  --text: #ede4e8;
+  --text-muted: #9a8a92;
+  --text-heading: #ffffff;
   /* Blog article body: same pink as site --text (strong still uses --text-heading for contrast) */
   --prose-body: var(--text);
-  --accent: #f0a0c0;
-  --accent-dim: #c080a0;
-  --border: rgba(240, 160, 192, 0.25);
-  --border-light: rgba(240, 160, 192, 0.12);
+  --accent: #ffb7c5;
+  --accent-dim: #e78398;
+  --border: #2b1f26;
+  --border-light: rgba(43, 31, 38, 0.65);
+  --mark-primary: #ffffff;
+  --mark-world: #ffb7c5;
+  --mark-knockout: #000000;
   /* Code surfaces — lifted from pure #000 body/panel so blocks read as distinct */
   --code-bg: #14141d;
   /* Semantic surfaces — dark defaults; light overrides in html[data-theme="light"] */
@@ -106,17 +109,20 @@
 
 html[data-theme="light"] {
   /* Soft lavender base; StarryBackground SCENE_BG.light matches */
-  --bg: #e8e0ee;
+  --bg: #ffffff;
   --bg-surface: rgba(255, 255, 255, 0.95);
   /* Light mode type: vivid rose / magenta pink (not muddy gray-mauve) */
-  --text: #923d68;
-  --text-muted: #a56782;
-  --text-heading: #702050;
+  --text: #000000;
+  --text-muted: #5c4f55;
+  --text-heading: #000000;
   --prose-body: var(--text);
-  --accent: #d04088;
-  --accent-dim: #a82868;
-  --border: rgba(140, 60, 95, 0.35);
-  --border-light: rgba(140, 60, 95, 0.18);
+  --accent: #bc526a;
+  --accent-dim: #7d1c35;
+  --border: #d8cbd1;
+  --border-light: rgba(92, 79, 85, 0.18);
+  --mark-primary: #ffb7c5;
+  --mark-world: #e78398;
+  --mark-knockout: #ffffff;
   --code-bg: #ede4e8;
   --chrome-backdrop: rgba(255, 255, 255, 0.78);
   --chrome-pill: rgba(255, 255, 255, 0.65);
@@ -210,8 +216,6 @@ html[data-theme="dark"] body.blog-page {
 }
 
 .fonts-home {
-  --font-body: "Cardo", Georgia, serif;
-  --font-heading: "Cinzel", "Times New Roman", serif;
   font-family: var(--font-body);
 }
 
@@ -223,6 +227,18 @@ html[data-theme="dark"] body.blog-page {
 }
 *::-webkit-scrollbar {
   display: none;
+}
+
+/* The site intentionally uses hover/active states without a separate focus frame. */
+:where(a, button, input, textarea, select, [tabindex]):focus,
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: none !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+}
+
+.orbit-mark {
+  color: var(--mark-primary);
 }
 
 html {
@@ -237,8 +253,8 @@ html {
 body {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 1.125rem;
-  line-height: 1.75;
+  font-size: 1.0625rem;
+  line-height: 1.7;
   color: var(--text);
   min-height: var(--app-height);
   background: var(--bg);
@@ -264,13 +280,13 @@ body {
   }
 
   body {
-    font-size: 1rem;
+    font-size: 1.0625rem;
     line-height: 1.7;
   }
 
   .prose {
-    font-size: 1.1rem;
-    line-height: 1.75;
+    font-size: 1.0625rem;
+    line-height: 1.7;
   }
 
   .prose p,
@@ -281,7 +297,7 @@ body {
   }
 
   body.blog-post-page .blog-post-measure .prose {
-    font-size: 1rem;
+    font-size: 1.0625rem;
   }
 
   body.blog-post-page .blog-post-measure .prose h1 {
@@ -289,11 +305,11 @@ body {
   }
 
   body.blog-post-page .blog-post-measure .prose h2 {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
   }
 
   body.blog-post-page .blog-post-measure .prose h3 {
-    font-size: 1rem;
+    font-size: 1.0625rem;
   }
 }
 
@@ -857,10 +873,11 @@ a.retro-link:hover {
   overflow-y: hidden;
 }
 
-/* Blog prose — slightly larger for comfortable reading */
+/* Canonical editorial measure and reading scale. */
 .prose {
-  font-size: 1.25rem;
-  line-height: 1.8;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  max-width: 45rem;
 }
 .prose pre {
   @apply overflow-x-auto p-4 text-base;
@@ -925,10 +942,6 @@ a.retro-link:hover {
 /* Blog Markdown: click-to-zoom lightbox (see Markdown.tsx) */
 .prose img.prose-img-zoom {
   cursor: zoom-in;
-}
-.prose img.prose-img-zoom:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
 }
 .prose img.prose-img-zoom.prose-img-zoom--hidden {
   opacity: 0;
@@ -1167,7 +1180,9 @@ html[data-theme-switching="true"] .music-panel button,
 html[data-theme-switching="true"] .blog-filter-tab,
 html[data-theme-switching="true"] .blog-filter-tab--active,
 html[data-theme-switching="true"] .theme-toggle,
-html[data-theme-switching="true"] .theme-toggle * {
+html[data-theme-switching="true"] .theme-toggle *,
+html[data-theme-switching="true"] .sound-toggle,
+html[data-theme-switching="true"] .sound-toggle * {
   transition: none !important;
   animation: none !important;
   -webkit-backdrop-filter: none !important;
@@ -1209,10 +1224,6 @@ html[data-theme-switching="true"] .theme-toggle * {
   color: var(--text-muted);
   opacity: 0.6;
 }
-.blog-search:focus {
-  border-color: var(--accent);
-}
-
 @media (max-width: 767px) {
   .blog-search {
     width: 100%;

@@ -6,11 +6,11 @@ import {
 } from "../lib/headerLayout";
 import { SoundToggle } from "./SoundToggle";
 import { ThemeToggle } from "./ThemeToggle";
+import { OrbitMark } from "./OrbitMark";
 
 const nav = [
   { to: "/", label: "Home" },
   { to: "/philosophy", label: "Philosophy" },
-  { to: "/projects", label: "Projects" },
   { to: "/blog", label: "Blog" },
 ] as const;
 
@@ -22,7 +22,7 @@ export function Header() {
   const { pathname } = useLocation();
   const isPhilosophy = pathname === "/philosophy";
   const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
-  const isHomeLike = pathname === "/" || pathname === "/projects";
+  const isHomeLike = pathname === "/";
   const isTransparentPage = isHomeLike || isPhilosophy || isBlog;
   const needsBackdropPill = isPhilosophy || isBlog;
 
@@ -66,7 +66,8 @@ export function Header() {
           to="/"
           className={`shrink-0 whitespace-nowrap inline-flex items-center justify-center font-heading text-2xl font-semibold uppercase leading-none tracking-wide text-[var(--text-heading)] no-underline hover:text-[var(--accent)] rounded-md max-md:w-full max-md:border-0 max-md:!bg-[var(--chrome-pill)] max-md:backdrop-blur-sm max-md:px-4 max-md:py-3.5 md:w-auto md:border-none md:py-3 md:pl-[calc(1.75rem+0.025em)] md:pr-7 ${linkPill(needsBackdropPill)}`}
         >
-          Onchain Reality
+          <OrbitMark className="mr-2.5 h-7 w-7 shrink-0" />
+          <span>Onchain Reality</span>
         </Link>
 
         <div className="flex w-full min-w-0 flex-1 max-md:justify-start md:min-w-max md:justify-end">

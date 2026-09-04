@@ -104,7 +104,7 @@ export function Home() {
         <div className="retro-box retro-box--hero w-full min-w-0 max-w-4xl flex flex-col items-stretch justify-center text-center">
           <div className="mx-auto flex w-full min-w-0 max-w-full flex-col items-center justify-center gap-6">
             <h1
-              className="hero-title font-heading text-3xl font-semibold tracking-wide text-[var(--text-heading)] sm:text-4xl md:text-5xl uppercase"
+              className="hero-title font-heading text-3xl font-semibold tracking-[0.08em] text-[var(--text-heading)] sm:text-4xl md:text-5xl uppercase"
               onMouseEnter={() =>
                 document.body.classList.add("hero-title-hovered")
               }

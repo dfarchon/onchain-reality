@@ -1,6 +1,6 @@
 # Onchain Reality
 
-Essays, projects, and philosophy at the intersection of blockchain, verifiable truth, and crypto-native culture.
+Essays, narratives, and philosophy at the intersection of blockchain, verifiable truth, and crypto-native culture.
 
 ## Development
 

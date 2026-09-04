@@ -1,40 +1,8 @@
-<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <filter id="coreGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-
-  <!-- Background: match site #0a0a0a with rounded corners -->
-  <rect width="512" height="512" rx="96" ry="96" fill="#0a0a0a"/>
-
-  <!-- Horizontal orbit ring -->
-  <ellipse cx="256" cy="256" rx="168" ry="56"
-    fill="none" stroke="#f0a0c0" stroke-width="16"
-    stroke-linecap="round"/>
-
-  <!-- Tilted orbit ring (30°) -->
-  <ellipse cx="256" cy="256" rx="168" ry="56"
-    fill="none" stroke="#f0a0c0" stroke-width="16"
-    stroke-linecap="round"
-    transform="rotate(30 256 256)"/>
-
-  <!-- Axis line (15°) -->
-  <line x1="256" y1="68" x2="256" y2="444"
-    stroke="#f0a0c0" stroke-width="18"
-    stroke-linecap="round"
-    transform="rotate(15 256 256)"/>
-
-  <!-- Core ring -->
-  <circle cx="256" cy="256" r="30"
-    fill="none" stroke="#f0a0c0" stroke-width="16"/>
-
-  <!-- Core dot with glow -->
-  <g filter="url(#coreGlow)">
-    <circle cx="256" cy="256" r="14" fill="#f0a0c0"/>
+<svg width="512" height="512" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+  <rect width="80" height="80" fill="#000000"/>
+  <g transform="translate(16 16) scale(3)">
+    <path fill="#ffffff" d="M7 0h1v5H7zM3 6h3v1H3zM10 6h3v1h-3zM2 7h1v1H2zM13 7h1v1h-1zM1 8h1v2H1zM14 8h1v2h-1zM2 10h2v1H2zM12 10h2v1h-2zM4 11h8v1H4zM7 12h1v3H7z"/>
+    <path fill="#ffb7c5" d="M6 5h4v1H6zM6 6h1v2H6zM9 6h1v2H9zM6 8h4v1H6z"/>
+    <path fill="#000000" d="M7 6h2v2H7z"/>
   </g>
 </svg>

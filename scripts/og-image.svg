@@ -1,68 +1,14 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&amp;display=swap');
-    </style>
-    <filter id="logoGlow" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&amp;display=swap');</style>
   </defs>
-
-  <rect width="1200" height="630" fill="#0a0a0a"/>
-
-  <!-- translate(77,0): centers logo+text block in 1200px width; translate(0,315): canvas vertical midline -->
-  <g transform="translate(77, 0)">
-  <g transform="translate(0, 315)">
-  <!-- Logo: center on midline (y=0 here = canvas y=315); scale 0.8 → ~410px wide -->
-  <g transform="translate(255, 0) scale(0.8)" filter="url(#logoGlow)">
-    <g transform="translate(-256,-256)">
-      <ellipse cx="256" cy="256" rx="168" ry="56"
-        fill="none" stroke="#f0a0c0" stroke-width="16" stroke-linecap="round"/>
-      <ellipse cx="256" cy="256" rx="168" ry="56"
-        fill="none" stroke="#f0a0c0" stroke-width="16" stroke-linecap="round"
-        transform="rotate(30 256 256)"/>
-      <line x1="256" y1="68" x2="256" y2="444"
-        stroke="#f0a0c0" stroke-width="18" stroke-linecap="round"
-        transform="rotate(15 256 256)"/>
-      <circle cx="256" cy="256" r="30"
-        fill="none" stroke="#f0a0c0" stroke-width="16"/>
-      <g filter="url(#logoGlow)">
-        <circle cx="256" cy="256" r="14" fill="#f0a0c0"/>
-      </g>
-    </g>
+  <rect width="1200" height="630" fill="#000000"/>
+  <g transform="translate(130 155) scale(20)" shape-rendering="crispEdges">
+    <path fill="#ffffff" d="M7 0h1v5H7zM3 6h3v1H3zM10 6h3v1h-3zM2 7h1v1H2zM13 7h1v1h-1zM1 8h1v2H1zM14 8h1v2h-1zM2 10h2v1H2zM12 10h2v1h-2zM4 11h8v1H4zM7 12h1v3H7z"/>
+    <path fill="#ffb7c5" d="M6 5h4v1H6zM6 6h1v2H6zM9 6h1v2H9zM6 8h4v1H6z"/>
+    <path fill="#000000" d="M7 6h2v2H7z"/>
   </g>
-
-  <!-- Text: y relative to midline; +18px vs previous absolute layout = slightly lower; x clears logo right (~460) -->
-  <text text-anchor="start">
-    <tspan x="478" y="-32"
-      font-family="'Fira Sans', sans-serif"
-      font-size="95"
-      font-weight="700"
-      fill="#f5f5f5"
-      letter-spacing="2">ONCHAIN</tspan>
-    <tspan x="478" y="78"
-      font-family="'Fira Sans', sans-serif"
-      font-size="104"
-      font-weight="700"
-      fill="#f5f5f5"
-      letter-spacing="2">REALITY</tspan>
-    <tspan x="478" y="143"
-      font-family="Georgia, 'Times New Roman', serif"
-      font-size="30"
-      fill="#f0a0c0"
-      fill-opacity="0.75"
-      letter-spacing="0.8">Blockchain Creates Digital Space</tspan>
-    <tspan x="478" y="183"
-      font-family="Georgia, 'Times New Roman', serif"
-      font-size="30"
-      fill="#f0a0c0"
-      fill-opacity="0.75"
-      letter-spacing="0.8"> to Shape New Realities</tspan>
-  </text>
-  </g>
-  </g>
+  <text x="520" y="282" fill="#ffffff" font-family="'Fira Sans', sans-serif" font-size="76" font-weight="600" letter-spacing="6">ONCHAIN</text>
+  <text x="520" y="370" fill="#ffffff" font-family="'Fira Sans', sans-serif" font-size="76" font-weight="600" letter-spacing="6">REALITY</text>
+  <text x="524" y="425" fill="#9a8a92" font-family="'Fira Sans', sans-serif" font-size="28" font-weight="400">Essays, narratives, and philosophy.</text>
 </svg>

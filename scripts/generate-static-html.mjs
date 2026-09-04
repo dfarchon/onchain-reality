@@ -9,7 +9,7 @@
  * the default site poster (/images/og-image.png) is used.
  *
  * The default poster is also used for the home page and other static routes
- * (/philosophy, /projects, /blog, /privacy).
+ * (/philosophy, /blog, /privacy).
  *
  * Run after `vite build` (wired as the `postbuild` script in package.json).
  */
@@ -30,7 +30,7 @@ const templatePath = join(distDir, "index.html");
 
 const SITE_NAME = "Onchain Reality";
 const DEFAULT_DESCRIPTION =
-  'The chain is a space. We shape reality on it. Essays, projects, and philosophy from "Onchain Reality".';
+  'The chain is a space. We shape reality on it. Essays, narratives, and philosophy from "Onchain Reality".';
 const DEFAULT_OG_IMAGE = "/images/og-image.png";
 const DEFAULT_OG_WIDTH = "1200";
 const DEFAULT_OG_HEIGHT = "630";
@@ -38,11 +38,9 @@ const DEFAULT_OG_HEIGHT = "630";
 const PAGE_DESCRIPTIONS = {
   philosophy:
     "Reality is what we commit to the blockchain. Thoughts on identity, value, and verifiable truth.",
-  projects:
-    'Each one is a service. Under "Onchain Reality". Links to experiments and work.',
   blog: 'Essays and notes from "Onchain Reality". Intro, manifesto, reflection, technology.',
   privacy:
-    'Privacy notice for "Onchain Reality" — what we collect, why, and your choices.',
+    "Onchain Reality does not use behavioral analytics or analytics cookies.",
 };
 
 const siteOrigin = (() => {
@@ -295,13 +293,6 @@ function main() {
       pathname: "/philosophy",
       title: "Philosophy",
       description: PAGE_DESCRIPTIONS.philosophy,
-      image: DEFAULT_OG_IMAGE,
-      isDefaultImage: true,
-    },
-    {
-      pathname: "/projects",
-      title: "Projects",
-      description: PAGE_DESCRIPTIONS.projects,
       image: DEFAULT_OG_IMAGE,
       isDefaultImage: true,
     },

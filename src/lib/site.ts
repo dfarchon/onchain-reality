@@ -3,13 +3,11 @@ export const SITE_NAME = "Onchain Reality";
 
 /** Default meta description (home and fallbacks). */
 export const DEFAULT_DESCRIPTION =
-  'The chain is a space. We shape reality on it. Essays, projects, and philosophy from "Onchain Reality".';
+  'The chain is a space. We shape reality on it. Essays, narratives, and philosophy from "Onchain Reality".';
 
 export const PAGE_DESCRIPTIONS = {
   philosophy:
     "Reality is what we commit to the blockchain. Thoughts on identity, value, and verifiable truth.",
-  projects:
-    'Each one is a service. Under "Onchain Reality". Links to experiments and work.',
   blog: 'Essays and notes from "Onchain Reality". Intro, manifesto, reflection, technology.',
 } as const;
 

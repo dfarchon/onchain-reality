@@ -67,10 +67,9 @@ export function MusicPlayer() {
   const isHome = pathname === "/";
   const isPhilosophy = pathname === "/philosophy";
   const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
-  const isProjects = pathname === "/projects";
-  /** Philosophy + Blog + Projects in light: flat chrome, no drop shadow. */
+  /** Philosophy + Blog in light: flat chrome, no drop shadow. */
   const philosophyOrBlogLightFlat =
-    (isPhilosophy || isBlog || isProjects) && theme === "light";
+    (isPhilosophy || isBlog) && theme === "light";
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);

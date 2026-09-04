@@ -16,7 +16,7 @@ export default {
       },
       fontFamily: {
         sans: ["var(--font-body)", "system-ui", "sans-serif"],
-        heading: ["var(--font-heading)", "serif"],
+        heading: ["var(--font-heading)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "Consolas", "monospace"],
       },
     },
