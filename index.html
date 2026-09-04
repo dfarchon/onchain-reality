@@ -2,7 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/images/icons/favicon.svg" />
+    <link
+      id="theme-favicon"
+      rel="icon"
+      type="image/svg+xml"
+      href="/images/icons/favicon.svg"
+    />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
@@ -35,8 +40,12 @@
         try {
           var k = "onchain-reality-theme";
           var t = localStorage.getItem(k);
-          document.documentElement.dataset.theme =
-            t === "light" || t === "dark" ? t : "dark";
+          var theme = t === "light" || t === "dark" ? t : "dark";
+          document.documentElement.dataset.theme = theme;
+          document.getElementById("theme-favicon").href =
+            theme === "light"
+              ? "/images/icons/favicon-light.svg"
+              : "/images/icons/favicon.svg";
         } catch (e) {
           document.documentElement.dataset.theme = "dark";
         }

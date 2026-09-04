@@ -15,6 +15,7 @@ export type Theme = "light" | "dark";
 const STORAGE_KEY = "onchain-reality-theme";
 
 const HLJS_LINK_ID = "hljs-theme";
+const FAVICON_LINK_ID = "theme-favicon";
 const THEME_SWITCHING_ATTR = "data-theme-switching";
 
 function readStored(): Theme | null {
@@ -29,6 +30,15 @@ function readStored(): Theme | null {
 
 function applyDomTheme(theme: Theme) {
   document.documentElement.dataset.theme = theme;
+  const favicon = document.getElementById(
+    FAVICON_LINK_ID,
+  ) as HTMLLinkElement | null;
+  if (favicon) {
+    favicon.href =
+      theme === "light"
+        ? "/images/icons/favicon-light.svg"
+        : "/images/icons/favicon.svg";
+  }
 }
 
 function markThemeSwitching() {
