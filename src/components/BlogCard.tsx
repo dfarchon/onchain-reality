@@ -39,7 +39,6 @@ export function BlogCard({ category, title, author, date }: BlogCardProps) {
   useEffect(() => {
     if (!hovered) return;
 
-    setGlitchProgress(0);
     startTimeRef.current = performance.now();
 
     function tick() {
@@ -56,7 +55,10 @@ export function BlogCard({ category, title, author, date }: BlogCardProps) {
     return () => cancelAnimationFrame(frameRef.current);
   }, [hovered]);
 
-  const onEnter = useCallback(() => setHovered(true), []);
+  const onEnter = useCallback(() => {
+    setGlitchProgress(0);
+    setHovered(true);
+  }, []);
   const onLeave = useCallback(() => {
     setHovered(false);
     setGlitchProgress(1);
