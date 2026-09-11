@@ -34,13 +34,13 @@ export function Philosophy() {
             viewportRef={viewportRef}
             rootClassName="h-full min-h-0 w-full"
           >
-            <div className="relative rounded-lg bg-transparent p-6 sm:p-8 md:p-12">
+            <div className="relative mx-auto max-w-[45rem] rounded-lg bg-transparent p-6 sm:p-8 md:p-12">
               <OrbitMark className="absolute top-4 right-4 h-24 w-24 sm:top-6 sm:right-6 sm:h-28 sm:w-28 md:top-8 md:right-8 md:h-32 md:w-32" />
-              <h1 className="text-3xl font-semibold tracking-wide text-[var(--text-heading)] uppercase">
+              <h1 className="type-article-title text-[var(--text-heading)]">
                 Philosophy
               </h1>
               <p
-                className="mt-2 font-body text-lg text-[var(--text-muted)]"
+                className="type-metadata mt-2 text-[var(--text-muted)]"
                 lang="ja"
               >
                 哲学
@@ -51,54 +51,38 @@ export function Philosophy() {
                 style={{ borderColor: "transparent" }}
               />
 
-              <blockquote className="border-l-2 border-[var(--accent)] pl-5 font-body text-2xl italic text-[var(--text)]">
+              <blockquote className="type-statement border-l-2 border-[var(--accent)] pl-5 italic text-[var(--text)]">
                 Reality is what we commit to the blockchain.
               </blockquote>
 
-              <p className="mt-6 leading-relaxed text-[var(--text)] font-body text-lg">
-                "Onchain Reality" is a practice.
-              </p>
+              <div className="prose mt-6">
+                <p>"Onchain Reality" is a practice.</p>
 
-              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
-                We start from the primitives of the chain. We compose new
-                interaction protocols.
-              </p>
+                <p>
+                  We start from the primitives of the chain. We compose new
+                  interaction protocols.
+                </p>
 
-              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
-                We do not import the old world.
-              </p>
+                <p>We do not import the old world.</p>
 
-              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
-                ..and the protocols, given time, become reality.
-              </p>
+                <p>..and the protocols, given time, become reality.</p>
 
-              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
-                A reality native to the chain.
-              </p>
+                <p>A reality native to the chain.</p>
+              </div>
 
-              <p className="mt-8 leading-relaxed text-[var(--text)] font-body text-lg">
-                "Onchain Reality" is also a lens.
-              </p>
+              <div className="prose mt-8">
+                <p>"Onchain Reality" is also a lens.</p>
 
-              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
-                Through it, we see the future.
-              </p>
+                <p>Through it, we see the future.</p>
 
-              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
-                Identity. Value. Belief.
-              </p>
+                <p>Identity. Value. Belief.</p>
 
-              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
-                Not only digital. Verifiable. Persistent. Shared.
-              </p>
+                <p>Not only digital. Verifiable. Persistent. Shared.</p>
 
-              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
-                The chain is sacred infrastructure.
-              </p>
+                <p>The chain is sacred infrastructure.</p>
 
-              <p className="mt-4 leading-relaxed text-[var(--text)] font-body text-lg">
-                Truth, once recorded, is not erased.
-              </p>
+                <p>Truth, once recorded, is not erased.</p>
+              </div>
             </div>
           </BlogPostScrollArea>
         </div>

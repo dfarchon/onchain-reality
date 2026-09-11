@@ -104,7 +104,7 @@ export function Home() {
         <div className="retro-box retro-box--hero w-full min-w-0 max-w-4xl flex flex-col items-stretch justify-center text-center">
           <div className="mx-auto flex w-full min-w-0 max-w-full flex-col items-center justify-center gap-6">
             <h1
-              className="hero-title font-heading text-3xl font-semibold tracking-[0.08em] text-[var(--text-heading)] sm:text-4xl md:text-5xl uppercase"
+              className="hero-title type-display text-[var(--text-heading)]"
               onMouseEnter={() =>
                 document.body.classList.add("hero-title-hovered")
               }
@@ -114,7 +114,7 @@ export function Home() {
             >
               Onchain Reality
             </h1>
-            <p className="min-h-[3rem] flex w-full min-w-0 max-w-full items-center justify-center px-1 font-body text-lg text-[var(--text)] sm:text-xl md:text-3xl">
+            <p className="type-statement flex min-h-[3rem] w-full min-w-0 max-w-full items-center justify-center px-1 text-[var(--text)]">
               <span
                 key={index}
                 lang={current.lang}
@@ -125,7 +125,7 @@ export function Home() {
               </span>
             </p>
 
-            <p className="w-full min-w-0 max-w-full whitespace-pre-line px-1 text-[var(--text)] text-xl font-medium leading-relaxed [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
+            <p className="type-statement w-full min-w-0 max-w-full whitespace-pre-line px-1 text-[var(--text)] [overflow-wrap:anywhere]">
               {"The chain is a space.\n\nWe shape reality on it."}
             </p>
           </div>
@@ -133,7 +133,7 @@ export function Home() {
           <div className="mt-12 flex w-full justify-center px-1">
             <Link
               to="/blog"
-              className="font-heading inline-flex w-fit max-w-full shrink-0 items-center justify-center border border-[rgba(240,160,192,0.55)] bg-[rgba(240,160,192,0.08)] px-10 py-4 text-[var(--text-heading)] text-sm font-semibold uppercase tracking-[0.12em] shadow-[var(--cta-shadow)] transition-colors md:px-12 md:py-4 md:text-base hover:border-[rgba(240,160,192,0.85)] hover:bg-[rgba(240,160,192,0.14)] hover:text-[var(--accent)] hover:shadow-[var(--cta-shadow-hover)]"
+              className="type-button inline-flex w-fit max-w-full shrink-0 items-center justify-center border border-[rgba(240,160,192,0.55)] bg-[rgba(240,160,192,0.08)] px-10 py-4 uppercase tracking-[0.08em] text-[var(--text-heading)] shadow-[var(--cta-shadow)] transition-colors md:px-12 md:py-4 hover:border-[rgba(240,160,192,0.85)] hover:bg-[rgba(240,160,192,0.14)] hover:text-[var(--accent)] hover:shadow-[var(--cta-shadow-hover)]"
             >
               Read.
             </Link>

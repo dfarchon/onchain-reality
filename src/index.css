@@ -44,9 +44,13 @@
   --blog-card-surface: rgba(0, 0, 0, 0.65);
   --shadow-cookie: 0 4px 16px rgba(0, 0, 0, 0.35);
   --shadow-consent: 0 -4px 32px rgba(0, 0, 0, 0.45);
-  --font-body: "Fira Sans", system-ui, sans-serif;
-  --font-heading: "Fira Sans", system-ui, sans-serif;
+  --font: "Fira Sans", system-ui, sans-serif;
+  --font-body: var(--font);
+  --font-heading: var(--font);
   --font-mono: "Courier New", Courier, monospace;
+  --reading-size: 1.0625rem;
+  --reading-leading: 1.7;
+  --reading-measure: 45rem;
   --banner-height: 6rem;
   /* Full viewport; dvh when supported (mobile browser chrome) */
   --app-height: 100vh;
@@ -75,8 +79,8 @@
   --blog-panel-chrome: clamp(1rem, 0.75rem + 1.1vw, 1.25rem);
   /* Blog post: extra horizontal inset inside the black column (distance from red to prose) */
   --blog-scroll-padding-x: clamp(1.35rem, 1rem + 2vw, 1.85rem);
-  /* Single-post article column — ~720px, between common 700–800px reading widths */
-  --blog-post-text-measure: 45rem;
+  /* Single-post article column — canon reading measure */
+  --blog-post-text-measure: var(--reading-measure);
   /* Blog post scrollbar: translucent pink thumb; visible track so bar stays on-screen */
   --blog-scrollbar-thumb: rgba(240, 160, 192, 0.32);
   --blog-scrollbar-thumb-hover: rgba(240, 160, 192, 0.48);
@@ -220,7 +224,72 @@ html[data-theme="dark"] body.blog-page {
 }
 
 .fonts-home {
-  font-family: var(--font-body);
+  font-family: var(--font);
+}
+
+/* Canon type roles — see canon/TYPE-SYSTEM.md */
+.type-wordmark {
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.type-display {
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.15;
+}
+
+.type-statement {
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 1.375rem;
+  line-height: 1.35;
+}
+
+.type-button {
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: var(--reading-size);
+  line-height: 1.3;
+}
+
+.type-label,
+.type-meta {
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.type-metadata {
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: var(--reading-size);
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+}
+
+.type-article-title {
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 1.375rem;
+  line-height: 1.3;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+@media (min-width: 768px) {
+  .type-article-title {
+    font-size: 2rem;
+    line-height: 1.25;
+  }
 }
 
 * {
@@ -256,9 +325,9 @@ html {
 
 body {
   margin: 0;
-  font-family: var(--font-body);
-  font-size: 1.0625rem;
-  line-height: 1.7;
+  font-family: var(--font);
+  font-size: var(--reading-size);
+  line-height: var(--reading-leading);
   color: var(--text);
   min-height: var(--app-height);
   background: var(--bg);
@@ -284,13 +353,13 @@ body {
   }
 
   body {
-    font-size: 1.0625rem;
-    line-height: 1.7;
+    font-size: var(--reading-size);
+    line-height: var(--reading-leading);
   }
 
   .prose {
-    font-size: 1.0625rem;
-    line-height: 1.7;
+    font-size: var(--reading-size);
+    line-height: var(--reading-leading);
   }
 
   .prose p,
@@ -301,7 +370,7 @@ body {
   }
 
   body.blog-post-page .blog-post-measure .prose {
-    font-size: 1.0625rem;
+    font-size: var(--reading-size);
   }
 
   body.blog-post-page .blog-post-measure .prose h1 {
@@ -844,9 +913,10 @@ a.retro-link:hover {
 
 /* Canonical editorial measure and reading scale. */
 .prose {
-  font-size: 1.0625rem;
-  line-height: 1.7;
-  max-width: 45rem;
+  font-family: var(--font);
+  font-size: var(--reading-size);
+  line-height: var(--reading-leading);
+  max-width: var(--reading-measure);
 }
 .prose pre {
   @apply overflow-x-auto p-4 text-base;
@@ -923,8 +993,9 @@ a.retro-link:hover {
 .prose figcaption {
   margin-top: 0.5rem;
   text-align: center;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   line-height: 1.45;
+  font-weight: 400;
   color: var(--text-muted);
 }
 /* YouTube (or any 16:9 embed) — raw HTML: <div class="embed-youtube"><iframe … /></div> */
@@ -973,7 +1044,8 @@ a.retro-link:hover {
 }
 
 /*
- * Bold + italic (**_…_**): need real semibold/bold italic faces (see Fira Sans weights in index.html).
+ * Bold + italic (**_…_**): 600 only (700 is reserved for critical status).
+ * Italic 600 is not a bundled face; font-synthesis is disabled.
  */
 .prose strong em,
 .prose strong i,
@@ -983,7 +1055,7 @@ a.retro-link:hover {
 .prose i strong,
 .prose em b,
 .prose i b {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 /*
@@ -997,7 +1069,7 @@ a.retro-link:hover {
 
 /* Preflight zeros p margin and list markers; restore readable block + list layout */
 .prose > * + * {
-  margin-top: 1.125em;
+  margin-top: 1.35em;
 }
 .prose ul {
   list-style-type: disc;
@@ -1033,8 +1105,8 @@ a.retro-link:hover {
 }
 
 body.blog-post-page .blog-post-measure .prose {
-  font-size: 1.0625rem;
-  line-height: 1.7;
+  font-size: var(--reading-size);
+  line-height: var(--reading-leading);
   color: var(--prose-body);
 }
 
@@ -1060,7 +1132,7 @@ body.blog-post-page .blog-post-measure .prose h1 {
   font-weight: 600;
   margin-top: 2em;
   margin-bottom: 0.55em;
-  letter-spacing: 0.01em;
+  letter-spacing: normal;
   text-transform: none;
 }
 
@@ -1070,7 +1142,7 @@ body.blog-post-page .blog-post-measure .prose h2 {
   font-weight: 600;
   margin-top: 1.65em;
   margin-bottom: 0.45em;
-  letter-spacing: 0.02em;
+  letter-spacing: normal;
   text-transform: none;
 }
 
@@ -1107,26 +1179,22 @@ body.blog-post-page .blog-post-measure .prose > h2:first-child {
 }
 
 /* Filter tabs + card/post category: match header nav type scale (Header.tsx site-header-nav__links) */
-.blog-filter-tab,
-.blog-card-category {
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 400;
+.blog-filter-tab {
+  font-family: var(--font);
+  font-size: var(--reading-size);
+  font-weight: 600;
   line-height: 1.3;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-@media (min-width: 640px) {
-  .blog-filter-tab,
-  .blog-card-category {
-    font-size: 0.75rem;
-  }
-}
-@media (min-width: 768px) {
-  .blog-filter-tab,
-  .blog-card-category {
-    font-size: 0.9rem;
-  }
+
+.blog-card-category {
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .blog-filter-tab {
@@ -1269,9 +1337,9 @@ body.blog-post-page main.main-scroll > * {
   background: var(--blog-ui-surface);
   backdrop-filter: blur(6px);
   color: var(--text-muted);
-  font-family: var(--font-body);
-  font-size: 1.125rem;
-  line-height: 1.5;
+  font-family: var(--font);
+  font-size: var(--reading-size);
+  line-height: var(--reading-leading);
   text-align: center;
 }
 
@@ -1284,8 +1352,9 @@ body.blog-post-page main.main-scroll > * {
   background: var(--blog-ui-surface);
   backdrop-filter: blur(6px);
   color: var(--text);
-  font-family: var(--font-body);
-  font-size: 0.9rem;
+  font-family: var(--font);
+  font-size: var(--reading-size);
+  line-height: var(--reading-leading);
   outline: none;
   transition: border-color 0.2s;
 }
@@ -1323,14 +1392,14 @@ body.blog-post-page main.main-scroll > * {
 .blog-card-category {
   display: inline-block;
   color: var(--accent);
-  margin-bottom: 0.75rem;
+  margin-bottom: 8px;
 }
 
 .blog-card-title {
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 400;
-  line-height: 1.35;
+  font-family: var(--font);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.45;
   color: var(--text-heading);
   margin: 0 0 auto;
 }
@@ -1341,10 +1410,12 @@ body.blog-post-page main.main-scroll > * {
   align-items: center;
   gap: 0.75rem;
   margin-top: 1.25rem;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  font-family: var(--font);
+  font-size: var(--reading-size);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: normal;
+  font-variant-numeric: tabular-nums;
   color: var(--text-muted);
 }
 

@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 
 const taglineClass = (needsBackdropPill: boolean) =>
-  `m-0 text-center text-[11px] leading-normal text-[var(--text-muted)] sm:text-xs md:text-base ${needsBackdropPill ? "inline-block rounded-md bg-[var(--chrome-pill)] px-4 py-2 backdrop-blur-sm" : ""}`;
+  `type-metadata m-0 text-center text-[var(--text-muted)] ${needsBackdropPill ? "inline-block rounded-md bg-[var(--chrome-pill)] px-4 py-2 backdrop-blur-sm" : ""}`;
 
 export function Footer() {
   const { pathname } = useLocation();

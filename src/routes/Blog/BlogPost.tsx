@@ -35,7 +35,7 @@ export function BlogPost() {
         {theme === "light" ? <AsciiClouds /> : <AsciiGameOfLife />}
         <div className="minimal-reading-column flex min-h-[50vh] flex-col items-center justify-center text-center">
           <p className="text-[var(--text-muted)]">Post not found.</p>
-          <Link to="/blog" className="retro-link mt-4 text-sm">
+          <Link to="/blog" className="retro-link type-button mt-4">
             Back to Blog
           </Link>
         </div>
@@ -70,14 +70,14 @@ export function BlogPost() {
       <div className="minimal-reading-column">
         <header className="mb-10">
           {post.category && (
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)]">
+            <p className="type-label mb-2 text-[var(--accent)]">
               {post.category}
             </p>
           )}
-          <h1 className="m-0 text-[1.375rem] leading-[1.3] font-semibold text-[var(--text-heading)] sm:text-[2rem] sm:leading-[1.25]">
+          <h1 className="type-article-title m-0 text-[var(--text-heading)]">
             {post.title}
           </h1>
-          <p className="mt-3 text-[1.0625rem] leading-relaxed text-[var(--text-muted)]">
+          <p className="type-metadata mt-3 text-[var(--text-muted)]">
             {post.author && (
               <>
                 <span>{post.author}</span>
@@ -90,7 +90,7 @@ export function BlogPost() {
         <div className="prose">
           <Markdown>{post.content}</Markdown>
         </div>
-        <Link to="/blog" className="retro-link mt-12 inline-block text-sm">
+        <Link to="/blog" className="retro-link type-button mt-12 inline-block">
           ← Back to Blog
         </Link>
       </div>

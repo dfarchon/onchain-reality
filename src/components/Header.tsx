@@ -58,7 +58,7 @@ export function Header() {
         >
           <Link
             to="/blog"
-            className="reading-back-link rounded-md px-3 py-2 text-sm backdrop-blur-sm"
+            className="reading-back-link type-button rounded-md px-3 py-2 backdrop-blur-sm"
           >
             <span className="sm:hidden">← Blog</span>
             <span className="hidden sm:inline">← Back to Blog</span>
@@ -75,12 +75,12 @@ export function Header() {
         >
           <Link
             to="/"
-            className={`inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-md font-heading text-2xl font-semibold leading-none tracking-wide text-[var(--text-heading)] uppercase hover:text-[var(--accent)] max-md:w-full max-md:bg-[var(--chrome-pill)] max-md:px-4 max-md:py-3.5 max-md:backdrop-blur-sm md:py-3 md:pr-7 md:pl-[calc(1.75rem+0.025em)] ${pill}`}
+            className={`type-wordmark inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-md text-[var(--text-heading)] hover:text-[var(--accent)] max-md:w-full max-md:bg-[var(--chrome-pill)] max-md:px-4 max-md:py-3.5 max-md:backdrop-blur-sm md:py-3 md:pr-7 md:pl-[calc(1.75rem+0.025em)] ${pill}`}
           >
-            <OrbitMark className="mr-2.5 h-7 w-7 shrink-0" />
+            <OrbitMark className="mr-2 h-4 w-4 shrink-0" />
             <span>Onchain Reality</span>
           </Link>
-          <ul className="m-0 flex w-full min-w-0 flex-1 list-none flex-wrap items-center justify-start gap-2 p-0 text-sm uppercase tracking-wide sm:gap-x-3 md:w-auto md:flex-nowrap md:justify-end md:text-base md:tracking-widest">
+          <ul className="m-0 flex w-full min-w-0 flex-1 list-none flex-wrap items-center justify-start gap-2 p-0 sm:gap-x-3 md:w-auto md:flex-nowrap md:justify-end">
             {nav.map(({ to, label }) => {
               const isCurrent = to === "/blog" ? isBlog : pathname === to;
 
@@ -89,7 +89,7 @@ export function Header() {
                   <Link
                     to={to}
                     aria-current={isCurrent ? "page" : undefined}
-                    className={`site-nav-link ${isCurrent ? "site-nav-link--active" : ""} inline-flex min-h-10 items-center justify-center whitespace-nowrap rounded-md px-3 font-normal sm:px-4 md:min-h-0 md:min-w-[5.5rem] md:py-1.5 ${pill}`}
+                    className={`site-nav-link type-button uppercase tracking-[0.08em] ${isCurrent ? "site-nav-link--active" : ""} inline-flex min-h-10 items-center justify-center whitespace-nowrap rounded-md px-3 sm:px-4 md:min-h-0 md:min-w-[5.5rem] md:py-1.5 ${pill}`}
                   >
                     {label}
                   </Link>

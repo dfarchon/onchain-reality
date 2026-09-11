@@ -65,26 +65,24 @@ export function SoundMenu({
       </button>
       {open && (
         <div className="absolute top-[calc(100%+0.5rem)] right-0 z-[70] w-[min(18rem,calc(100vw-2rem))] rounded-md bg-[var(--bg)] p-3 text-left">
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--text-muted)]">
-            Sound
-          </p>
+          <p className="type-label mb-2 text-[var(--text-muted)]">Sound</p>
           <button
             type="button"
             onClick={toggleBgm}
-            className="flex min-h-11 w-full items-center justify-between rounded px-2 text-sm hover:bg-[var(--border-light)]"
+            className="flex min-h-11 w-full items-center justify-between rounded px-2 hover:bg-[var(--border-light)]"
           >
             <span>Background music</span>
-            <span className="text-xs capitalize text-[var(--text-muted)]">
+            <span className="text-[0.875rem] leading-[1.45] capitalize text-[var(--text-muted)]">
               {bgmEnabled ? bgmStatus : "Off"}
             </span>
           </button>
           <button
             type="button"
             onClick={toggleSfx}
-            className="flex min-h-11 w-full items-center justify-between rounded px-2 text-sm hover:bg-[var(--border-light)]"
+            className="flex min-h-11 w-full items-center justify-between rounded px-2 hover:bg-[var(--border-light)]"
           >
             <span>Interface sounds</span>
-            <span className="text-xs text-[var(--text-muted)]">
+            <span className="text-[0.875rem] leading-[1.45] text-[var(--text-muted)]">
               {sfxEnabled ? "On" : "Off"}
             </span>
           </button>
@@ -92,7 +90,7 @@ export function SoundMenu({
             <button
               type="button"
               onClick={muteAll}
-              className="mt-2 min-h-10 w-full pt-2 text-sm text-[var(--text-muted)] hover:text-[var(--text-heading)]"
+              className="mt-2 min-h-10 w-full pt-2 font-semibold text-[var(--text-muted)] hover:text-[var(--text-heading)]"
             >
               Mute all
             </button>
