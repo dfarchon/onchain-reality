@@ -1,6 +1,12 @@
+# Netlify does not read package.json#engines.node. NODE_VERSION must match it.
+# pnpm comes from package.json#packageManager via Corepack.
+# Do not set NODE_VERSION or PNPM_VERSION in the Netlify UI; a UI value overrides this file.
 [build]
   command = "pnpm build"
   publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24.22.1"
 
 [[redirects]]
   from = "/*"

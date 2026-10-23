@@ -4,8 +4,11 @@ Essays, narratives, and philosophy at the intersection of blockchain, verifiable
 
 ## Development
 
+Node 24.22.1 and pnpm 12.15.0 are pinned in `package.json`.
+
 ```bash
-pnpm install
+nvm install 24.22.1 && nvm use 24.22.1
+pnpm install --frozen-lockfile
 pnpm dev
 ```
 
